@@ -26,9 +26,14 @@ class AddUserController extends AbstractController
 
         // On récupère les données inscrites dans le formulaire
         $form->handleRequest($request);
+        $utilisateur-> setCreatedAt(new \DateTimeImmutable('now'));
+        $utilisateur-> setUpdatedAt(new \DateTimeImmutable('now'));
+        $utilisateur->setRole(1 );
+
 
         // Verifier si le formulaire est déjà soummis
         if ($form->isSubmitted()){
+
             // Si oui on enregistre les données de la requête dans la table
             $entityManager = $manager->getManager();
             $entityManager->persist($utilisateur);
