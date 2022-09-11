@@ -16,17 +16,34 @@ class AddUserController extends AbstractController
     #[Route('/add/user', name: 'app_add_user')]
     public function index(Request $request, ManagerRegistry $manager): Response
     {
-        $entityManager = $manager->getManager();
+
 
         $utilisateur = new User();
-
+        // Création de l'objet formulaire
         $form = $this->createForm(AddUserType::class, $utilisateur);
         $form->remove('createdAt');
         $form->remove('updatedAt');
 
-        return $this->render('add_user/addUser.html.twig', [
-            'form' => $form->createView()
+        // On récupère les données inscrites dans le formulaire
+        $form->handleRequest($request);
 
-        ]);
+        // Verifier si le formulaire est déjà soummis
+        if ($form->isSubmitted()){
+            // Si oui on enregistre les données de la requête dans la table
+            $entityManager = $manager->getManager();
+            $entityManager->persist($utilisateur);
+            $entityManager->flush();
+            // rediriger vers une page
+            return $this->redirectToRoute('/')
+
+        } else{
+
+            return $this->render('add_user/addUser.html.twig', [
+                'form' => $form->createView()
+
+            ]);
+        }
+
+
     }
 }
