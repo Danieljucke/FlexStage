@@ -34,7 +34,7 @@ class AddUserController extends AbstractController
             $entityManager->persist($utilisateur);
             $entityManager->flush();
             // rediriger vers une page
-            return $this->redirectToRoute('/')
+            return $this->redirectToRoute('/');
 
         } else{
 
