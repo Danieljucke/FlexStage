@@ -36,14 +36,10 @@ class Ville
     #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Quartier::class)]
     private Collection $quartiers;
 
-    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Restaurant::class)]
-    private Collection $restaurant;
-
     public function __construct()
     {
         $this->communes = new ArrayCollection();
         $this->quartiers = new ArrayCollection();
-        $this->restaurant = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -170,39 +166,4 @@ class Ville
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Restaurant>
-     */
-    public function getRestaurant(): Collection
-    {
-        return $this->restaurant;
-    }
-
-    public function addRestaurant(Restaurant $restaurant): self
-    {
-        if (!$this->restaurant->contains($restaurant)) {
-            $this->restaurant->add($restaurant);
-            $restaurant->setVille($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRestaurant(Restaurant $restaurant): self
-    {
-        if ($this->restaurant->removeElement($restaurant)) {
-            // set the owning side to null (unless already changed)
-            if ($restaurant->getVille() === $this) {
-                $restaurant->setVille(null);
-            }
-        }
-
-        return $this;
-    }
-
-  public function __toString(): string
-  {
-    return $this->nom_ville;
-  }
 }
