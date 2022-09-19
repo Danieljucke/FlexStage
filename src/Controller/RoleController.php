@@ -15,24 +15,36 @@ class RoleController extends AbstractController
     #[Route('/role', name: 'app_role')]
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {
-        $role = new Role();
-        $manager=$doctrine->getManager();
-        $form=$this->createForm(RoleType::class,$role);
-        $form->remove('privillege');
-        $form->remove('statut');
-        $form->remove('createdAt');
-        $form->remove('updatedAt');
-        $role->setUpdatedAt(new \DateTimeImmutable());
-        $role->setCreatedAt(new \DateTimeImmutable());
-        $role->setStatut('Actif');
-        $form->handleRequest($request);
-        if ($form->isSubmitted() ) {
-            $this->addFlash('success', 'Enregistrement Réussi !');
-            $manager->persist($role);
-            $manager->flush();
-        }
+         $role = new Role();
+         $forms=$this->createForm(RoleType::class,$role);
+         $forms->remove('staut');
+         $forms->remove('createdAt');
+         $forms->remove('updatedAt');
+         $forms->remove('privillege');
+         $forms->handleRequest($request);
+         $roleName=$forms->get('roleName')->getViewData();
+         $manage=$doctrine->getRepository(Role::class);
+         $find=$manage->findBy(['roleName'=>$roleName]);
+         if ($forms->isSubmitted())
+         {
+             if ($find!=null)
+             {
+                 $this->addFlash('error','ce role existe déjà dans la base de données!');
+             }
+             else
+             {
+                 $this->addFlash('success','enregistrement réussi!');
+                 $role->setStatut('Actif');
+                 $role->setCreatedAt(new \DateTimeImmutable('now'));
+                 $role->setUpdatedAt(new \DateTimeImmutable('now'));
+                 $manager=$doctrine->getManager();
+                 $manager->persist($role);
+                 $manager->flush();
+             }
+         }
+
         return $this->render('role/addRole.html.twig',[
-            'formRole'=>$form->createView()
+            'formRole'=> $forms->createView()
         ]);
     }
 }
