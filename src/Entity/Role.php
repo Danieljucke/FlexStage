@@ -15,15 +15,17 @@ class Role
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25,unique: true)]
+    #[ORM\Column(length: 25)]
     private ?string $roleName = null;
 
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
+    #[ORM\OneToMany(mappedBy: 'role', targetEntity: User::class, orphanRemoval: true)]
+    private Collection $users;
 
-//    #[ORM\ManyToMany(targetEntity: Privillege::class, inversedBy: 'roles')]
-//    private Collection $privillege;
+    #[ORM\ManyToMany(targetEntity: Privillege::class, inversedBy: 'roles')]
+    private Collection $privillege;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -31,16 +33,10 @@ class Role
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'role', targetEntity: Users::class)]
-    private Collection $users;
-
-    #[ORM\ManyToMany(targetEntity: Privillege::class, inversedBy: 'roles')]
-    private Collection $privillege;
-
     public function __construct()
     {
-        $this->privillege = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->privillege = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,65 +68,15 @@ class Role
         return $this;
     }
 
-
-//    /**
-//     * @return Collection<int, Privillege>
-//     */
-//    public function getPrivillege(): Collection
-//    {
-//        return $this->privillege;
-//    }
-//
-//    public function addPrivillege(Privillege $privillege): self
-//    {
-//        if (!$this->privillege->contains($privillege)) {
-//            $this->privillege->add($privillege);
-//        }
-//
-//        return $this;
-//    }
-
-//    public function removePrivillege(Privillege $privillege): self
-//    {
-//        $this->privillege->removeElement($privillege);
-//
-//        return $this;
-//    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-
     /**
-     * @return Collection<int, Users>
+     * @return Collection<int, User>
      */
     public function getUsers(): Collection
     {
         return $this->users;
     }
 
-    public function addUser(Users $user): self
+    public function addUser(User $user): self
     {
         if (!$this->users->contains($user)) {
             $this->users->add($user);
@@ -140,7 +86,7 @@ class Role
         return $this;
     }
 
-    public function removeUser(Users $user): self
+    public function removeUser(User $user): self
     {
         if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
@@ -150,10 +96,6 @@ class Role
         }
 
         return $this;
-    }
-    public function __toString(): string
-    {
-        return $this->roleName;
     }
 
     /**
@@ -178,5 +120,33 @@ class Role
         $this->privillege->removeElement($privillege);
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->roleName;
     }
 }
