@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -25,6 +26,7 @@ class AddUserType extends AbstractType
             ->add('createdAt')
             ->add('updatedAt')
             ->add('role')
+            ->add('Ajouter', SubmitType::class)
         ;
     }
 
