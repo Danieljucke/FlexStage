@@ -32,13 +32,13 @@ class User
     #[ORM\Column(length: 30)]
     private ?string $telephone = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, unique:true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 25)]
     private ?string $etat_civil = null;
 
-    #[ORM\Column(length: 30)]
+    #[ORM\Column(length: 30, unique: true)]
     private ?string $username = null;
 
     #[ORM\Column(length: 30)]

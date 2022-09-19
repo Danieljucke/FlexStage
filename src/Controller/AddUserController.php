@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Role;
 use App\Entity\User;
 use App\Form\AddUserType;
+use App\Repository\RoleRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +19,7 @@ class AddUserController extends AbstractController
     public function index(Request $request, ManagerRegistry $manager): Response
     {
 
-
+        $entityManager = $manager->getManager();
         $utilisateur = new User();
         // Création de l'objet formulaire
         $form = $this->createForm(AddUserType::class, $utilisateur);
@@ -28,18 +30,17 @@ class AddUserController extends AbstractController
         $form->handleRequest($request);
         $utilisateur-> setCreatedAt(new \DateTimeImmutable('now'));
         $utilisateur-> setUpdatedAt(new \DateTimeImmutable('now'));
-        $utilisateur->setRole(1 );
 
 
         // Verifier si le formulaire est déjà soummis
         if ($form->isSubmitted()){
 
             // Si oui on enregistre les données de la requête dans la table
-            $entityManager = $manager->getManager();
+
             $entityManager->persist($utilisateur);
             $entityManager->flush();
             // rediriger vers une page
-            return $this->redirectToRoute('/');
+            return $this->redirectToRoute('app_add_user');
 
         } else{
 
