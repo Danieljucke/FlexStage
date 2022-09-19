@@ -15,7 +15,7 @@ class Role
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25)]
+    #[ORM\Column(length: 25,unique: true)]
     private ?string $roleName = null;
 
     #[ORM\Column(length: 255)]
