@@ -26,13 +26,11 @@ class RoleController extends AbstractController
         $role->setCreatedAt(new \DateTimeImmutable());
         $role->setStatut('Actif');
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $this->addFlash('success','Enregistrement Réussi !');
-
+        if ($form->isSubmitted() ) {
+            $this->addFlash('success', 'Enregistrement Réussi !');
+            $manager->persist($role);
+            $manager->flush();
         }
-        $manager->persist($role);
-        $manager->flush();
         return $this->render('role/addRole.html.twig',[
             'formRole'=>$form->createView()
         ]);
