@@ -21,6 +21,8 @@ class AddUserController extends AbstractController
         $utilisateur = new User();
 
         $form = $this->createForm(AddUserType::class, $utilisateur);
+        $form->remove('createdAt');
+        $form->remove('updatedAt');
 
         return $this->render('add_user/addUser.html.twig', [
             'form' => $form->createView()
