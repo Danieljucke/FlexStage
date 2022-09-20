@@ -5,46 +5,32 @@ namespace App\Controller;
 use App\Entity\Users;
 use App\Form\UsersType;
 use App\Repository\UsersRepository;
-use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-//use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/users'), IsGranted("IS_AUTHENTICATED_FULLY")]
+#[Route('/users')]
 class UsersController extends AbstractController
 {
-    #[Route('/indexUser/{page?1}/{nbre?10}', name: 'app_users_index', methods: ['GET'])]
-    public function index($page,$nbre,UsersRepository $usersRepository): Response
+    #[Route('/', name: 'app_users_index', methods: ['GET'])]
+    public function index(UsersRepository $usersRepository): Response
     {
-        $nbUsers=$usersRepository->count([]);
-        $nbPages=ceil($nbUsers/$nbre);
         return $this->render('users/index.html.twig', [
-            'users' => $usersRepository->findBy([],[],$nbre,($page-1)*$nbre),
-            'isPaginated'=>true,
-            'nbrePage'=>$nbPages,
-            'page'=>$page,
-            'nbre'=>$nbre
+            'users' => $usersRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_users_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ManagerRegistry $doctrine,UserPasswordHasherInterface $hasher): Response
+    public function new(Request $request, UsersRepository $usersRepository): Response
     {
         $user = new Users();
-        $entite=$doctrine->getManager();
         $form = $this->createForm(UsersType::class, $user);
         $form->handleRequest($request);
-//        $getpassword=$form->get('password')->getViewData();
-//        $passwordHashed=$hasher->hashPassword($user,$getpassword);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($hasher->hashPassword($user,'12345'));
-            $entite->persist($user);
-            $entite->flush();
-//            $usersRepository->add($user, true);
+            $usersRepository->add($user, true);
+
             return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
         }
 

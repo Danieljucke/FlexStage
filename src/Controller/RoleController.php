@@ -42,9 +42,11 @@ class RoleController extends AbstractController
                  $manager->flush();
              }
          }
-
+        $repository = $doctrine->getRepository(Role::class);
+        $role=$repository->findAll();
         return $this->render('role/addRole.html.twig',[
-            'formRole'=> $forms->createView()
+            'formRole'=> $forms->createView(),
+            'roles'=>$role
         ]);
     }
     #[Route('/supprimerRole', name: 'supprimer.role')]
@@ -65,11 +67,30 @@ class RoleController extends AbstractController
     #[Route('/montrerRoles', name:'montrer.roles')]
     public function afficherRoles(ManagerRegistry $doctrine):Response
     {
-        $repository = $doctrine->getRepository(Role::class);
-        $role=$repository->findAll();
+
         return $this->render('role/addRole.html.twig',[
             'roles'=> $role
         ]);
     }
 
+    #[
+        Route('/alls', name: 'list.alls')
+    ]
+    public function indexAlls(ManagerRegistry $doctrine, $page, $nbre): Response {
+        $repository = $doctrine->getRepository(Role::class);
+        $nbRole = $repository->count([]);
+        $nbrePage = ceil($nbRole / $nbre) ;
+
+        $role = $repository->findBy([], [],$nbre, ($page - 1 ) * $nbre);
+        $listAllPersonneEvent = new ListAllPersonnesEvent(count($role));
+        $this->dispatcher->dispatch($listAllPersonneEvent, ListAllPersonnesEvent::LIST_ALL_PERSONNE_EVENT);
+
+        return $this->render('personne/index.html.twig', [
+            'personnes' => $personnes,
+            'isPaginated' => true,
+            'nbrePage' => $nbrePage,
+            'page' => $page,
+            'nbre' => $nbre
+        ]);
+    }
 }
