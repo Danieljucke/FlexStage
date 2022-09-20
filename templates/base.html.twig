@@ -12,7 +12,8 @@
         {% endblock %}
     </title>
     {% block stylesheets %}
-        <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}">
+        <link rel="stylesheet" href="{{asset('node_modules/bootstrap/dist/css/bootstrap.css')}}" >
         <link href="{{ asset('node_modules/@fortawesome/fontawesome-free/css/all.css') }}" rel="stylesheet" />
         <link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
     {% endblock %}
@@ -37,10 +38,10 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <li><a class="dropdown-item" href=" ">Logout</a></li>
+                    <li><a class="dropdown-item" href=" ">Se Déconnecter</a></li>
                 {% else %}
-                    <li><a class="dropdown-item" href=" ">Login</a></li>
-                    <li><a class="dropdown-item" href=" ">Register</a></li>
+                    <li><a class="dropdown-item" href=" ">Se Connecter</a></li>
+                    <li><a class="dropdown-item" href=" ">S'Enregistrer</a></li>
                 {% endif %}
 
             </ul>
@@ -49,12 +50,13 @@
 </nav>
 
 <div id="layoutSidenav">
+{#    {% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
-                        <a class="nav-link" href="#">
+                        <div class="sb-sidenav-menu-heading">Menu</div>
+                        <a class="nav-link" href="{{path('app_default')}}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
@@ -76,25 +78,25 @@
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link" href="#" >
+                                <a class="nav-link" href="{{path('app_commune')}}" >
                                     Communes
                                 </a>
-                                    <a class="nav-link" href="#" >
+                                    <a class="nav-link" href="" >
                                         Privillege
                                     </a>
-                                    <a class="nav-link" href="#" >
+                                    <a class="nav-link" href="{{path('app_province')}}" >
                                         Province
                                     </a>
-                                    <a class="nav-link" href="#" >
+                                    <a class="nav-link" href="{{path('app_quartier')}}" >
                                         Quartier
                                     </a>
-                                    <a class="nav-link" href="#" >
+                                    <a class="nav-link" href="{{path('app_region')}}" >
                                         Region
                                     </a>
-                                    <a class="nav-link" href="#" >
+                                    <a class="nav-link" href="{{path('app_role')}}" >
                                         Roles
                                     </a>
-                                    <a class="nav-link" href="#" >
+                                    <a class="nav-link" href="{{path('app_ville')}}" >
                                         ville
                                     </a>
                             </nav>
@@ -102,16 +104,17 @@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
+                    <div class="small">Conecté en tant que:</div>
                     {% if app.user %}
                         {{ app.user.email }}
                     {% else %}
-                        Anonymous
+                        Personne
                     {% endif %}
                 </div>
             </nav>
         </div>
 
+{#    {%endif%}#}
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
