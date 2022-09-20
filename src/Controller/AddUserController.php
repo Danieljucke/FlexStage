@@ -19,6 +19,12 @@ class AddUserController extends AbstractController
 
 
         $utilisateur = new User();
+        $repository = $manager->getRepository(User::class);
+        $checker = $repository->findOneBy([
+            'nom' => $request->get('nom'),
+            'prenom'=> $request->get('prenom'),
+            'email'=> $request ->get('email')
+        ]);
         // Création de l'objet formulaire
         $form = $this->createForm(AddUserType::class, $utilisateur);
         $form->remove('createdAt');
@@ -28,7 +34,7 @@ class AddUserController extends AbstractController
         $form->handleRequest($request);
         $utilisateur-> setCreatedAt(new \DateTimeImmutable('now'));
         $utilisateur-> setUpdatedAt(new \DateTimeImmutable('now'));
-        $utilisateur->setRole(1 );
+
 
 
         // Verifier si le formulaire est déjà soummis
