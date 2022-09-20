@@ -41,4 +41,19 @@ class RegionController extends AbstractController
             'formRegion' => $form->createView(),
         ]);
     }
+    #[Route('/supprimerRegion', name: 'supprimer.region')]
+    public function supprimerRegion(ManagerRegistry $doctrine, Region $region = null): Response
+    {
+        $entite = $doctrine->getManager();
+        if ($region) {
+            $entite->remove($region);
+            $entite->flush();
+            $this->addFlash('success', 'Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error',"cette region n'existe pas dans la base !");
+        }
+        return new Response();
+    }
 }

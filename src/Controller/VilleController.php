@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Role;
 use App\Entity\Ville;
 use App\Form\VilleType;
 use http\Env\Request;
@@ -42,5 +43,20 @@ class VilleController extends AbstractController
         return $this->render('ville/Ville.html.twig', [
             'formVille' => $form->createView(),
         ]);
+    }
+    #[Route('/supprimerVille', name: 'supprimer.ville')]
+    public function supprimerVille(ManagerRegistry $doctrine, Ville $ville = null): Response
+    {
+        $entite = $doctrine->getManager();
+        if ($ville) {
+            $entite->remove($ville);
+            $entite->flush();
+            $this->addFlash('success', 'Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error',"cette ville n'existe pas dans la base !");
+        }
+        return new Response();
     }
 }
