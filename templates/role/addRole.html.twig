@@ -7,5 +7,16 @@
 <div class="mb-3">
         {{form(formRole)}}
 </div>
-
+    {%for Role in  roles %}
+        <ul class="list-group list-group-light">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="fw-bold">{{roles.role_name}}</div>
+                    <div class="text-muted">{{roles.createdAt}}</div>
+                    <div class="text-muted">{{roles.updatedAt}}</div>
+                </div>
+                <span class="badge rounded-pill badge-success">{{roles.statut}}</span>
+            </li>
+        </ul>
+    {%endfor%}
 {% endblock %}
