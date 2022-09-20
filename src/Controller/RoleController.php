@@ -62,4 +62,14 @@ class RoleController extends AbstractController
         }
         return new Response();
     }
+    #[Route('/montrerRoles', name:'montrer.roles')]
+    public function afficherRoles(ManagerRegistry $doctrine):Response
+    {
+        $repository = $doctrine->getRepository(Role::class);
+        $role=$repository->findAll();
+        return $this->render('role/addRole.html.twig',[
+            'roles'=> $role
+        ]);
+    }
+
 }
