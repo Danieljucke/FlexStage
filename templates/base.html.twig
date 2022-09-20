@@ -11,10 +11,10 @@
             Static Navigation - SB Admin
         {% endblock %}
     </title>
-    <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet" />
-    <link href="{{ asset('node_modules/@fortawesome/fontawesome-free/css/all.css') }}" rel="stylesheet" />
-    <link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
     {% block stylesheets %}
+        <link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet" />
+        <link href="{{ asset('node_modules/@fortawesome/fontawesome-free/css/all.css') }}" rel="stylesheet" />
+        <link href="{{ asset('node_modules/select2/dist/css/select2.min.css') }}" rel="stylesheet" />
     {% endblock %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 </head>
@@ -49,7 +49,6 @@
 </nav>
 
 <div id="layoutSidenav">
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
@@ -67,44 +66,39 @@
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ path('') }}">First</a>
-                                <a class="nav-link" href="{{ path('') }}">Users</a>
+                                <a class="nav-link" href="#">Afficher les Utilisateurs</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Personnes
+                            Données
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link" href="{{ path('') }}" >
-                                    Liste des personnes
+                                <a class="nav-link" href="#" >
+                                    Communes
                                 </a>
-                                {#                            <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">#}
-                                {#                                <nav class="sb-sidenav-menu-nested nav">#}
-                                {#                                    <a class="nav-link" href="login.html">Login</a>#}
-                                {#                                    <a class="nav-link" href="register.html">Register</a>#}
-                                {#                                    <a class="nav-link" href="password.html">Forgot Password</a>#}
-                                {#                                </nav>#}
-                                {#                            </div>#}
-                                {% if is_granted('ROLE_ADMIN') %}
-                                    <a class="nav-link collapsed" href=" " >
-                                        Ajouter une personne
+                                    <a class="nav-link" href="#" >
+                                        Privillege
                                     </a>
-                                {% endif %}
-
+                                    <a class="nav-link" href="#" >
+                                        Province
+                                    </a>
+                                    <a class="nav-link" href="#" >
+                                        Quartier
+                                    </a>
+                                    <a class="nav-link" href="#" >
+                                        Region
+                                    </a>
+                                    <a class="nav-link" href="#" >
+                                        Roles
+                                    </a>
+                                    <a class="nav-link" href="#" >
+                                        ville
+                                    </a>
                             </nav>
                         </div>
-                        {#                    <div class="sb-sidenav-menu-heading">Addons</div>#}
-                        {#                    <a class="nav-link" href="charts.html">#}
-                        {#                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>#}
-                        {#                        Charts#}
-                        {#                    </a>#}
-                        {#                    <a class="nav-link" href="tables.html">#}
-                        {#                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>#}
-                        {#                        Tables#}
-                        {#                    </a>#}
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
@@ -117,7 +111,6 @@
                 </div>
             </nav>
         </div>
-    {% endif %}
 
     <div id="layoutSidenav_content">
         <main>
@@ -150,18 +143,12 @@
                     </div>
                 </div>
                 <div style="height: 100vh"></div>
-                <div class="card mb-4"><div class="card-body">When scrolling, the navigation stays at the top of the page. This is the end of the static navigation demo.</div></div>
             </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
             <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-between small">
-                    <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                    <div>
-                        <a href="#">Privacy Policy</a>
-                        &middot;
-                        <a href="#">Terms &amp; Conditions</a>
-                    </div>
+                    <div class="text-muted" >Copyright &copy; 2021- 2022</div>
                 </div>
             </div>
         </footer>
