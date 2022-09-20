@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Role;
 use App\Entity\Ville;
 use App\Form\VilleType;
+use App\Repository\VilleRepository;
 use http\Env\Request;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class VilleController extends AbstractController
 {
     #[Route('/ville', name: 'app_ville')]
-    public function index(\Symfony\Component\HttpFoundation\Request $request, ManagerRegistry $doctrine): Response
+    public function index(\Symfony\Component\HttpFoundation\Request $request, ManagerRegistry $doctrine, VilleRepository $villeRepository): Response
     {
         $villes = new Ville();
         $form=$this->createForm(VilleType::class,$villes);
@@ -42,6 +43,7 @@ class VilleController extends AbstractController
         }
         return $this->render('ville/Ville.html.twig', [
             'formVille' => $form->createView(),
+            'Villes'=>$villeRepository->findAll()
         ]);
     }
     #[Route('/supprimerVille', name: 'supprimer.ville')]

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Quartier;
 use App\Form\QuartierType;
+use App\Repository\QuartierRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuartierController extends AbstractController
 {
     #[Route('/quartier', name: 'app_quartier')]
-    public function ajouterQuartier(ManagerRegistry $doctrine, Request $request): Response
+    public function ajouterQuartier(ManagerRegistry $doctrine, Request $request, QuartierRepository $quartierRepository): Response
     {
         $quartiers = new Quartier();
         $form = $this->createForm(QuartierType::class, $quartiers);
@@ -38,6 +39,7 @@ class QuartierController extends AbstractController
         }
         return $this->render('quartier/Quartier.html.twig', [
             'formQuartier' => $form->createView(),
+            'quartiers'=>$quartierRepository->findAll()
         ]);
     }
 
