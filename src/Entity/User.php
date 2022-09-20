@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User
@@ -38,7 +39,7 @@ class User
     #[ORM\Column(length: 25)]
     private ?string $etat_civil = null;
 
-    #[ORM\Column(length: 30, unique: true)]
+    #[ORM\Column(length: 30, unique:true)]
     private ?string $username = null;
 
     #[ORM\Column(length: 30)]
