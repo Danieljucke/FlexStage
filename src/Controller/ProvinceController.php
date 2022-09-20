@@ -42,4 +42,19 @@ class ProvinceController extends AbstractController
             'formProvince' => $form->createView(),
         ]);
     }
+    #[Route('/supprimerProvince', name: 'supprimer.province')]
+    public function supprimerProvince(ManagerRegistry $doctrine, Province $province = null): Response
+    {
+        $entite = $doctrine->getManager();
+        if ($province) {
+            $entite->remove($province);
+            $entite->flush();
+            $this->addFlash('success', 'Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error',"cette province n'existe pas dans la base !");
+        }
+        return new Response();
+    }
 }

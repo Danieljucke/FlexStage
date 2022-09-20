@@ -43,4 +43,19 @@ class CommuneController extends AbstractController
             'formCommune' => $form->createView(),
         ]);
     }
+    #[Route('/supprimerCommune', name: 'supprimer.commune')]
+    public function supprimerCommune(ManagerRegistry $doctrine, Commune $commune = null): Response
+    {
+        $entite = $doctrine->getManager();
+        if ($commune) {
+            $entite->remove($commune);
+            $entite->flush();
+            $this->addFlash('success', 'Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error',"cette commune n'existe pas dans la base !");
+        }
+        return new Response();
+    }
 }

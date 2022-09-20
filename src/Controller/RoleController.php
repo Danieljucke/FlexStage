@@ -47,4 +47,19 @@ class RoleController extends AbstractController
             'formRole'=> $forms->createView()
         ]);
     }
+    #[Route('/supprimerRole', name: 'supprimer.role')]
+    public function supprimerRole(ManagerRegistry $doctrine, Role $role= null): Response
+    {
+        $entite = $doctrine->getManager();
+        if ($role) {
+            $entite->remove($role);
+            $entite->flush();
+            $this->addFlash('success', 'Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error',"ce role n'existe pas dans la base !");
+        }
+        return new Response();
+    }
 }
