@@ -36,16 +36,20 @@ class AddUserController extends AbstractController
         if ($form->isSubmitted()){
 
             // Si oui on enregistre les données de la requête dans la table
-
             $entityManager->persist($utilisateur);
             $entityManager->flush();
+
+            // Afficher la liste de tous les utilisateurs
+            ;
+
+
             // rediriger vers une page
             return $this->redirectToRoute('app_add_user');
 
         } else{
 
             return $this->render('add_user/addUser.html.twig', [
-                'form' => $form->createView()
+                'form' => $form->createView(),
 
             ]);
         }

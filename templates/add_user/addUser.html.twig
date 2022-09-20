@@ -1,5 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ form(form) }}
+    <div>
+        {{ form(form) }}
+    </div><br>
+    <div>
+        {% for notice in app.session.flashBag.get('notice') %}
+            {{ notice }}
+        {% endfor %}
+{#        <p>{{ users.nom }} || {{ users.prenom }} || {{ users.email }}</p>#}
+    </div>
+
 {% endblock %}
