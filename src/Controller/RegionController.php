@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Region;
 use App\Form\RegionType;
+use App\Repository\RegionRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegionController extends AbstractController
 {
     #[Route('/region', name: 'app_region')]
-    public function index(Request $request,ManagerRegistry $doctrine): Response
+    public function index(Request $request,ManagerRegistry $doctrine, RegionRepository $regionRepository): Response
     {
         $region = new Region();
         $form=$this->createForm(RegionType::class,$region);
@@ -39,6 +40,7 @@ class RegionController extends AbstractController
         }
         return $this->render('region/region.html.twig', [
             'formRegion' => $form->createView(),
+            'regions'=>$regionRepository->findAll()
         ]);
     }
     #[Route('/supprimerRegion', name: 'supprimer.region')]

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Province;
 use App\Form\ProvinceType;
+use App\Repository\ProvinceRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProvinceController extends AbstractController
 {
     #[Route('/province', name: 'app_province')]
-    public function AjouterProvince(Request $request, ManagerRegistry $doctrine): Response
+    public function AjouterProvince(Request $request, ManagerRegistry $doctrine, ProvinceRepository $provinceRepository): Response
     {
         $province= new Province();
         $form=$this->createForm(ProvinceType::class,$province);
@@ -40,6 +41,7 @@ class ProvinceController extends AbstractController
         }
         return $this->render('province/Province.html.twig', [
             'formProvince' => $form->createView(),
+            'provinces'=>$provinceRepository->findAll()
         ]);
     }
     #[Route('/supprimerProvince', name: 'supprimer.province')]

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Commune;
 use App\Form\CommuneType;
+use App\Repository\CommuneRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommuneController extends AbstractController
 {
     #[Route('/commune', name: 'app_commune')]
-    public function ajouterCommune(Request $request, ManagerRegistry $doctrine): Response
+    public function ajouterCommune(Request $request, ManagerRegistry $doctrine, CommuneRepository $communeRepository): Response
     {
         $communes = new Commune();
         $form=$this->createForm(CommuneType::class,$communes);
@@ -41,6 +42,7 @@ class CommuneController extends AbstractController
         }
         return $this->render('commune/index.html.twig', [
             'formCommune' => $form->createView(),
+            'communes'=>$communeRepository->findAll()
         ]);
     }
     #[Route('/supprimerCommune', name: 'supprimer.commune')]
