@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,12 +16,23 @@ class AddUserType extends AbstractType
         $builder
             ->add('nom')
             ->add('prenom')
-            ->add('sexe')
+            ->add('sexe', ChoiceType::class,[
+                'choices' => [
+                    'Homme'=>'M',
+                    'Femme'=>'F'
+                ]
+            ])
             ->add('date_naissance')
             ->add('lieu_naissance')
             ->add('telephone')
             ->add('email')
-            ->add('etat_civil')
+            ->add('etat_civil', ChoiceType::class,[
+                'choices' => [
+                    'Marié(e)' => 'marié(e)',
+                    'Célibataire'=> 'célibataire',
+                    'Veuf(ve)'=>'veuf(ve)'
+                ]
+            ])
             ->add('username')
             ->add('password')
             ->add('createdAt')
