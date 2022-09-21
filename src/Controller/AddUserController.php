@@ -35,6 +35,9 @@ class AddUserController extends AbstractController
         // Verifier si le formulaire est déjà soummis
         if ($form->isSubmitted()){
 
+            // Ajouter la fonction génératrice de nom d'utilisateur (Challenge privé)
+
+
             // Si oui on enregistre les données de la requête dans la table
             $entityManager->persist($utilisateur);
             $entityManager->flush();
