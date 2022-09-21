@@ -40,6 +40,7 @@ class User
     private ?string $etat_civil = null;
 
     #[ORM\Column(length: 30, unique:true)]
+    #[Assert\Length(min:2, max:30)]
     private ?string $username = null;
 
     #[ORM\Column(length: 30)]

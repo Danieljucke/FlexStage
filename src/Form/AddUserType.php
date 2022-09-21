@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Entity\Ville;
 use Doctrine\DBAL\Types\DateTimeType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
@@ -33,7 +35,7 @@ class AddUserType extends AbstractType
                 'months'=> range(1,12),
                 'days'=> range(1,31)
             ])
-            ->add('lieu_naissance')  // A changer en EntityType avec comme entité liée la table des villes
+            ->add('lieu_naissance')
             ->add('telephone')
             ->add('email', EmailType::class)
             ->add('etat_civil', ChoiceType::class,[
