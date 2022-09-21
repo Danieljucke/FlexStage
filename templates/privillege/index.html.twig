@@ -1,14 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Commune{% endblock %}
+{% block title %} Privillege{% endblock %}
 
 {% block body %}
-{{form(formCommune)}}
+    <div class="mb-3">
+        {% if is_granted('ROLE_ADMIN') %}
+            {{form(formPrivillege)}}
+        {%endif%}
+    </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="card  card-box">
                 <div class="card-head">
-                    <header>Commune</header>
+                    <header>Privilege</header>
                     <div class="tools">
                         <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
                         <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
@@ -22,30 +26,25 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nom De La Commune</th>
-                                    <th>Region</th>
-                                    <th>Province</th>
-                                    <th>Ville</th>
+                                    <th>Nom Du Privilege</th>
+                                    <th>Role</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {%for commune in communes %}
+                                {%for privillege in privilleges %}
                                     <tr>
-                                        <td>{{ commune.id}}</td>
-                                        <td>{{ commune.nomCommune}}</td>
-                                        <td>{{ commune.region}}</td>
-                                        <td>{{ commune.province}}</td>
-                                        <td>{{ commune.ville}}</td>
+                                        <td>{{ privillege.id }}</td>
+                                        <td>{{ privillege.privillegeName }}</td>
+                                        <td>{{ privillege.roles }}</td>
                                         <td>
-                                            <span class="label label-sm label-success">{{role.statut}}</span>
-                                        </td>
-                                        <td>
-                                            <a href="edit_booking.html" class="btn btn-tbl-edit btn-xs">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-                                            <button class="btn btn-tbl-delete btn-xs">
-                                                <i class="fa fa-trash-o "></i>
-                                            </button>
+
+                                                <a href="" class="btn btn-tbl-edit btn-xs">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <button class="btn btn-tbl-delete btn-xs">
+                                                    <i class="fa fa-trash-o "></i>
+                                                </button>
+
                                         </td>
                                     </tr>
                                 {%endfor%}
