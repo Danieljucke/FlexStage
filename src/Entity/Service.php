@@ -24,9 +24,13 @@ class Service
     #[ORM\OneToMany(mappedBy: 'service', targetEntity: Salle::class, orphanRemoval: true)]
     private Collection $salle;
 
+    #[ORM\ManyToMany(targetEntity: Reservation::class, mappedBy: 'service')]
+    private Collection $reservations;
+
     public function __construct()
     {
         $this->salle = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -83,6 +87,37 @@ class Service
             if ($salle->getService() === $this) {
                 $salle->setService(null);
             }
+        }
+
+        return $this;
+    }
+    public function __toString(): string
+    {
+        return $this->nom_service;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): self
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->addService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): self
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            $reservation->removeService($this);
         }
 
         return $this;

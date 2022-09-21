@@ -6,22 +6,21 @@ use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-#[Route("/service"),IsGranted("IS_AUTHENTICATED_FULLY")]
+
 class ServiceController extends AbstractController
 {
-    #[Route('/voirEtAjouter', name: 'app_service')]
+    #[Route('/service', name: 'app_service')]
     public function index(ServiceRepository $serviceRepository,ManagerRegistry $doctrine, Request $request): Response
     {
         $service= new Service();
         $form=$this->createForm(ServiceType::class,$service);
         $form->handleRequest($request);
-        // je check dans la BDD si le nom que je récupère dans le formulaire existe dans la base ou pas si oui alors je pose une condition
-        $checkSiNomServiceExiste=$serviceRepository->findBy(['nom_service'=>$form->get('nom_service')->getViewData()]);
+        $recupNomService=$form->get('nom_service')->getViewData();
+        $checkSiNomServiceExiste=$serviceRepository->findBy(['nom_service'=>$recupNomService]);
         if($form->isSubmitted()&& $form->isValid())
         {
             if ($checkSiNomServiceExiste!=null)
@@ -30,32 +29,14 @@ class ServiceController extends AbstractController
             }else
             {
                 $this->addFlash('error','Enregistrement Réussi !');
-                $serviceRepository->add($service,true);// la méthode add permet de persiter et de flush en même temps
+                $entite=$doctrine->getManager();
+                $entite->persist($service);
+                $entite->flush();
             }
         }
         return $this->render('service/index.html.twig', [
             'formService' => $form->createView(),
-            'services'=>$serviceRepository->findAll()
+            'service'=>$serviceRepository->findAll()
         ]);
-    }
-    #[Route('/montrerService/{id}', name: 'montrer.service')]
-    public function montrer(Service $service=null): Response
-    {
-        return $this->render('service/detailService.html.twig', [
-            'service' => $service,
-        ]);
-    }
-    #[Route('/supprimerService/{id}', name: 'supprimer.service')]
-    public function supprimer(Request $request, Service $service=null, ServiceRepository $serviceRepository): Response
-    {
-        if ($service) {
-            $serviceRepository->remove($service, true);
-            $this->addFlash('success','Suppression Réussi !');
-        }
-        else
-        {
-            $this->addFlash('error','Opération Echoué !');
-        }
-        return $this->redirectToRoute('app_service');
     }
 }
