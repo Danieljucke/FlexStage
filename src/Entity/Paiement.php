@@ -22,8 +22,8 @@ class Paiement
     #[ORM\Column(length: 10)]
     private ?string $mode_paiement = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_paiement = null;
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?\DateTimeImmutable $date_paiement = null;
 
     #[ORM\OneToMany(mappedBy: 'paiement', targetEntity: Reservation::class)]
     private Collection $reservation;
@@ -62,12 +62,12 @@ class Paiement
         return $this;
     }
 
-    public function getDatePaiement(): ?\DateTimeInterface
+    public function getDatePaiement(): ?\DateTimeImmutable
     {
         return $this->date_paiement;
     }
 
-    public function setDatePaiement(\DateTimeInterface $date_paiement): self
+    public function setDatePaiement(\DateTimeImmutable $date_paiement): self
     {
         $this->date_paiement = $date_paiement;
 
