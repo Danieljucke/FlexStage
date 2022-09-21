@@ -1,20 +1,75 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/jucke/Documents/Symfony Project/FlexStage/src/Controller/DefaultController.php'|file_link(0) }}">src/Controller/DefaultController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/jucke/Documents/Symfony Project/FlexStage/templates/default/addRole.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
-    </ul>
-</div>
+       <!-- start widget -->
+       <div class="state-overview">
+           <div class="row">
+               <div class="col-xl-3 col-md-6 col-12">
+                   <div class="info-box bg-blue">
+                       <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                       <div class="info-box-content">
+                           <span class="info-box-text">Utilisateurs</span>
+                           <span class="info-box-number">450</span>
+                           <div class="progress">
+                               <div class="progress-bar width-6"></div>
+                           </div>
+                       </div>
+                       <!-- /.info-box-content -->
+                   </div>
+                   <!-- /.info-box -->
+               </div>
+               <!-- /.col -->
+               <div class="col-xl-3 col-md-6 col-12">
+                   <div class="info-box bg-orange">
+									<span class="info-box-icon push-bottom"><i
+                                                class="material-icons">card_travel</i></span>
+                       <div class="info-box-content">
+                           <span class="info-box-text">Reservations</span>
+                           <span class="info-box-number">155</span>
+                           <div class="progress">
+                               <div class="progress-bar width-40"></div>
+                           </div>
+                       </div>
+                       <!-- /.info-box-content -->
+                   </div>
+                   <!-- /.info-box -->
+               </div>
+               <!-- /.col -->
+                           <div class="col-xl-3 col-md-6 col-12">
+                               <div class="info-box bg-purple">
+               									<span class="info-box-icon push-bottom"><i
+                                                               class="material-icons">phone_in_talk</i></span>
+                                   <div class="info-box-content">
+                                       <span class="info-box-text"> </span>
+                                       <span class="info-box-number">52</span>
+                                       <div class="progress">
+                                           <div class="progress-bar width-80"></div>
+                                       </div>
+                                   </div>
+                                   <!-- /.info-box-content -->
+                               </div>
+                               <!-- /.info-box -->
+                           </div>
+               <!-- /.col -->
+               <div class="col-xl-3 col-md-6 col-12">
+                   <div class="info-box bg-success">
+									<span class="info-box-icon push-bottom"><i
+                                                class="material-icons">monetization_on</i></span>
+                       <div class="info-box-content">
+                           <span class="info-box-text">Total Paiement</span>
+                           <span class="info-box-number">13,921</span><span>$</span>
+                           <div class="progress">
+                               <div class="progress-bar width-60"></div>
+                           </div>
+                       </div>
+                       <!-- /.info-box-content -->
+                   </div>
+                   <!-- /.info-box -->
+               </div>
+               <!-- /.col -->
+           </div>
+       </div>
+       <!-- end widget -->
 {% endblock %}

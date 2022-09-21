@@ -1,14 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RegionController!{% endblock %}
+{% block title %}Region{% endblock %}
 
 {% block body %}
-{{form(formRegion)}}
+    <div class="mb-3">
+            {{form(formRegion)}}
+
+    </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="card  card-box">
                 <div class="card-head">
-                    <header>Roles</header>
+                    <header>Region</header>
                     <div class="tools">
                         <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
                         <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
@@ -23,6 +26,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Nom De la Region</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>

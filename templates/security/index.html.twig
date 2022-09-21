@@ -1,42 +1,67 @@
-{% extends 'base.html.twig' %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    {#    <link rel="stylesheet" href="{{asset('node_modules/bootstrap/dist/css/bootstrap.css')}}">#}
+    <title>Login</title>
+</head>
+<body>
+<h2>Bienvenu sur FlexStage</h2>
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form action="{{ path('app_users_new') }}" method="post">
+            <h1>Créer Un Compte</h1>
 
-{% block title %}Log in!{% endblock %}
+            <input type="text" placeholder="Name"  name="name"required />
+            <input type="email" placeholder="Email" name="email" required/>
+            <input type="password" placeholder="Password"  name="password" required/>
+            {% for message in app.session.flashBag.get('info') %}
+                <div class="alert alert-info">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <button type="submit" value="Sign Up" name="submit">S'inscrire</button>
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
 
-{% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+        <form action="{{ path('app_login') }}" method="post">
+            <h1>Se connecter</h1>
+            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+            <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+            {% for message in app.session.flashBag.get('danger') %}
+                <div class="alert alert-danger">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <a href="#">Mot de passe Oublié?</a>
+            <button type="submit" value="Sign In" name="submit">Se Connecter</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Bienvenue !</h1>
+                <p>Pour rester en contact avec nous, veuillez vous connecter avec vos informations personnelles.</p>
+                <button class="ghost" id="signIn">Se Connecter</button>
             </div>
-        {% endif %}
+            <div class="overlay-panel overlay-right">
+                <h1>Bonjour l'ami!</h1>
+                <p>Entrez vos données personnelles et commencez votre voyage avec nous</p>
+                <button class="ghost" id="signUp">S'inscrire</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="{{ asset('js/mouve.js') }}"></script>
+</html>
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-        <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-
-        {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-        #}
-
-        {#        <div class="checkbox mb-3">#}
-        {#            <label>#}
-        {#                <input type="checkbox" name="_remember_me"> Remember me#}
-        {#            </label>#}
-        {#        </div>#}
-
-        <button class="btn btn-lg btn-primary mt-2" type="submit">
-            Sign in
-        </button>
-    </form>
-{% endblock %}

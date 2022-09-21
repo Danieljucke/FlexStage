@@ -4,13 +4,14 @@
 
 {% block body %}
     <div class="mb-3">
-        {{form(formVille)}}
+            {{form(formVille)}}
+
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="card  card-box">
                 <div class="card-head">
-                    <header>Roles</header>
+                    <header>Ville</header>
                     <div class="tools">
                         <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
                         <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
@@ -27,6 +28,7 @@
                                     <th>Nom De La Ville</th>
                                     <th>Region</th>
                                     <th>Province</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -37,12 +39,12 @@
                                         <td>{{ ville.region }}</td>
                                         <td>{{ ville.province }}</td>
                                         <td>
-                                            <a href="edit_booking.html" class="btn btn-tbl-edit btn-xs">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-                                            <button class="btn btn-tbl-delete btn-xs">
-                                                <i class="fa fa-trash-o "></i>
-                                            </button>
+                                                <a href="" class="btn btn-tbl-edit btn-xs">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                                <button class="btn btn-tbl-delete btn-xs">
+                                                    <i class="fa fa-trash-o "></i>
+                                                </button>
                                         </td>
                                     </tr>
                                 {%endfor%}
