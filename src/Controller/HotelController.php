@@ -13,10 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HotelController extends AbstractController
 {
-    #[Route('/hotel', name: 'app_hotel')]
-    public function create(HotelRepository $hotelRepository, ManagerRegistry $doctrine, Request $request): Response
+    #[Route('/hotel/add', name: 'add_hotel')]
+    #[Route('/hotel/edit/{id}', name:'edit_hotel')]
+    public function create(HotelRepository $hotelRepository, ManagerRegistry $doctrine, Request $request, Hotel $hotel=null): Response
     {
-        $hotel = new Hotel();
+        if (!$hotel){
+            $hotel = new Hotel();
+
+        }
+
         $form = $this->createForm(HotelType::class, $hotel);
         $form->handleRequest($request);
 
@@ -32,16 +37,18 @@ class HotelController extends AbstractController
                 $this->addFlash('error', 'Cet hôtel existe déjà dans la base');
             }
             else{
+
                 $this->addFlash('success', 'Enregistrement réussi');
                 $entiteHotel =  $doctrine->getManager();
                 $entiteHotel->persist($hotel);
                 $entiteHotel->flush();
+
             }
         }
 
         return $this->render('hotel/index.html.twig', [
             'formHotel' => $form-> createView(),
-            'hotel'=>$hotelRepository->findAll()
+            'editMode' => $hotel->getId() !== null
         ]);
     }
 }

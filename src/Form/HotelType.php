@@ -23,7 +23,7 @@ class HotelType extends AbstractType
             ->add('adresse', EntityType::class, [
                 'class' => Ville::class
             ])
-            ->add('Ajouter',SubmitType::class)
+            // ->add('Ajouter',SubmitType::class)
         ;
     }
 
