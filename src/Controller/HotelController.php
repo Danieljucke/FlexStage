@@ -21,7 +21,9 @@ class HotelController extends AbstractController
         $form->handleRequest($request);
 
         $nomHotel = $form->get('nom_hotel')->getViewData();
-        $checker_Hotel = $hotelRepository->findBy(['nom_hotel'=>$nomHotel]);
+        $adresseHotel = $form->get('adresse')->getViewData();
+
+        $checker_Hotel = $hotelRepository->findBy(['nom_hotel'=>$nomHotel,'adresse' =>$adresseHotel]);
         //Penser à ajouter un vérificateur d'adresse car deux hôtels peuvent avoir le même nom
 
         if ($form->isSubmitted() && $form->isValid()){

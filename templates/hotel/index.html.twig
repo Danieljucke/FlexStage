@@ -1,7 +1,14 @@
 {% extends 'base.html.twig' %}
 
+{% form_theme formHotel 'bootstrap_5_layout.html.twig' %}
+
 {% block title %}Insertion d'hotel{% endblock %}
 
 {% block body %}
-    {{ form(formHotel) }}
+    <h1>Création d'un hotel</h1>
+    {{ form_start(formHotel) }}
+
+    {{ form_widget(formHotel) }}
+
+    {{ form_end(formHotel) }}
 {% endblock %}
