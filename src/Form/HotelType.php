@@ -2,7 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\CategorieHotel;
 use App\Entity\Hotel;
+use App\Entity\Ville;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,7 +20,9 @@ class HotelType extends AbstractType
             ->add('nom_hotel')
             ->add('nombre_etoiles', NumberType::class)
             ->add('categorie')
-            ->add('adresse')
+            ->add('adresse', EntityType::class, [
+                'class' => Ville::class
+            ])
             ->add('Ajouter',SubmitType::class)
         ;
     }
