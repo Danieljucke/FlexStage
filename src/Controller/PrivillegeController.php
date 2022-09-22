@@ -8,6 +8,7 @@ use App\Repository\PrivillegeRepository;
 use App\Repository\ProvinceRepository;
 use mysql_xdevapi\Exception;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PrivillegeController extends AbstractController
 {
-    #[Route('/privillege', name: 'app_privillege')]
+    #[Route('/privillege', name: 'app_privillege'),IsGranted("ROLE_ADMIN")]
     public function ajouterPrivillege(Request $request, PrivillegeRepository $privillegeRepository, ManagerRegistry $doctrine): Response
     {
         $privilleges= new Privillege();
@@ -51,7 +52,7 @@ class PrivillegeController extends AbstractController
             'privilleges'=>$privillegeRepository->findAll()
         ]);
     }
-    #[Route('/supprimerPrivillege', name:'supprimer.privillege')]
+    #[Route('/supprimerPrivillege', name:'supprimer.privillege'),IsGranted("ROLE_ADMIN")]
     public function supprimerPrivillge(ManagerRegistry $doctrine, Privillege $privillege):Response
     {
         $entite = $doctrine->getManager();
