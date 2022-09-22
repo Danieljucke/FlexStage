@@ -30,12 +30,20 @@ class Ville
     #[ORM\ManyToOne(inversedBy: 'villes')]
     private ?Region $region = null;
 
-    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Salle::class, orphanRemoval: true)]
-    private Collection $salles;
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Commune::class)]
+    private Collection $communes;
+
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Quartier::class)]
+    private Collection $quartiers;
+
+    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Hotel::class)]
+    private Collection $hotels;
 
     public function __construct()
     {
-        $this->salles = new ArrayCollection();
+        $this->communes = new ArrayCollection();
+        $this->quartiers = new ArrayCollection();
+        $this->hotels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -102,34 +110,91 @@ class Ville
 
         return $this;
     }
-    public function __toString() {
-        return $this->nom_ville;
-    }
 
     /**
-     * @return Collection<int, Salle>
+     * @return Collection<int, Commune>
      */
-    public function getSalles(): Collection
+    public function getCommunes(): Collection
     {
-        return $this->salles;
+        return $this->communes;
     }
 
-    public function addSalle(Salle $salle): self
+    public function addCommune(Commune $commune): self
     {
-        if (!$this->salles->contains($salle)) {
-            $this->salles->add($salle);
-            $salle->setVille($this);
+        if (!$this->communes->contains($commune)) {
+            $this->communes->add($commune);
+            $commune->setVille($this);
         }
 
         return $this;
     }
 
-    public function removeSalle(Salle $salle): self
+    public function removeCommune(Commune $commune): self
     {
-        if ($this->salles->removeElement($salle)) {
+        if ($this->communes->removeElement($commune)) {
             // set the owning side to null (unless already changed)
-            if ($salle->getVille() === $this) {
-                $salle->setVille(null);
+            if ($commune->getVille() === $this) {
+                $commune->setVille(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quartier>
+     */
+    public function getQuartiers(): Collection
+    {
+        return $this->quartiers;
+    }
+
+    public function addQuartier(Quartier $quartier): self
+    {
+        if (!$this->quartiers->contains($quartier)) {
+            $this->quartiers->add($quartier);
+            $quartier->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuartier(Quartier $quartier): self
+    {
+        if ($this->quartiers->removeElement($quartier)) {
+            // set the owning side to null (unless already changed)
+            if ($quartier->getVille() === $this) {
+                $quartier->setVille(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hotel>
+     */
+    public function getHotels(): Collection
+    {
+        return $this->hotels;
+    }
+
+    public function addHotel(Hotel $hotel): self
+    {
+        if (!$this->hotels->contains($hotel)) {
+            $this->hotels->add($hotel);
+            $hotel->setAdresse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHotel(Hotel $hotel): self
+    {
+        if ($this->hotels->removeElement($hotel)) {
+            // set the owning side to null (unless already changed)
+            if ($hotel->getAdresse() === $this) {
+                $hotel->setAdresse(null);
             }
         }
 

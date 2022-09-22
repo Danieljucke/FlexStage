@@ -25,6 +25,10 @@ class Hotel
     #[ORM\ManyToMany(targetEntity: CategorieHotel::class)]
     private Collection $categorie;
 
+    #[ORM\ManyToOne(inversedBy: 'hotels')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Ville $adresse = null;
+
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
@@ -79,6 +83,18 @@ class Hotel
     public function removeCategorie(CategorieHotel $categorie): self
     {
         $this->categorie->removeElement($categorie);
+
+        return $this;
+    }
+
+    public function getAdresse(): ?Ville
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?Ville $adresse): self
+    {
+        $this->adresse = $adresse;
 
         return $this;
     }
