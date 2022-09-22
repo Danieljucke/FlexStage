@@ -52,6 +52,23 @@ class RegionController extends AbstractController
             'region' => $region,
         ]);
     }
+    #[Route('/{id}/modifier', name: 'modifier.region', methods: ['GET', 'POST'])]
+    public function modifier(Request $request, Region $region, RegionRepository $regionRepository): Response
+    {
+        $form = $this->createForm(RegionType::class, $region);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $regionRepository->add($region, true);
+
+            return $this->redirectToRoute('app_regions');
+        }
+
+        return $this->renderForm('users/edit.html.twig', [
+            'region' => $region,
+            'form' => $form,
+        ]);
+    }
     #[Route('/{id}', name: 'supprimer.region', methods: ['POST'])]
     public function supprimer(Request $request, Region $region, RegionRepository $regionRepository): Response
     {

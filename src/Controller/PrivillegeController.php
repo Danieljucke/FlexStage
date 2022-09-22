@@ -59,6 +59,23 @@ class PrivillegeController extends AbstractController
             'privillege' => $privillege,
         ]);
     }
+    #[Route('/{id}/modifier', name: 'modifier.privillege', methods: ['GET', 'POST'])]
+    public function modifier(Request $request, Privillege $privillege, PrivillegeRepository $privillegeRepository): Response
+    {
+        $form = $this->createForm(PrivillegeType::class, $privillege);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $privillegeRepository->add($privillege, true);
+
+            return $this->redirectToRoute('app_privillege');
+        }
+
+        return $this->renderForm('users/edit.html.twig', [
+            'privillege' => $privillege,
+            'form' => $form,
+        ]);
+    }
     #[Route('/{id}', name: 'supprimer.privillege', methods: ['POST'])]
     public function supprimer(Request $request, Privillege $privillege, PrivillegeRepository $privillegeRepository): Response
     {

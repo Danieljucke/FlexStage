@@ -52,6 +52,6 @@ class ServiceController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->request->get('_token'))) {
             $serviceRepository->remove($service, true);
         }
-        return $this->redirectToRoute('app_reservation');
+        return $this->redirectToRoute('app_service');
     }
 }

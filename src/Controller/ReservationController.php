@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Reservation;
+use App\Form\RegionType;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -34,6 +35,23 @@ class ReservationController extends AbstractController
     {
         return $this->render('users/show.html.twig', [
             'reservation' => $reservation,
+        ]);
+    }
+    #[Route('/{id}/modifier', name: 'modifier.reservation', methods: ['GET', 'POST'])]
+    public function modifier(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+    {
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $reservationRepository->add($reservation, true);
+
+            return $this->redirectToRoute('app_reservation');
+        }
+
+        return $this->renderForm('users/edit.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form,
         ]);
     }
     #[Route('/{id}', name: 'supprimer.Reservation', methods: ['POST'])]

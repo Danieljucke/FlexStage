@@ -49,12 +49,29 @@ class SalleController extends AbstractController
             'salle' => $salle,
         ]);
     }
+    #[Route('/{id}/modifier', name: 'modifier.salle', methods: ['GET', 'POST'])]
+    public function modifier(Request $request, Salle $salle,SalleRepository $salleRepository): Response
+    {
+        $form = $this->createForm(SalleType::class, $salle);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $salleRepository->add($salle, true);
+
+            return $this->redirectToRoute('app_salle');
+        }
+
+        return $this->renderForm('users/edit.html.twig', [
+            'salle' => $salle,
+            'form' => $form,
+        ]);
+    }
     #[Route('/{id}', name: 'supprimer.salle', methods: ['POST'])]
     public function supprimer(Request $request, Salle $salle, SalleRepository $salleRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$salle->getId(), $request->request->get('_token'))) {
             $salleRepository->remove($salle, true);
         }
-        return $this->redirectToRoute('app_reservation');
+        return $this->redirectToRoute('app_salle');
     }
 }
