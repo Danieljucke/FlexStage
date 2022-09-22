@@ -42,4 +42,19 @@ class SalleController extends AbstractController
             'salles'=>$salleRepository->findAll()
         ]);
     }
+    #[Route('/{id}', name: 'montrer.salle', methods: ['GET'])]
+    public function montrer( Salle $salle): Response
+    {
+        return $this->render('users/show.html.twig', [
+            'salle' => $salle,
+        ]);
+    }
+    #[Route('/{id}', name: 'supprimer.salle', methods: ['POST'])]
+    public function supprimer(Request $request, Salle $salle, SalleRepository $salleRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$salle->getId(), $request->request->get('_token'))) {
+            $salleRepository->remove($salle, true);
+        }
+        return $this->redirectToRoute('app_reservation');
+    }
 }

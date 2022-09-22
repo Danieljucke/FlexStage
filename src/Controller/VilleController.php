@@ -46,19 +46,19 @@ class VilleController extends AbstractController
             'Villes'=>$villeRepository->findAll()
         ]);
     }
-    #[Route('/supprimerVille', name: 'supprimer.ville')]
-    public function supprimerVille(ManagerRegistry $doctrine, Ville $ville = null): Response
+    #[Route('/{id}', name: 'montrer.ville', methods: ['GET'])]
+    public function montrer(Ville $ville): Response
     {
-        $entite = $doctrine->getManager();
-        if ($ville) {
-            $entite->remove($ville);
-            $entite->flush();
-            $this->addFlash('success', 'Suppression Réussi !');
+        return $this->render('users/show.html.twig', [
+            'ville' => $ville,
+        ]);
+    }
+    #[Route('/{id}', name: 'supprimer.ville', methods: ['POST'])]
+    public function supprimer(Request $request, Ville $ville, VilleRepository $villeRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
+            $villeRepository->remove($ville, true);
         }
-        else
-        {
-            $this->addFlash('error',"cette ville n'existe pas dans la base !");
-        }
-        return new Response();
+        return $this->redirectToRoute('app_reservation');
     }
 }

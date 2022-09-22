@@ -39,4 +39,19 @@ class ServiceController extends AbstractController
             'services'=>$serviceRepository->findAll()
         ]);
     }
+    #[Route('/{id}', name: 'montrer.service', methods: ['GET'])]
+    public function montrer(Service $service): Response
+    {
+        return $this->render('users/show.html.twig', [
+            'service' => $service,
+        ]);
+    }
+    #[Route('/{id}', name: 'supprimer.Reservation', methods: ['POST'])]
+    public function supprimer(Request $request, Service $service, ServiceRepository $serviceRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$service->getId(), $request->request->get('_token'))) {
+            $serviceRepository->remove($service, true);
+        }
+        return $this->redirectToRoute('app_reservation');
+    }
 }

@@ -44,19 +44,20 @@ class RegionController extends AbstractController
             'regions'=>$regionRepository->findAll()
         ]);
     }
-    #[Route('/supprimerRegion', name: 'supprimer.region'),IsGranted("ROLE_ADMIN")]
-    public function supprimerRegion(ManagerRegistry $doctrine, Region $region = null): Response
+
+    #[Route('/{id}', name: 'montrer.region', methods: ['GET'])]
+    public function montrer(Region $region): Response
     {
-        $entite = $doctrine->getManager();
-        if ($region) {
-            $entite->remove($region);
-            $entite->flush();
-            $this->addFlash('success', 'Suppression Réussi !');
+        return $this->render('users/show.html.twig', [
+            'region' => $region,
+        ]);
+    }
+    #[Route('/{id}', name: 'supprimer.region', methods: ['POST'])]
+    public function supprimer(Request $request, Region $region, RegionRepository $regionRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$region->getId(), $request->request->get('_token'))) {
+            $regionRepository->remove($region, true);
         }
-        else
-        {
-            $this->addFlash('error',"cette region n'existe pas dans la base !");
-        }
-        return new Response();
+        return $this->redirectToRoute('app_region');
     }
 }

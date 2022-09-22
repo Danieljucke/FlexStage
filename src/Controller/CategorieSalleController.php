@@ -44,4 +44,19 @@ class CategorieSalleController extends AbstractController
             'categories'=>$categorieSalleRepository->findAll()
         ]);
     }
+    #[Route('/{id}', name: 'montrer.category', methods: ['GET'])]
+    public function montrer(CategorieSalle $categorieSalle): Response
+    {
+        return $this->render('users/show.html.twig', [
+            'categorieSalle' => $categorieSalle,
+        ]);
+    }
+    #[Route('/{id}', name: 'supprimer.Category.salle', methods: ['POST'])]
+    public function supprimer(Request $request, CategorieSalle $categorieSalle, CategorieSalleRepository $categorieSalleRepository ): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$categorieSalle->getId(), $request->request->get('_token'))) {
+            $categorieSalleRepository->remove($categorieSalle, true);
+        }
+        return $this->redirectToRoute('app_categorie_salle');
+    }
 }
