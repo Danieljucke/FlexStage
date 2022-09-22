@@ -51,6 +51,23 @@ class CategorieSalleController extends AbstractController
             'categorieSalle' => $categorieSalle,
         ]);
     }
+    #[Route('/{id}/modifier', name: 'modifier.categorie', methods: ['GET', 'POST'])]
+    public function modifier(Request $request, CategorieSalle $categorieSalle, CategorieSalleRepository $categorieSalleRepository): Response
+    {
+        $form = $this->createForm(CategorieSalleType::class, $categorieSalle);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $categorieSalleRepository->add($categorieSalle, true);
+
+            return $this->redirectToRoute('app_categorie_salle');
+        }
+
+        return $this->renderForm('users/edit.html.twig', [
+            'categorieSalle' => $categorieSalle,
+            'form' => $form,
+        ]);
+    }
     #[Route('/{id}', name: 'supprimer.Category.salle', methods: ['POST'])]
     public function supprimer(Request $request, CategorieSalle $categorieSalle, CategorieSalleRepository $categorieSalleRepository ): Response
     {

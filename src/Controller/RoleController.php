@@ -59,6 +59,23 @@ class RoleController extends AbstractController
             'role' => $role,
         ]);
     }
+    #[Route('/{id}/modifier', name: 'modifier.role', methods: ['GET', 'POST'])]
+    public function modifier(Request $request, Role $role, RoleRepository $roleRepository): Response
+    {
+        $form = $this->createForm(RoleType::class, $role);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $roleRepository->add($role, true);
+
+            return $this->redirectToRoute('app_role');
+        }
+
+        return $this->renderForm('users/edit.html.twig', [
+            'role' => $role,
+            'form' => $form,
+        ]);
+    }
     #[Route('/{id}', name: 'supprimer.role', methods: ['POST'])]
     public function supprimer(Request $request, Role $role, RoleRepository $roleRepository): Response
     {

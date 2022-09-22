@@ -52,6 +52,23 @@ class ProvinceController extends AbstractController
             'province' => $province,
         ]);
     }
+    #[Route('/{id}/modifier', name: 'modifier.province', methods: ['GET', 'POST'])]
+    public function modifier(Request $request, Province $province, ProvinceRepository $provinceRepository): Response
+    {
+        $form = $this->createForm(  ProvinceType::class, $province);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $provinceRepository->add($province, true);
+
+            return $this->redirectToRoute('app_province');
+        }
+
+        return $this->renderForm('users/edit.html.twig', [
+            'province' => $province,
+            'form' => $form,
+        ]);
+    }
     #[Route('/{id}', name: 'supprimer.province', methods: ['POST'])]
     public function supprimer(Request $request, Province $province, ProvinceRepository $provinceRepository): Response
     {

@@ -53,12 +53,29 @@ class VilleController extends AbstractController
             'ville' => $ville,
         ]);
     }
+    #[Route('/{id}/modifier', name: 'modifier.ville', methods: ['GET', 'POST'])]
+    public function modifier(Request $request, Ville $ville, VilleRepository $villeRepository): Response
+    {
+        $form = $this->createForm(VilleType::class, $ville);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $villeRepository->add($ville, true);
+
+            return $this->redirectToRoute('app_ville');
+        }
+
+        return $this->renderForm('users/edit.html.twig', [
+            'ville' => $ville,
+            'form' => $form,
+        ]);
+    }
     #[Route('/{id}', name: 'supprimer.ville', methods: ['POST'])]
     public function supprimer(Request $request, Ville $ville, VilleRepository $villeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
             $villeRepository->remove($ville, true);
         }
-        return $this->redirectToRoute('app_reservation');
+        return $this->redirectToRoute('app_ville');
     }
 }
