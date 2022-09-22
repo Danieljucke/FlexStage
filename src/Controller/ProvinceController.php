@@ -45,19 +45,19 @@ class ProvinceController extends AbstractController
             'provinces'=>$provinceRepository->findAll()
         ]);
     }
-    #[Route('/supprimerProvince', name: 'supprimer.province'),IsGranted("ROLE_ADMIN")]
-    public function supprimerProvince(ManagerRegistry $doctrine, Province $province = null): Response
+    #[Route('/{id}', name: 'montrer.province', methods: ['GET'])]
+    public function montrer(Province $province): Response
     {
-        $entite = $doctrine->getManager();
-        if ($province) {
-            $entite->remove($province);
-            $entite->flush();
-            $this->addFlash('success', 'Suppression Réussi !');
+        return $this->render('users/show.html.twig', [
+            'province' => $province,
+        ]);
+    }
+    #[Route('/{id}', name: 'supprimer.province', methods: ['POST'])]
+    public function supprimer(Request $request, Province $province, ProvinceRepository $provinceRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$province->getId(), $request->request->get('_token'))) {
+            $provinceRepository->remove($province, true);
         }
-        else
-        {
-            $this->addFlash('error',"cette province n'existe pas dans la base !");
-        }
-        return new Response();
+        return $this->redirectToRoute('app_province');
     }
 }

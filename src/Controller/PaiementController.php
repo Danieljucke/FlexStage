@@ -33,4 +33,19 @@ class PaiementController extends AbstractController
             'paiements'=>$paiementRepository->findAll()
         ]);
     }
+    #[Route('/{id}', name: 'montrer.reservation', methods: ['GET'])]
+    public function montrer(Paiement $paiement): Response
+    {
+        return $this->render('users/show.html.twig', [
+            'paiement' => $paiement,
+        ]);
+    }
+    #[Route('/{id}', name: 'supprimer.Reservation', methods: ['POST'])]
+    public function supprimer(Request $request, Paiement $paiement,  PaiementRepository $paiementRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$paiement->getId(), $request->request->get('_token'))) {
+            $paiementRepository->remove($paiement, true);
+        }
+        return $this->redirectToRoute('app_paiement');
+    }
 }

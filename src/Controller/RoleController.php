@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Role;
 use App\Form\RoleType;
+use App\Repository\RoleRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -50,48 +51,41 @@ class RoleController extends AbstractController
             'roles'=>$role
         ]);
     }
-    #[Route('/supprimerRole', name: 'supprimer.role')]
-    public function supprimerRole(ManagerRegistry $doctrine, Role $role= null): Response
-    {
-        $entite = $doctrine->getManager();
-        if ($role) {
-            $entite->remove($role);
-            $entite->flush();
-            $this->addFlash('success', 'Suppression Réussi !');
-        }
-        else
-        {
-            $this->addFlash('error',"ce role n'existe pas dans la base !");
-        }
-        return new Response();
-    }
-    #[Route('/montrerRoles', name:'montrer.roles')]
-    public function afficherRoles(ManagerRegistry $doctrine):Response
-    {
 
-        return $this->render('role/addRole.html.twig',[
-            'roles'=> $role
+    #[Route('/{id}', name: 'montrer.role', methods: ['GET'])]
+    public function montrer(Role $role): Response
+    {
+        return $this->render('users/show.html.twig', [
+            'role' => $role,
         ]);
     }
-
-    #[
-        Route('/alls', name: 'list.alls')
-    ]
-    public function indexAlls(ManagerRegistry $doctrine, $page, $nbre): Response {
-        $repository = $doctrine->getRepository(Role::class);
-        $nbRole = $repository->count([]);
-        $nbrePage = ceil($nbRole / $nbre) ;
-
-        $role = $repository->findBy([], [],$nbre, ($page - 1 ) * $nbre);
-        $listAllPersonneEvent = new ListAllPersonnesEvent(count($role));
-        $this->dispatcher->dispatch($listAllPersonneEvent, ListAllPersonnesEvent::LIST_ALL_PERSONNE_EVENT);
-
-        return $this->render('personne/index.html.twig', [
-            'personnes' => $personnes,
-            'isPaginated' => true,
-            'nbrePage' => $nbrePage,
-            'page' => $page,
-            'nbre' => $nbre
-        ]);
+    #[Route('/{id}', name: 'supprimer.role', methods: ['POST'])]
+    public function supprimer(Request $request, Role $role, RoleRepository $roleRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$role->getId(), $request->request->get('_token'))) {
+            $roleRepository->remove($role, true);
+        }
+        return $this->redirectToRoute('app_role');
     }
+
+//    #[
+//        Route('/alls', name: 'list.alls')
+//    ]
+//    public function indexAlls(ManagerRegistry $doctrine, $page, $nbre): Response {
+//        $repository = $doctrine->getRepository(Role::class);
+//        $nbRole = $repository->count([]);
+//        $nbrePage = ceil($nbRole / $nbre) ;
+//
+//        $role = $repository->findBy([], [],$nbre, ($page - 1 ) * $nbre);
+//        $listAllPersonneEvent = new ListAllPersonnesEvent(count($role));
+//        $this->dispatcher->dispatch($listAllPersonneEvent, ListAllPersonnesEvent::LIST_ALL_PERSONNE_EVENT);
+//
+//        return $this->render('personne/index.html.twig', [
+//            'personnes' => $personnes,
+//            'isPaginated' => true,
+//            'nbrePage' => $nbrePage,
+//            'page' => $page,
+//            'nbre' => $nbre
+//        ]);
+//    }
 }

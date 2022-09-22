@@ -21,9 +21,9 @@ class PrivillegeController extends AbstractController
     {
         $privilleges= new Privillege();
         $form=$this->createForm(PrivillegeType::class,$privilleges);
-//        $form->remove('statut');
-//        $form->remove('createdAt');
-//        $form->remove('updatedAt');
+        $form->remove('statut');
+        $form->remove('createdAt');
+        $form->remove('updatedAt');
         $form->handleRequest($request);
         $recuperPrivillege=$form->get('privillegeName')->getViewData();
         $checkSiPrivillegeExiste=$privillegeRepository->findBy(['privillegeName'=>$recuperPrivillege]);
@@ -52,19 +52,19 @@ class PrivillegeController extends AbstractController
             'privilleges'=>$privillegeRepository->findAll()
         ]);
     }
-    #[Route('/supprimerPrivillege', name:'supprimer.privillege'),IsGranted("ROLE_ADMIN")]
-    public function supprimerPrivillge(ManagerRegistry $doctrine, Privillege $privillege):Response
+    #[Route('/{id}', name: 'montrer.privillege', methods: ['GET'])]
+    public function montrer(Privillege $privillege): Response
     {
-        $entite = $doctrine->getManager();
-        if ($privillege) {
-            $entite->remove($privillege);
-            $entite->flush();
-            $this->addFlash('success', 'Suppression Réussi !');
+        return $this->render('users/show.html.twig', [
+            'privillege' => $privillege,
+        ]);
+    }
+    #[Route('/{id}', name: 'supprimer.privillege', methods: ['POST'])]
+    public function supprimer(Request $request, Privillege $privillege, PrivillegeRepository $privillegeRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$privillege->getId(), $request->request->get('_token'))) {
+            $privillegeRepository->remove($privillege, true);
         }
-        else
-        {
-            $this->addFlash('error',"cette province n'existe pas dans la base !");
-        }
-        return $this->render('privillege/index.html.twig');
+        return $this->redirectToRoute('app_privillege');
     }
 }
