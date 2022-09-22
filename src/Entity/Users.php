@@ -23,9 +23,6 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column]
-    private array $roles = [];
-
     /**
      * @var string The hashed password
      */
@@ -96,11 +93,16 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $rs = [];
+        $rs[] = 'ROLE_ADMIN';
+        if ($this->role != null) {
+            foreach ($this->role->getPrivillege() as $role)
+            {
+                $rs[] =$role->getPrivillegeName();
+            }
+        }
 
-        return array_unique($roles);
+        return $rs;
     }
 
     public function setRoles(array $roles): self
@@ -258,5 +260,9 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         $this->etat_civil = $etat_civil;
 
         return $this;
+    }
+    public function __toString(): string
+    {
+        return $this->email;
     }
 }

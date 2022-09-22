@@ -1,20 +1,65 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ReservationController!{% endblock %}
+{% block title %}Reservation{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/jucke/Documents/Symfony Project/FlexStage/src/Controller/ReservationController.php'|file_link(0) }}">src/Controller/ReservationController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/jucke/Documents/Symfony Project/FlexStage/templates/reservation/index.html.twig'|file_link(0) }}">templates/reservation/index.html.twig</a></code></li>
-    </ul>
+<div class="mb-3">
+    {{form(formReservation)}}
 </div>
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card  card-box">
+                <div class="card-head">
+                    <header>Reservation</header>
+                    <div class="tools">
+                        <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                        <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                        <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                    </div>
+                </div>
+                <div class="card-body ">
+                    <div class="table-wrap">
+                        <div class="table-responsive">
+                            <table class="table display product-overview mb-30" id="support_table5">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date Début Reservation</th>
+                                    <th>Date Fin Reservation</th>
+                                    <th>Motif</th>
+                                    <th>Client</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%for reservation in reservations %}
+                                    <tr>
+                                        <td>{{ reservation.id}}</td>
+                                        <td>{{ reservation.dateArriver|date("Y-M-D")}}</td>
+                                        <td>{{ reservation.dateFin|date("Y-M-D")}}</td>
+                                        <td>{{ reservation.motif }}</td>
+                                        <td>{{ reservation.user }}</td>
+                                        <td>
+                                            <a href="{{path('montrer.reservation',{'id':reservation.id})}}" class="btn btn-tbl-info btn-xs">
+                                                <i class="fa fa-info"></i>
+                                            </a>
+                                            <a href="" class="btn btn-tbl-edit btn-xs">
+                                                <i class="fa fa-pencil"></i>
+                                            </a>
+                                            <a href="{{path('supprimer.Reservation')}}">
+                                                <button class="btn btn-tbl-delete btn-xs">
+                                                    <i class="fa fa-trash-o "></i>
+                                                </button>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

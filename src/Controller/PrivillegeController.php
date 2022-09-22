@@ -21,9 +21,9 @@ class PrivillegeController extends AbstractController
     {
         $privilleges= new Privillege();
         $form=$this->createForm(PrivillegeType::class,$privilleges);
-        $form->remove('statut');
-        $form->remove('createdAt');
-        $form->remove('updatedAt');
+//        $form->remove('statut');
+//        $form->remove('createdAt');
+//        $form->remove('updatedAt');
         $form->handleRequest($request);
         $recuperPrivillege=$form->get('privillegeName')->getViewData();
         $checkSiPrivillegeExiste=$privillegeRepository->findBy(['privillegeName'=>$recuperPrivillege]);

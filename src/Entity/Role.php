@@ -22,8 +22,8 @@ class Role
     private ?string $statut = null;
 
 
-    #[ORM\ManyToMany(targetEntity: Privillege::class, inversedBy: 'roles')]
-    private Collection $privillege;
+//    #[ORM\ManyToMany(targetEntity: Privillege::class, inversedBy: 'roles')]
+//    private Collection $privillege;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -33,6 +33,9 @@ class Role
 
     #[ORM\OneToMany(mappedBy: 'role', targetEntity: Users::class)]
     private Collection $users;
+
+    #[ORM\ManyToMany(targetEntity: Privillege::class, inversedBy: 'roles')]
+    private Collection $privillege;
 
     public function __construct()
     {
@@ -70,29 +73,29 @@ class Role
     }
 
 
-    /**
-     * @return Collection<int, Privillege>
-     */
-    public function getPrivillege(): Collection
-    {
-        return $this->privillege;
-    }
+//    /**
+//     * @return Collection<int, Privillege>
+//     */
+//    public function getPrivillege(): Collection
+//    {
+//        return $this->privillege;
+//    }
+//
+//    public function addPrivillege(Privillege $privillege): self
+//    {
+//        if (!$this->privillege->contains($privillege)) {
+//            $this->privillege->add($privillege);
+//        }
+//
+//        return $this;
+//    }
 
-    public function addPrivillege(Privillege $privillege): self
-    {
-        if (!$this->privillege->contains($privillege)) {
-            $this->privillege->add($privillege);
-        }
-
-        return $this;
-    }
-
-    public function removePrivillege(Privillege $privillege): self
-    {
-        $this->privillege->removeElement($privillege);
-
-        return $this;
-    }
+//    public function removePrivillege(Privillege $privillege): self
+//    {
+//        $this->privillege->removeElement($privillege);
+//
+//        return $this;
+//    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -117,10 +120,7 @@ class Role
 
         return $this;
     }
-    public function __toString(): string
-    {
-        return $this->roleName;
-    }
+
 
     /**
      * @return Collection<int, Users>
@@ -148,6 +148,34 @@ class Role
                 $user->setRole(null);
             }
         }
+
+        return $this;
+    }
+    public function __toString(): string
+    {
+        return $this->roleName;
+    }
+
+    /**
+     * @return Collection<int, Privillege>
+     */
+    public function getPrivillege(): Collection
+    {
+        return $this->privillege;
+    }
+
+    public function addPrivillege(Privillege $privillege): self
+    {
+        if (!$this->privillege->contains($privillege)) {
+            $this->privillege->add($privillege);
+        }
+
+        return $this;
+    }
+
+    public function removePrivillege(Privillege $privillege): self
+    {
+        $this->privillege->removeElement($privillege);
 
         return $this;
     }

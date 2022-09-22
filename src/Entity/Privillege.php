@@ -21,14 +21,17 @@ class Privillege
     #[ORM\Column]
     private ?bool $statut = null;
 
-    #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'privillege')]
-    private Collection $roles;
+//    #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'privillege')]
+//    private Collection $roles;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'privillege')]
+    private Collection $roles;
 
     public function __construct()
     {
@@ -64,32 +67,32 @@ class Privillege
         return $this;
     }
 
-    /**
-     * @return Collection<int, Role>
-     */
-    public function getRoles(): Collection
-    {
-        return $this->roles;
-    }
-
-    public function addRole(Role $role): self
-    {
-        if (!$this->roles->contains($role)) {
-            $this->roles->add($role);
-            $role->addPrivillege($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRole(Role $role): self
-    {
-        if ($this->roles->removeElement($role)) {
-            $role->removePrivillege($this);
-        }
-
-        return $this;
-    }
+//    /**
+//     * @return Collection<int, Role>
+//     */
+//    public function getRoles(): Collection
+//    {
+//        return $this->roles;
+//    }
+//
+//    public function addRole(Role $role): self
+//    {
+//        if (!$this->roles->contains($role)) {
+//            $this->roles->add($role);
+//            $role->addPrivillege($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeRole(Role $role): self
+//    {
+//        if ($this->roles->removeElement($role)) {
+//            $role->removePrivillege($this);
+//        }
+//
+//        return $this;
+//    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -117,5 +120,32 @@ class Privillege
     public function __toString(): string
     {
         return $this->privillegeName;
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getRoles(): Collection
+    {
+        return $this->roles;
+    }
+
+    public function addRole(Role $role): self
+    {
+        if (!$this->roles->contains($role)) {
+            $this->roles->add($role);
+            $role->addPrivillege($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): self
+    {
+        if ($this->roles->removeElement($role)) {
+            $role->removePrivillege($this);
+        }
+
+        return $this;
     }
 }

@@ -39,6 +39,9 @@
                                         <td>{{ ville.region }}</td>
                                         <td>{{ ville.province }}</td>
                                         <td>
+                                            <a href="{{path('app_ville',{'id':ville.id})}}" class="btn btn-tbl-info btn-xs">
+                                                <i class="fa fa-info"></i>
+                                            </a>
                                                 <a href="" class="btn btn-tbl-edit btn-xs">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>

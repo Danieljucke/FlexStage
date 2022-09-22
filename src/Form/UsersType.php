@@ -7,6 +7,7 @@ use App\Entity\Users;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,13 +20,14 @@ class UsersType extends AbstractType
             ->add('role',EntityType::class,[
                 'required'=>false,
                 'class'=>Role::class])
-            ->add('password', PasswordType::class
-            ,['required'=>true])
+//            ->add('password', PasswordType::class
+//            ,['required'=>true])
 //            ->add('roles', EntityType::class,[
 //                'required'=>false,
 //                'multiple'=> true,
 //                'class'=>Role::class]
 //            )
+        ->add('submit',SubmitType::class)
         ;
     }
 
