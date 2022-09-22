@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- BEGIN HEAD -->
-
+{#{%if is_granted('ROLE_ADMIN')%}#}
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +13,6 @@
             Dashboard
         {%endblock%}
     </title>
-
         <!-- icons -->
         <link href=" {{asset('assets/plugins/simple-line-icons/simple-line-icons.min.css')}}" rel="stylesheet" type="text/css" />
         <link href=" {{asset('assets/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
@@ -40,6 +39,7 @@
     {%endblock%}
 </head>
 <!-- END HEAD -->
+{#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
 
 <body
         class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark">
@@ -51,12 +51,15 @@
             <!-- logo start -->
             <div class="page-logo">
                 <a href="{{ path('app_default') }}">
-                    <img alt="" src="{{asset('assets/img/Infoset (3).png')}}">
                     <span class="logo-default">FlexStage</span> </a>
             </div>
             <!-- logo end -->
+
             <ul class="nav navbar-nav navbar-left in">
                 <li><a href="#" class="menu-toggler sidebar-toggler"><i class="icon-menu"></i></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-left in">
+                <img src="{{asset('assets/img/Infoset (4).png')}}" alt="" style="padding-left: 35px">
             </ul>
             <!-- start mobile menu -->
             <a href="javascript:;" class="menu-toggler responsive-toggler" data-bs-toggle="collapse"
@@ -114,7 +117,7 @@
         </div>
     </div>
     <!-- end header -->
-{#    {% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
+
     <!-- start page container -->
     <div class="page-container">
         <!-- start sidebar menu -->
@@ -384,7 +387,7 @@
             </div>
         </div>
         <!-- end footer -->
-{#        {%endif%}#}
+
     </div>
     <!-- start js include path -->
     <script src="assets/plugins/jquery/jquery.min.js"></script>
@@ -410,5 +413,7 @@
     <!-- end js include path -->
     {% block javascripts %}
     {% endblock %}
+
 </body>
+{#{%endif%}#}
 </html>

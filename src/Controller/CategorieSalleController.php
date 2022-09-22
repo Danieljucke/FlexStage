@@ -6,6 +6,7 @@ use App\Entity\CategorieSalle;
 use App\Form\CategorieSalleType;
 use App\Repository\CategorieSalleRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CategorieSalleController extends AbstractController
 {
-    #[Route('/categorie/salle', name: 'app_categorie_salle')]
+    #[Route('/categorie/salle', name: 'app_categorie_salle'), IsGranted("ROLE_ADMIN")]
     public function index(Request $request, CategorieSalleRepository $categorieSalleRepository,ManagerRegistry $doctrine): Response
     {
         $categorieSalles= new CategorieSalle();

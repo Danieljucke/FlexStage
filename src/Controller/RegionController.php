@@ -6,6 +6,7 @@ use App\Entity\Region;
 use App\Form\RegionType;
 use App\Repository\RegionRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegionController extends AbstractController
 {
-    #[Route('/region', name: 'app_region')]
+    #[Route('/region', name: 'app_region'),IsGranted("ROLE_ADMIN")]
     public function index(Request $request,ManagerRegistry $doctrine, RegionRepository $regionRepository): Response
     {
         $region = new Region();
@@ -43,7 +44,7 @@ class RegionController extends AbstractController
             'regions'=>$regionRepository->findAll()
         ]);
     }
-    #[Route('/supprimerRegion', name: 'supprimer.region')]
+    #[Route('/supprimerRegion', name: 'supprimer.region'),IsGranted("ROLE_ADMIN")]
     public function supprimerRegion(ManagerRegistry $doctrine, Region $region = null): Response
     {
         $entite = $doctrine->getManager();

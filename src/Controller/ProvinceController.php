@@ -6,6 +6,7 @@ use App\Entity\Province;
 use App\Form\ProvinceType;
 use App\Repository\ProvinceRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProvinceController extends AbstractController
 {
-    #[Route('/province', name: 'app_province')]
+    #[Route('/province', name: 'app_province'),IsGranted("ROLE_ADMIN")]
     public function AjouterProvince(Request $request, ManagerRegistry $doctrine, ProvinceRepository $provinceRepository): Response
     {
         $province= new Province();
@@ -44,7 +45,7 @@ class ProvinceController extends AbstractController
             'provinces'=>$provinceRepository->findAll()
         ]);
     }
-    #[Route('/supprimerProvince', name: 'supprimer.province')]
+    #[Route('/supprimerProvince', name: 'supprimer.province'),IsGranted("ROLE_ADMIN")]
     public function supprimerProvince(ManagerRegistry $doctrine, Province $province = null): Response
     {
         $entite = $doctrine->getManager();
