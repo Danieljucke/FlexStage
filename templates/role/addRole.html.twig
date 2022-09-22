@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Role{% endblock %}
+
+{% block body %}
+
+<div class="mb-3">
+        {{form(formRole)}}
+</div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <div class="card  card-box">
+                    <div class="card-head">
+                        <header>Roles</header>
+                        <div class="tools">
+                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                            <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                        <div class="table-wrap">
+                            <div class="table-responsive">
+                                <table class="table display product-overview mb-30" id="support_table5">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Nom Du Role</th>
+                                            <th>Statut</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {%for role in roles %}
+                                    <tr>
+                                        <td>{{role.id}}</td>
+                                        <td>{{ role.roleName }}</td>
+                                        <td>
+                                            <span class="label label-sm label-success">{{role.statut}}</span>
+                                        </td>
+                                        <td>
+                                            <a href="{#{{path('montrer.roles',{'id':role.id})}}#}" class="btn btn-tbl-info btn-xs">
+                                                <i class="fa fa-info"></i>
+                                            </a>
+                                                <a href="{#{{path('modifier.role',{'id':role.id})}}#}" class="btn btn-tbl-edit btn-xs">
+                                                    <i class="fa fa-pencil"></i>
+                                                </a>
+                                            <a href="{#{{path('supprimer.role',{'id':role.id})}}#}">
+                                            <button class="btn btn-tbl-delete btn-xs">
+                                                    <i class="fa fa-trash-o "></i>
+                                                </button></a>
+                                        </td>
+                                    </tr>
+                                    {%endfor%}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

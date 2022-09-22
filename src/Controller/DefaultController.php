@@ -2,21 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+//#[Route('/dashboard')]
 class DefaultController extends AbstractController
 {
-    #[Route('/default', name: 'app_default')]
-    public function index(Request $request, ManagerRegistry $doctrine): Response
+    #[Route('/', name: 'app_default'),IsGranted("IS_AUTHENTICATED_FULLY")]
+    public function index(): Response
     {
-
         return $this->render('default/index.html.twig', [
-            'form' => $form->createView(),
+            'controller_name' => 'DefaultController',
         ]);
     }
 }

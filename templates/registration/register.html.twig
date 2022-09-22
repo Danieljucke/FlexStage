@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    <title>S'Inscrire</title>
+</head>
+<body>
+<h2>Bienvenu sur FlexStage</h2>
+<div class="container" id="container">
+    <div class="form-container sign-in-container">
+        {{ form_start(registrationForm) }}
+        <h1>S'Inscrire</h1>
+        <br>
+        Email
+        {{ form_row(registrationForm.email) }}
+        Mot De Passe
+        {{ form_row(registrationForm.plainPassword)}}
+        {{ form_row(registrationForm.agreeTerms) }}
+        <br>
+        <button type="submit" value="Sign Up" name="submit">S'inscrire</button>
+        {{ form_end(registrationForm)}}
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-right">
+                <h1>Bienvenue !</h1>
+                <p>Vous avez déjà un compte chez nous?</p>
+                <a href="{{path('app_login')}}"><button class="ghost" id="signIn">Se Connecter</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+

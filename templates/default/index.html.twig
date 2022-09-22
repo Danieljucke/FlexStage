@@ -1,7 +1,75 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-
+       <!-- start widget -->
+       <div class="state-overview">
+           <div class="row">
+               <div class="col-xl-3 col-md-6 col-12">
+                   <div class="info-box bg-blue">
+                       <span class="info-box-icon push-bottom"><i class="material-icons">group</i></span>
+                       <div class="info-box-content">
+                           <span class="info-box-text">Utilisateurs</span>
+                           <span class="info-box-number">450</span>
+                           <div class="progress">
+                               <div class="progress-bar width-6"></div>
+                           </div>
+                       </div>
+                       <!-- /.info-box-content -->
+                   </div>
+                   <!-- /.info-box -->
+               </div>
+               <!-- /.col -->
+               <div class="col-xl-3 col-md-6 col-12">
+                   <div class="info-box bg-orange">
+									<span class="info-box-icon push-bottom"><i
+                                                class="material-icons">card_travel</i></span>
+                       <div class="info-box-content">
+                           <span class="info-box-text">Reservations</span>
+                           <span class="info-box-number">155</span>
+                           <div class="progress">
+                               <div class="progress-bar width-40"></div>
+                           </div>
+                       </div>
+                       <!-- /.info-box-content -->
+                   </div>
+                   <!-- /.info-box -->
+               </div>
+               <!-- /.col -->
+                           <div class="col-xl-3 col-md-6 col-12">
+                               <div class="info-box bg-purple">
+               									<span class="info-box-icon push-bottom"><i
+                                                               class="material-icons">visibility</i></span>
+                                   <div class="info-box-content">
+                                       <span class="info-box-text">Nombre de visite  </span>
+                                       <span class="info-box-number">52</span>
+                                       <div class="progress">
+                                           <div class="progress-bar width-80"></div>
+                                       </div>
+                                   </div>
+                                   <!-- /.info-box-content -->
+                               </div>
+                               <!-- /.info-box -->
+                           </div>
+               <!-- /.col -->
+               <div class="col-xl-3 col-md-6 col-12">
+                   <div class="info-box bg-success">
+									<span class="info-box-icon push-bottom"><i
+                                                class="material-icons">monetization_on</i></span>
+                       <div class="info-box-content">
+                           <span class="info-box-text">Total Paiement</span>
+                           <span class="info-box-number">13,921</span><span>$</span>
+                           <div class="progress">
+                               <div class="progress-bar width-60"></div>
+                           </div>
+                       </div>
+                       <!-- /.info-box-content -->
+                   </div>
+                   <!-- /.info-box -->
+               </div>
+               <!-- /.col -->
+           </div>
+       </div>
+       <!-- end widget -->
 {% endblock %}

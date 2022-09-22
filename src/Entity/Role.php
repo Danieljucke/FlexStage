@@ -15,17 +15,15 @@ class Role
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25)]
+    #[ORM\Column(length: 25,unique: true)]
     private ?string $roleName = null;
 
     #[ORM\Column(length: 255)]
     private ?string $statut = null;
 
-    #[ORM\OneToMany(mappedBy: 'role', targetEntity: User::class, orphanRemoval: true)]
-    private Collection $users;
 
-    #[ORM\ManyToMany(targetEntity: Privillege::class, inversedBy: 'roles')]
-    private Collection $privillege;
+//    #[ORM\ManyToMany(targetEntity: Privillege::class, inversedBy: 'roles')]
+//    private Collection $privillege;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -33,10 +31,16 @@ class Role
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'role', targetEntity: Users::class)]
+    private Collection $users;
+
+    #[ORM\ManyToMany(targetEntity: Privillege::class, inversedBy: 'roles')]
+    private Collection $privillege;
+
     public function __construct()
     {
-        $this->users = new ArrayCollection();
         $this->privillege = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -68,59 +72,30 @@ class Role
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
 
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setRole($this);
-        }
+//    /**
+//     * @return Collection<int, Privillege>
+//     */
+//    public function getPrivillege(): Collection
+//    {
+//        return $this->privillege;
+//    }
+//
+//    public function addPrivillege(Privillege $privillege): self
+//    {
+//        if (!$this->privillege->contains($privillege)) {
+//            $this->privillege->add($privillege);
+//        }
+//
+//        return $this;
+//    }
 
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getRole() === $this) {
-                $user->setRole(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Privillege>
-     */
-    public function getPrivillege(): Collection
-    {
-        return $this->privillege;
-    }
-
-    public function addPrivillege(Privillege $privillege): self
-    {
-        if (!$this->privillege->contains($privillege)) {
-            $this->privillege->add($privillege);
-        }
-
-        return $this;
-    }
-
-    public function removePrivillege(Privillege $privillege): self
-    {
-        $this->privillege->removeElement($privillege);
-
-        return $this;
-    }
+//    public function removePrivillege(Privillege $privillege): self
+//    {
+//        $this->privillege->removeElement($privillege);
+//
+//        return $this;
+//    }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -145,8 +120,63 @@ class Role
 
         return $this;
     }
-    public function __toString()
+
+
+    /**
+     * @return Collection<int, Users>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(Users $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->setRole($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(Users $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getRole() === $this) {
+                $user->setRole(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString(): string
     {
         return $this->roleName;
+    }
+
+    /**
+     * @return Collection<int, Privillege>
+     */
+    public function getPrivillege(): Collection
+    {
+        return $this->privillege;
+    }
+
+    public function addPrivillege(Privillege $privillege): self
+    {
+        if (!$this->privillege->contains($privillege)) {
+            $this->privillege->add($privillege);
+        }
+
+        return $this;
+    }
+
+    public function removePrivillege(Privillege $privillege): self
+    {
+        $this->privillege->removeElement($privillege);
+
+        return $this;
     }
 }

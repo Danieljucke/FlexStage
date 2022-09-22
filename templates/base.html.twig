@@ -1,19 +1,415 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<html lang="en">
+<!-- BEGIN HEAD -->
+{#{%if is_granted('ROLE_ADMIN')%}#}
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta name="description" content="Responsive Admin Template" />
+    <meta name="author" content="SmartUniversity" />
+    <title>
+        {%block tittle%}
+            Dashboard
+        {%endblock%}
+    </title>
+        <!-- icons -->
+        <link href=" {{asset('assets/plugins/simple-line-icons/simple-line-icons.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href=" {{asset('assets/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
+{#        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"#}
+{#              integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">#}
+        <!--bootstrap -->
+        <link href="{{asset('assets/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('assets/plugins/summernote/summernote.css')}}" rel="stylesheet">
+        <!-- morris chart -->
+        <link href="{{asset('assets/plugins/morris/morris.css')}}" rel="stylesheet" type="text/css" />
+        <!-- Material Design Lite CSS -->
+        <link rel="stylesheet" href="{{asset('assets/plugins/material/material.min.css')}}">
+        <link rel="stylesheet" href=" {{asset('assets/css/material_style.css')}}">
+        <!-- animation -->
+        <link href="{{asset('assets/css/pages/animate_page.css')}}" rel="stylesheet">
+        <!-- Template Styles -->
+        <link href="{{asset('assets/css/plugins.min.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('assets/css/style.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('assets/css/responsive.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('assets/css/theme-color.css')}}" rel="stylesheet" type="text/css" />
+        <!-- favicon -->
+        <link rel="shortcut icon" href="{{asset('assets/img/Infoset.ico')}}" />
+    {%block stylesheets%}
+    {%endblock%}
+</head>
+<!-- END HEAD -->
+{#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+<body
+        class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark">
+
+<div class="page-wrapper">
+    <!-- start header -->
+    <div class="page-header navbar navbar-fixed-top">
+        <div class="page-header-inner ">
+            <!-- logo start -->
+            <div class="page-logo">
+                <a href="{{ path('app_default') }}">
+                    <span class="logo-default">FlexStage</span> </a>
+            </div>
+            <!-- logo end -->
+
+            <ul class="nav navbar-nav navbar-left in">
+                <li><a href="#" class="menu-toggler sidebar-toggler"><i class="icon-menu"></i></a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-left in">
+                <img src="{{asset('assets/img/Infoset (4).png')}}" alt="" style="padding-left: 35px">
+            </ul>
+            <!-- start mobile menu -->
+            <a href="javascript:;" class="menu-toggler responsive-toggler" data-bs-toggle="collapse"
+               data-bs-target=".navbar-collapse">
+                <span></span>
+            </a>
+            <!-- end mobile menu -->
+            <!-- start header menu -->
+            <div class="top-menu">
+                <ul class="nav navbar-nav pull-right">
+                    <!-- start manage user dropdown -->
+                    <li class="dropdown dropdown-user">
+                        <a href="javascript:" class="dropdown-toggle" data-bs-toggle="dropdown" data-hover="dropdown"
+                           data-close-others="true">
+                            <img alt="" class="img-circle " src="assets/img/dp.jpg" />
+                            <span class="username username-hide-on-mobile">
+                                {% if app.user %}
+                                    {{ app.user.email }}
+                                {% else %}
+                                    Anonymous
+                                {% endif %}
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-default animated jello">
+                            <li>
+                                <a href="">
+                                    <i class="icon-user"></i> Profile </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="icon-settings"></i> Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="icon-directions"></i> Help
+                                </a>
+                            </li>
+                            <li class="divider"> </li>
+                            <li>
+                                <a href="">
+                                    <i class="icon-lock"></i> Lock
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{path('app_logout')}}">
+                                    <i class="icon-logout"></i> Log Out </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- end manage user dropdown -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- end header -->
+
+    <!-- start page container -->
+    <div class="page-container">
+        <!-- start sidebar menu -->
+        <div class="sidebar-container">
+            <div class="sidemenu-container navbar-collapse collapse fixed-menu">
+                <div id="remove-scroll">
+                    <ul class="sidemenu page-header-fixed p-t-20" data-keep-expanded="false" data-auto-scroll="true"
+                        data-slide-speed="200">
+                        <li class="sidebar-toggler-wrapper hide">
+                            <div class="sidebar-toggler">
+                                <span></span>
+                            </div>
+                        </li>
+                        <li class="sidebar-user-panel">
+                            <div class="user-panel">
+                                <div class="row">
+                                    <div class="sidebar-userpic">
+                                        <img src="{{asset('assets/img/dp.jpg')}}" class="img-responsive" alt=""> </div>
+                                </div>
+                                <div class="profile-usertitle">
+                                    <div class="sidebar-userpic-name">
+                                        {% if app.user %}
+                                            {{ app.user.email }}
+                                        {% else %}
+                                            Anonymous
+                                        {% endif %}
+                                    </div>
+                                    <div class="profile-usertitle-job">
+                                       Admin
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="menu-heading">
+                            <span>Menu</span>
+                        </li>
+                        <li class="nav-item start active">
+                            <a href="{{path('app_default')}}" class="nav-link nav-toggle">
+                                <i class="fa fa-dashboard"></i>
+                                <span class="title">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link nav-toggle">
+                                <i class="fa fa-user-o"></i>
+                                <span class="title">Utilisateurs</span>
+                                <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item">
+
+                                        <a href="{{ path('app_users_new') }}" class="nav-link ">
+                                            <i class="fa fa-user-plus"></i>
+                                            <span class="title">Ajouter Un Utilisateur</span>
+                                        </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{path('app_users_index')}}" class="nav-link ">
+                                        <i class="fa fa-book"></i>
+                                        <span class="title">Tous Les Utilisateurs</span>
+                                    </a>
+                                </li>
+{#                                <li class="nav-item">#}
+
+{#                                        <a href="{{path('app_users_edit')}}" class="nav-link ">#}
+{#                                            <i class="fa fa-edit"></i>#}
+{#                                            <span class="title">Editer Un Utilisateur</span>#}
+{#                                        </a>#}
+
+
+{#                                </li>#}
+                            </ul>
+                        </li>
+{#                        {%if is_granted('ROLE_MASTERDATA')%}#}
+                            <li class="menu-heading m-t-20">
+                                <span>Master Data</span>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link nav-toggle"> <i class="fa fa-database"></i>
+                                    <span class="title">Données</span> <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item">
+                                        <a href="{{path('app_privillege')}}" class="nav-link ">
+                                            <i class="material-icons">verified_user</i>
+                                            <span class="title">Privilege</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{path('app_province')}}" class="nav-link ">
+                                            <i class="material-icons">my_location</i>
+                                            <span class="title">Province</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{path('app_region')}}" class="nav-link ">
+                                            <i class="fa fa-globe"></i>
+                                            <span
+                                                    class="title">Region</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{path('app_role')}}" class="nav-link ">
+                                            <i class="material-icons">gavel</i>
+                                            <span class="title">Role</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{path('app_ville')}}" class="nav-link ">
+                                            <i class="material-icons">location_city</i>
+                                            <span class="title">Ville</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{path('app_service')}}" class="nav-link ">
+                                            <i class="material-icons">grain</i>
+                                            <span class="title">Service</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+{#                        {%endif%}#}
+                        <li class="nav-item">
+                            <a href="#" class="nav-link nav-toggle"> <i class="material-icons">grain</i>
+                                <span class="title">Services</span> <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link nav-toggle"> <i class="fa fa-hotel"></i>
+                                        <span class="title">Hotel</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item">
+                                            <a href="contact_list.html" class="nav-link ">
+                                                <i class="fa fa-object-group"></i>
+                                                <span class="title">Catégories</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link nav-toggle"> <i class="fa fa-cutlery"></i>
+                                        <span class="title">Restaurant</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item">
+                                            <a href="contact_list.html" class="nav-link ">
+                                                <i class="material-icons">menu_book</i>
+                                                <span class="title">Ménus</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="contact_list.html" class="nav-link ">
+                                                <i class="material-icons">restaurant_menu</i>
+                                                <span class="title">Plats</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link nav-toggle"> <i class="material-icons">event_seat</i>
+                                        <span class="title">Salles</span> <span class="arrow"></span>
+                                    </a>
+                                    <ul class="sub-menu">
+                                        <li class="nav-item">
+                                            <a href="{{path('app_salle')}}" class="nav-link ">
+                                                <i class="material-icons">add</i>
+                                                <span class="title">Ajout De Salle</span>
+                                            </a>
+                                            <a href="{{path('app_categorie_salle')}}" class="nav-link ">
+                                                <i class="fa fa-object-group"></i>
+                                                <span class="title">Catégories</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link nav-toggle"> <i class="material-icons">turned_in</i>
+                                <span class="title">Réservation</span> <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item">
+                                    <a href="{{path('app_reservation')}}" class="nav-link nav-toggle"> <i class="material-icons">history</i>
+                                        <span class="title">Afficher Réservations</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link nav-toggle"> <i class="material-icons">payments</i>
+                                <span class="title">Paiement</span> <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li class="nav-item">
+                                    <a href="{{path('app_paiement')}}" class="nav-link nav-toggle"> <i class="material-icons">shopping_basket</i>
+                                        <span class="title">Voir Paiements</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end sidebar menu -->
+        <!-- start page content -->
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                <div class="page-bar">
+                    <div class="page-title-breadcrumb">
+                        <div class=" pull-left">
+                            <div class="page-title">
+                                {{ block("title")}}
+                            </div>
+                        </div>
+                        <ol class="breadcrumb page-breadcrumb pull-right">
+                            <li><i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="{{path('app_default')}}">Home</a>&nbsp;<i class="fa fa-angle-right"></i>
+                            </li>
+                            <li class="active">
+                                {{ block("title")}}
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        {% for message in app.session.flashBag.get('info') %}
+                            <div class="alert alert-info">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% for message in app.session.flashBag.get('success') %}
+                            <div class="alert alert-success">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% for message in app.session.flashBag.get('error') %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                        {% block body %}
+                            Template Body
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- end page content -->
+
+        </div>
+        <!-- end page container -->
+        <!-- start footer -->
+        <div class="page-footer">
+            <div class="page-footer-inner"> 2022 &copy;  By
+                <a href="mailto:admin@info.cd" target="_top" class="makerCss">FlexStage</a>
+            </div>
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+        </div>
+        <!-- end footer -->
+    </div>
+    </div>
+
+    {% block javascripts %}
+    <!-- start js include path -->
+        <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/popper/popper.min.js') }}"></script>
+        <script src="{{asset('assets/plugins/jquery-blockui/jquery.blockui.min.js')}}"></script>
+        <script src="{{asset('assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+        <!-- bootstrap -->
+        <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/sparkline/jquery.sparkline.min.js') }}"></script>
+        <script src="{{ asset('assets/js/pages/sparkline/sparkline-data.js') }}"></script>
+        <!-- Common js-->
+        <script src="{{asset('assets/js/app.js')}}"></script>
+        <script src="{{asset('assets/js/layout.js')}}"></script>
+        <script src="{{asset('assets/js/theme-color.js')}}"></script>
+        <!-- material -->
+        <script src="{{asset('assets/plugins/material/material.min.js')}}"></script>
+        <!-- animation -->
+        <script src="{{asset('assets/js/pages/ui/animations.js')}}"></script>
+        <!-- morris chart -->
+        <script src="{{asset('assets/plugins/morris/morris.min.js')}}"></script>
+        <script src="{{asset('assets/plugins/morris/raphael-min.js')}}"></script>
+        <script src="{{asset('assets/js/pages/chart/morris/morris_home_data.js')}}"></script>
+    <!-- end js include path -->
+    {% endblock %}
+
+</body>
+{#{%endif%}#}
 </html>

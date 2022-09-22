@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Service {% endblock %}
+
+{% block body %}
+{{form(formService)}}
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <div class="card  card-box">
+                <div class="card-head">
+                    <header>Services</header>
+                    <div class="tools">
+                        <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                        <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                        <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                    </div>
+                </div>
+                <div class="card-body ">
+                    <div class="table-wrap">
+                        <div class="table-responsive">
+                            <table class="table display product-overview mb-30" id="support_table5">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nom Du Service</th>
+                                    <th>Code Du Service</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {%for service in services %}
+                                    <tr>
+                                        <td>{{ service.id}}</td>
+                                        <td>{{ service.nomService }}</td>
+                                        <td>{{ service.codeService }}</td>
+                                        <td>
+                                            <a href="{#{{path('montrer.service',{'id':service.id})}}#}" class="btn btn-tbl-info btn-xs">
+                                                <i class="fa fa-info"></i>
+                                            </a>
+                                            <a href="{#{{path('supprimer.service',{'id':service.id})}}#}">
+                                            <button class="btn btn-tbl-delete btn-xs">
+                                                <i class="fa fa-trash-o "></i>
+                                            </button></a>
+                                        </td>
+                                    </tr>
+                                {%endfor%}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
