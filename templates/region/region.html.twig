@@ -35,6 +35,9 @@
                                         <td>{{ region.id }}</td>
                                         <td>{{ region.nomRegion }}</td>
                                         <td>
+                                            <a href="{{path('app_region',{'id':region.id})}}" class="btn btn-tbl-info btn-xs">
+                                                <i class="fa fa-info"></i>
+                                            </a>
                                             <a href="edit_booking.html" class="btn btn-tbl-edit btn-xs">
                                                 <i class="fa fa-pencil"></i>
                                             </a>

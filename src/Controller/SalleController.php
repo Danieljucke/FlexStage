@@ -39,7 +39,7 @@ class SalleController extends AbstractController
         }
         return $this->render('salle/index.html.twig', [
             'formSalle' => $form->createView(),
-            'categories'=>$salleRepository->findAll()
+            'salles'=>$salleRepository->findAll()
         ]);
     }
 }

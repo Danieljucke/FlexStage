@@ -6887,8 +6887,15 @@ tr.group:hover {
   color: #fff !important;
   box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
 }
+.btn-tbl-info{
+  background-color: #2874A6;
+  border-radius: 50% !important;
+  padding: 5px !important;
+  color: #fff !important;
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
+}
 .btn-tbl-edit:hover,
-.btn-tbl-delete:hover {
+.btn-tbl-delete:hover,.btn-tbl-info {
   color: #fff;
 }
 /* .tblHeightSet{

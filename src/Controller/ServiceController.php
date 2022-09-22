@@ -36,7 +36,7 @@ class ServiceController extends AbstractController
         }
         return $this->render('service/index.html.twig', [
             'formService' => $form->createView(),
-            'service'=>$serviceRepository->findAll()
+            'services'=>$serviceRepository->findAll()
         ]);
     }
 }

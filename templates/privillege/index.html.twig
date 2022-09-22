@@ -27,7 +27,6 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Nom Du Privilege</th>
-                                    <th>Role</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -36,9 +35,10 @@
                                     <tr>
                                         <td>{{ privillege.id }}</td>
                                         <td>{{ privillege.privillegeName }}</td>
-                                        <td>{{ privillege.roles }}</td>
                                         <td>
-
+                                                <a href="{{path('app_privillege',{'id':privillege.id})}}" class="btn btn-tbl-info btn-xs">
+                                                    <i class="fa fa-info"></i>
+                                                </a>
                                                 <a href="" class="btn btn-tbl-edit btn-xs">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>

@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Entity\Users;
 use App\Form\UsersType;
 use App\Repository\UsersRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+//use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/users')]
@@ -22,15 +25,19 @@ class UsersController extends AbstractController
     }
 
     #[Route('/new', name: 'app_users_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, UsersRepository $usersRepository): Response
+    public function new(Request $request, ManagerRegistry $doctrine,UserPasswordHasherInterface $hasher): Response
     {
         $user = new Users();
+        $entite=$doctrine->getManager();
         $form = $this->createForm(UsersType::class, $user);
         $form->handleRequest($request);
-
+//        $getpassword=$form->get('password')->getViewData();
+//        $passwordHashed=$hasher->hashPassword($user,$getpassword);
         if ($form->isSubmitted() && $form->isValid()) {
-            $usersRepository->add($user, true);
-
+            $user->setPassword($hasher->hashPassword($user,'12345'));
+            $entite->persist($user);
+            $entite->flush();
+//            $usersRepository->add($user, true);
             return $this->redirectToRoute('app_users_index', [], Response::HTTP_SEE_OTHER);
         }
 

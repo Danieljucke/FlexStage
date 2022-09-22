@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Users index{% endblock %}
+{% block title %}Listes des Utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>Users index</h1>
+    <h1>Liste Des Utilisateurs</h1>
 
     <table class="table">
         <thead>
@@ -23,8 +23,20 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
                 <td>
-                    <a href="{{ path('app_users_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_users_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{path('app_users_show',{'id':user.id})}}" class="btn btn-tbl-info btn-xs">
+                        <i class="fa fa-info"></i>
+                    </a>
+                    <a href="{{ path('app_users_show', {'id': user.id}) }}" class="btn btn-tbl-edit btn-xs">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="{{ path('app_users_delete', {'id': user.id}) }}">
+                        <button class="btn btn-tbl-delete btn-xs">
+                            <i class="fa fa-trash-o "></i>
+                        </button>
+                    </a>
+
+                    {#                    <a href="">show</a>#}
+{#                    <a href="">edit</a>#}
                 </td>
             </tr>
         {% else %}
@@ -35,5 +47,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_users_new') }}">Create new</a>
+<a href="{{ path('app_users_new') }}">
+    <li class="fa fa-plus-circle"></li>
+</a>
 {% endblock %}

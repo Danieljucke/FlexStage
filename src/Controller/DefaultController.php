@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 //#[Route('/dashboard')]
 class DefaultController extends AbstractController
 {
-    #[Route('/', name: 'app_default'),/*IsGranted("ROLE_ADMIN")*/]
+    #[Route('/', name: 'app_default'),IsGranted("IS_AUTHENTICATED_FULLY")]
     public function index(): Response
     {
         return $this->render('default/index.html.twig', [
