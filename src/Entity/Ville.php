@@ -30,11 +30,6 @@ class Ville
     #[ORM\ManyToOne(inversedBy: 'villes')]
     private ?Region $region = null;
 
-    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Commune::class)]
-    private Collection $communes;
-
-    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Quartier::class)]
-    private Collection $quartiers;
 
     #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Hotel::class)]
     private Collection $hotels;
@@ -111,65 +106,6 @@ class Ville
         return $this;
     }
 
-    /**
-     * @return Collection<int, Commune>
-     */
-    public function getCommunes(): Collection
-    {
-        return $this->communes;
-    }
-
-    public function addCommune(Commune $commune): self
-    {
-        if (!$this->communes->contains($commune)) {
-            $this->communes->add($commune);
-            $commune->setVille($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommune(Commune $commune): self
-    {
-        if ($this->communes->removeElement($commune)) {
-            // set the owning side to null (unless already changed)
-            if ($commune->getVille() === $this) {
-                $commune->setVille(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Quartier>
-     */
-    public function getQuartiers(): Collection
-    {
-        return $this->quartiers;
-    }
-
-    public function addQuartier(Quartier $quartier): self
-    {
-        if (!$this->quartiers->contains($quartier)) {
-            $this->quartiers->add($quartier);
-            $quartier->setVille($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuartier(Quartier $quartier): self
-    {
-        if ($this->quartiers->removeElement($quartier)) {
-            // set the owning side to null (unless already changed)
-            if ($quartier->getVille() === $this) {
-                $quartier->setVille(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Hotel>
