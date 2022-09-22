@@ -36,10 +36,14 @@ class Ville
     #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Quartier::class)]
     private Collection $quartiers;
 
+    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Hotel::class)]
+    private Collection $hotels;
+
     public function __construct()
     {
         $this->communes = new ArrayCollection();
         $this->quartiers = new ArrayCollection();
+        $this->hotels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -161,6 +165,36 @@ class Ville
             // set the owning side to null (unless already changed)
             if ($quartier->getVille() === $this) {
                 $quartier->setVille(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Hotel>
+     */
+    public function getHotels(): Collection
+    {
+        return $this->hotels;
+    }
+
+    public function addHotel(Hotel $hotel): self
+    {
+        if (!$this->hotels->contains($hotel)) {
+            $this->hotels->add($hotel);
+            $hotel->setAdresse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHotel(Hotel $hotel): self
+    {
+        if ($this->hotels->removeElement($hotel)) {
+            // set the owning side to null (unless already changed)
+            if ($hotel->getAdresse() === $this) {
+                $hotel->setAdresse(null);
             }
         }
 

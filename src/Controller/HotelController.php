@@ -27,7 +27,13 @@ class HotelController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
 
             if ($checker_Hotel != null ){
-                $this->addFlash('error', 'Cet hôtel existe déjà dans la base')
+                $this->addFlash('error', 'Cet hôtel existe déjà dans la base');
+            }
+            else{
+                $this->addFlash('success', 'Enregistrement réussi');
+                $entiteHotel =  $doctrine->getManager();
+                $entiteHotel->persist($hotel);
+                $entiteHotel->flush();
             }
         }
 

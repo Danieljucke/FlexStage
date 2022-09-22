@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Hotel;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -13,8 +15,10 @@ class HotelType extends AbstractType
     {
         $builder
             ->add('nom_hotel')
-            ->add('nombre_etoiles')
+            ->add('nombre_etoiles', NumberType::class)
             ->add('categorie')
+            ->add('adresse')
+            ->add('Ajouter',SubmitType::class)
         ;
     }
 
