@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PaiementController extends AbstractController
 {
-    #[Route('/paiement', name: 'app_paiement'),IsGranted("ROLE_ADMIN")]
-    public function index(Request $request, ManagerRegistry $doctrine,PaiementRepository $paiementRepository): Response
+    #[Route('/paiement/{page?1}/{nbre?10}', name: 'app_paiement'),IsGranted("ROLE_ADMIN")]
+    public function index($page,$nbre,Request $request, ManagerRegistry $doctrine,PaiementRepository $paiementRepository): Response
     {
         $paiements= new Paiement();
         $form=$this->createForm(PaiementType::class,$paiements);
@@ -28,11 +28,15 @@ class PaiementController extends AbstractController
             $entite->persist($paiements);
             $entite->flush();
         }
+        $nbrPaiement=$paiementRepository->count([]);
+        $nbPages=ceil($nbrPaiement/$nbre);
+        $paiements=$paiementRepository->findBy()
         return $this->render('paiement/index.html.twig', [
             'formPaiement' => $form->createView(),
-            'paiements'=>$paiementRepository->findAll()
+            'paiements'=>$paiements
         ]);
     }
+
 //    #[Route('/{id}', name: 'montrer.paiement', methods: ['GET'])]
 //    public function montrer(Paiement $paiement): Response
 //    {

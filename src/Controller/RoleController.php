@@ -99,7 +99,7 @@ class RoleController extends AbstractController
 ////        $listAllPersonneEvent = new ListAllPersonnesEvent(count($role));
 ////        $this->dispatcher->dispatch($listAllPersonneEvent, ListAllPersonnesEvent::LIST_ALL_PERSONNE_EVENT);
 ////
-////        return $this->render('personne/index.html.twig', [
+////        return $this->render('personne/login.html.twig', [
 ////            'personnes' => $personnes,
 ////            'isPaginated' => true,
 ////            'nbrePage' => $nbrePage,

@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VilleController extends AbstractController
 {
-    #[Route('/ville', name: 'app_ville')]
-    public function index(\Symfony\Component\HttpFoundation\Request $request, ManagerRegistry $doctrine, VilleRepository $villeRepository): Response
+    #[Route('/ville/{page?1}/{nbre?10}', name: 'app_ville')]
+    public function index($page,$nbre,\Symfony\Component\HttpFoundation\Request $request, ManagerRegistry $doctrine, VilleRepository $villeRepository): Response
     {
         $villes = new Ville();
         $form=$this->createForm(VilleType::class,$villes);
@@ -41,9 +41,16 @@ class VilleController extends AbstractController
                 $this->addFlash('success','Enregistrement réussi!');
             }
         }
+        $nbrVille=$villeRepository->count([]);
+        $nbPages=ceil($nbrVille/$nbre);
+        $villes=$villeRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('ville/Ville.html.twig', [
             'formVille' => $form->createView(),
-            'Villes'=>$villeRepository->findAll()
+            'Villes'=>$villes,
+            'isPaginated'=>true,
+            'nbrePage'=>$nbPages,
+            'page'=>$page,
+            'nbre'=>$nbre
         ]);
     }
 //    #[Route('/supprimerVille', name: 'supprimer.ville')]
