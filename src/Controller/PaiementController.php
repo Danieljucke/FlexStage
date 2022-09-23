@@ -28,15 +28,30 @@ class PaiementController extends AbstractController
             $entite->persist($paiements);
             $entite->flush();
         }
-        $nbrPaiement=$paiementRepository->count([]);
-        $nbPages=ceil($nbrPaiement/$nbre);
-        $paiements=$paiementRepository->findBy()
+//        $nbrPaiement=$paiementRepository->count([]);
+//        $nbPages=ceil($nbrPaiement/$nbre);
+//        $paiements=$paiementRepository->findBy()
         return $this->render('paiement/index.html.twig', [
             'formPaiement' => $form->createView(),
             'paiements'=>$paiements
         ]);
     }
-
+    #[Route('/supprimerPaiement/{id}', name: 'supprimer.paiement')]
+    public function supprimerPaiement(ManagerRegistry $doctrine,Paiement $paiement = null): Response
+    {
+        $entite = $doctrine->getManager();
+        $form=$this->createForm(PaiementType::class,$paiement);
+        if ($paiement) {
+            $entite->remove($paiement);
+            $entite->flush();
+            $this->addFlash('success', 'Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error',"Opération Echoué !");
+        }
+        return $this->redirectToRoute('app_paiement');
+    }
 //    #[Route('/{id}', name: 'montrer.paiement', methods: ['GET'])]
 //    public function montrer(Paiement $paiement): Response
 //    {
@@ -44,13 +59,5 @@ class PaiementController extends AbstractController
 ////            'paiement' => $paiement,
 ////        ]);
 //        return new Response();
-//    }
-//    #[Route('/{id}', name: 'supprimer.paiement', methods: ['POST'])]
-//    public function supprimer(Request $request, Paiement $paiement,  PaiementRepository $paiementRepository): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$paiement->getId(), $request->request->get('_token'))) {
-//            $paiementRepository->remove($paiement, true);
-//        }
-//        return $this->redirectToRoute('app_paiement');
 //    }
 }

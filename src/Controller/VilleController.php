@@ -53,19 +53,20 @@ class VilleController extends AbstractController
             'nbre'=>$nbre
         ]);
     }
-//    #[Route('/supprimerVille', name: 'supprimer.ville')]
-//    public function supprimerVille(ManagerRegistry $doctrine, Ville $ville = null): Response
-//    {
-//        $entite = $doctrine->getManager();
-//        if ($ville) {
-//            $entite->remove($ville);
-//            $entite->flush();
-//            $this->addFlash('success', 'Suppression Réussi !');
-//        }
-//        else
-//        {
-//            $this->addFlash('error',"cette ville n'existe pas dans la base !");
-//        }
-//        return new Response();
-//    }
+    #[Route('/supprimerVille/{id}', name: 'supprimer.ville')]
+    public function supprimerVille(ManagerRegistry $doctrine, Ville $ville = null): Response
+    {
+        $entite = $doctrine->getManager();
+        $form=$this->createForm(VilleType::class,$ville);
+        if ($ville) {
+            $entite->remove($ville);
+            $entite->flush();
+            $this->addFlash('success', 'Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error',"cette ville n'existe pas dans la base !");
+        }
+        return $this->redirectToRoute('app_ville');
+    }
 }
