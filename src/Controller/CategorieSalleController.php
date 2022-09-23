@@ -46,13 +46,10 @@ class CategorieSalleController extends AbstractController
         ]);
     }
     #[Route('/supprimerCategory/{id}', name: 'supprimer.category')]
-    public function supprimerCategory(ManagerRegistry $doctrine,CategorieSalle $categorieSalle = null): Response
+    public function supprimerCategory(CategorieSalleRepository $categorieSalleRepository,CategorieSalle $categorieSalle = null): Response
     {
-        $entite = $doctrine->getManager();
-        $form=$this->createForm(CategorieSalleType::class,$categorieSalle);
         if ($categorieSalle) {
-            $entite->remove($categorieSalle);
-            $entite->flush();
+           $categorieSalleRepository->remove($categorieSalle,true);
             $this->addFlash('success', 'Suppression Réussi !');
         }
         else
@@ -60,5 +57,13 @@ class CategorieSalleController extends AbstractController
             $this->addFlash('error',"Opération Echoué !");
         }
         return $this->redirectToRoute('app_categorie_salle');
+    }
+    #[Route('/montrerSalle/{id}', name: 'montrer.category')]
+    public function montrerCategorieSalle(CategorieSalle $categorieSalle=null): Response
+    {
+//        return $this->render('users/show.html.twig', [
+//            'reservation' => $reservation,
+//        ]);
+        return new Response('bonjour');
     }
 }

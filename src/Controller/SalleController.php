@@ -42,14 +42,14 @@ class SalleController extends AbstractController
             'salles'=>$salleRepository->findAll()
         ]);
     }
-//    #[Route('/{id}', name: 'montrer.salle', methods: ['GET'])]
-//    public function montrer( Salle $salle): Response
-//    {
-////        return $this->render('users/show.html.twig', [
-////            'salle' => $salle,
-////        ]);
-//        return new Response();
-//    }
+    #[Route('/montrerSalle/{id}', name: 'montrer.salle')]
+    public function montrerSalle( Salle $salle=null): Response
+    {
+//        return $this->render('users/show.html.twig', [
+//            'salle' => $salle,
+//        ]);
+        return new Response();
+    }
 //    #[Route('/{id}/modifier', name: 'modifier.salle', methods: ['GET', 'POST'])]
 //    public function modifier(Request $request, Salle $salle,SalleRepository $salleRepository): Response
 //    {
@@ -68,12 +68,17 @@ class SalleController extends AbstractController
 ////        ]);
 //        return new Response();
 //    }
-//    #[Route('/{id}', name: 'supprimer.salle', methods: ['POST'])]
-//    public function supprimer(Request $request, Salle $salle, SalleRepository $salleRepository): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$salle->getId(), $request->request->get('_token'))) {
-//            $salleRepository->remove($salle, true);
-//        }
-//        return $this->redirectToRoute('app_salle');
-//    }
+    #[Route('/supprimerSalle/{id}', name: 'supprimer.salle')]
+    public function supprimerSalle( Salle $salle=null, SalleRepository $salleRepository): Response
+    {
+        if ($salle) {
+            $salleRepository->remove($salle, true);
+            $this->addFlash('success','Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error','Opération Echoué !');
+        }
+        return $this->redirectToRoute('app_salle');
+    }
 }

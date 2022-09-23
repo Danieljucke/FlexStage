@@ -40,13 +40,13 @@
                                         <td>{{ reservation.motif }}</td>
                                         <td>{{ reservation.user }}</td>
                                         <td>
-                                            <a href="{#{{path('montrer.reservation',{'id':reservation.id})}}#}" class="btn btn-tbl-info btn-xs">
+                                            <a href="{{path('montrer.reservation',{'id':reservation.id})}}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
                                             <a href="{#{{path('modifier.reservation',{'id':reservation.id})}}#}" class="btn btn-tbl-edit btn-xs">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
-                                            <a href="{#{{path('supprimer.Reservation',{'id':reservation.id})}}#}">
+                                            <a href="{{path('supprimer.Reservation',{'id':reservation.id})}}">
                                                 <button class="btn btn-tbl-delete btn-xs">
                                                     <i class="fa fa-trash-o "></i>
                                                 </button>

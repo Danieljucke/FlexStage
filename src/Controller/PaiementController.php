@@ -36,28 +36,25 @@ class PaiementController extends AbstractController
             'paiements'=>$paiements
         ]);
     }
-    #[Route('/supprimerPaiement/{id}', name: 'supprimer.paiement')]
-    public function supprimerPaiement(ManagerRegistry $doctrine,Paiement $paiement = null): Response
-    {
-        $entite = $doctrine->getManager();
-        $form=$this->createForm(PaiementType::class,$paiement);
-        if ($paiement) {
-            $entite->remove($paiement);
-            $entite->flush();
-            $this->addFlash('success', 'Suppression Réussi !');
-        }
-        else
-        {
-            $this->addFlash('error',"Opération Echoué !");
-        }
-        return $this->redirectToRoute('app_paiement');
-    }
-//    #[Route('/{id}', name: 'montrer.paiement', methods: ['GET'])]
-//    public function montrer(Paiement $paiement): Response
+//    #[Route('/supprimerPaiement/{id}', name: 'supprimer.paiement')]
+//    public function supprimerPaiement(PaiementRepository $paiementRepository,Paiement $paiement = null): Response
 //    {
-////        return $this->render('users/show.html.twig', [
-////            'paiement' => $paiement,
-////        ]);
-//        return new Response();
+//        if ($paiement) {
+//            $paiementRepository->remove($paiement,true);
+//            $this->addFlash('success', 'Suppression Réussi !');
+//        }
+//        else
+//        {
+//            $this->addFlash('error',"Opération Echoué !");
+//        }
+//        return $this->redirectToRoute('app_paiement');
 //    }
+    #[Route('/montrerPaiement/{id}', name: 'montrer.paiement')]
+    public function montrerPaiment(Paiement $paiement=null): Response
+    {
+//        return $this->render('users/show.html.twig', [
+//            'paiement' => $paiement,
+//        ]);
+        return new Response();
+    }
 }

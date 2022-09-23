@@ -36,7 +36,7 @@
                                         <td>{{ categorie.description }}</td>
                                         <td>{{ categorie.prix }} $</td>
                                         <td>
-                                            <a href="{#{{path('montrer.category',{'id': categorie.id})}}#}" class="btn btn-tbl-info btn-xs">
+                                            <a href="{{path('montrer.category',{'id': categorie.id})}}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
                                             <a href="{#{{path('modifier.category',{'id':categorie.id})}}#}" class="btn btn-tbl-edit btn-xs">
