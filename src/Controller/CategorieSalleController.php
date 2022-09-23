@@ -39,6 +39,7 @@ class CategorieSalleController extends AbstractController
                 $this->addFlash('success','Enregistrement Réussi !');
             }
         }
+
         return $this->render('categorie_salle/index.html.twig', [
             'formCategorie' => $form->createView(),
             'categories'=>$categorieSalleRepository->findAll()
@@ -47,7 +48,7 @@ class CategorieSalleController extends AbstractController
 //    #[Route('/{id}', name: 'montrer.category', methods: ['GET'])]
 //    public function montrer(CategorieSalle $categorieSalle): Response
 //    {
-////        return $this->render('categorie_salle/index.html.twig', [
+////        return $this->render('categorie_salle/login.html.twig', [
 ////            'categorieSalle' => $categorieSalle,
 ////        ]);
 //        return new Response();
