@@ -35,15 +35,16 @@
                                         <td>{{ region.id }}</td>
                                         <td>{{ region.nomRegion }}</td>
                                         <td>
-                                            <a href="{{path('app_region',{'id':region.id})}}" class="btn btn-tbl-info btn-xs">
+                                            <a href="{#{{path('montrer.region',{'id':region.id})}}#}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
-                                            <a href="edit_booking.html" class="btn btn-tbl-edit btn-xs">
+                                            <a href="{#{{path('modifier.region',{'id':region.id})}}#}" class="btn btn-tbl-edit btn-xs">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
+                                            <a href="{#{{path('supprimer.region',{'id':region.id})}}#}">
                                             <button class="btn btn-tbl-delete btn-xs">
                                                 <i class="fa fa-trash-o "></i>
-                                            </button>
+                                            </button></a>
                                         </td>
                                     </tr>
                                 {%endfor%}

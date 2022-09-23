@@ -45,36 +45,38 @@ class RegionController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'montrer.region', methods: ['GET'])]
-    public function montrer(Region $region): Response
-    {
-        return $this->render('users/show.html.twig', [
-            'region' => $region,
-        ]);
-    }
-    #[Route('/{id}/modifier', name: 'modifier.region', methods: ['GET', 'POST'])]
-    public function modifier(Request $request, Region $region, RegionRepository $regionRepository): Response
-    {
-        $form = $this->createForm(RegionType::class, $region);
-        $form->handleRequest($request);
+//    #[Route('/{id}', name: 'montrer.region', methods: ['GET'])]
+//    public function montrer(Region $region): Response
+//    {
+////        return $this->render('users/show.html.twig', [
+////            'region' => $region,
+////        ]);
+//        return new Response();
+//    }
+//    #[Route('/{id}/modifier', name: 'modifier.region', methods: ['GET', 'POST'])]
+//    public function modifier(Request $request, Region $region, RegionRepository $regionRepository): Response
+//    {
+//        $form = $this->createForm(RegionType::class, $region);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $regionRepository->add($region, true);
+//
+//            return $this->redirectToRoute('app_regions');
+//        }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $regionRepository->add($region, true);
-
-            return $this->redirectToRoute('app_regions');
-        }
-
-        return $this->renderForm('users/edit.html.twig', [
-            'region' => $region,
-            'form' => $form,
-        ]);
-    }
-    #[Route('/{id}', name: 'supprimer.region', methods: ['POST'])]
-    public function supprimer(Request $request, Region $region, RegionRepository $regionRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$region->getId(), $request->request->get('_token'))) {
-            $regionRepository->remove($region, true);
-        }
-        return $this->redirectToRoute('app_region');
-    }
+//        return $this->renderForm('users/edit.html.twig', [
+//            'region' => $region,
+//            'form' => $form,
+//        ]);
+//        return new Response();
+//    }
+//    #[Route('/{id}', name: 'supprimer.region', methods: ['POST'])]
+//    public function supprimer(Request $request, Region $region, RegionRepository $regionRepository): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$region->getId(), $request->request->get('_token'))) {
+//            $regionRepository->remove($region, true);
+//        }
+//        return $this->redirectToRoute('app_region');
+//    }
 }

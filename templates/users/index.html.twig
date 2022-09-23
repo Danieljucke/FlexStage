@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Password</th>
+{#                <th>Password</th>#}
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,12 +21,12 @@
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.password }}</td>
+{#                <td>{{ user.password }}</td>#}
                 <td>
                     <a href="{{path('app_users_show',{'id':user.id})}}" class="btn btn-tbl-info btn-xs">
                         <i class="fa fa-info"></i>
                     </a>
-                    <a href="{{ path('app_users_show', {'id': user.id}) }}" class="btn btn-tbl-edit btn-xs">
+                    <a href="{{ path('app_users_edit', {'id': user.id}) }}" class="btn btn-tbl-edit btn-xs">
                         <i class="fa fa-pencil"></i>
                     </a>
                     <a href="{{ path('app_users_delete', {'id': user.id}) }}">
@@ -34,9 +34,6 @@
                             <i class="fa fa-trash-o "></i>
                         </button>
                     </a>
-
-                    {#                    <a href="">show</a>#}
-{#                    <a href="">edit</a>#}
                 </td>
             </tr>
         {% else %}
@@ -48,6 +45,6 @@
     </table>
 
 <a href="{{ path('app_users_new') }}">
-    <li class="fa fa-plus-circle"></li>
+    <i class="fa fa-plus-circle"></i>
 </a>
 {% endblock %}
