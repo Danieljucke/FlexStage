@@ -30,14 +30,14 @@ class ReservationController extends AbstractController
             'reservations'=>$reservationRepository->findAll()
         ]);
     }
-//    #[Route('/{id}', name: 'montrer.reservation', methods: ['GET'])]
-//    public function montrer(Reservation $reservation): Response
-//    {
-////        return $this->render('users/show.html.twig', [
-////            'reservation' => $reservation,
-////        ]);
-//        return new Response();
-//    }
+    #[Route('/montrerReservation/{id}', name: 'montrer.reservation')]
+    public function montrerReservation(Reservation $reservation=null): Response
+    {
+//        return $this->render('users/show.html.twig', [
+//            'reservation' => $reservation,
+//        ]);
+        return new Response('bonjour');
+    }
 //    #[Route('/{id}/modifier', name: 'modifier.reservation', methods: ['GET', 'POST'])]
 //    public function modifier(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
 //    {
@@ -56,12 +56,16 @@ class ReservationController extends AbstractController
 ////        ]);
 //        return new Response();
 //    }
-//    #[Route('/{id}', name: 'supprimer.Reservation', methods: ['POST'])]
-//    public function supprimerReservaiton(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {
-//            $reservationRepository->remove($reservation, true);
-//        }
-//        return $this->redirectToRoute('app_reservation');
-//    }
+    #[Route('/supprimerReservation/{id}', name: 'supprimer.Reservation')]
+    public function supprimerReservaiton(Reservation $reservation=null, ReservationRepository $reservationRepository): Response
+    {
+        if ($reservation) {
+            $reservationRepository->remove($reservation, true);
+            $this->addFlash('success','Suppression Réussi !');
+        }else
+        {
+            $this->addFlash('error','Opération Echoué !');
+        }
+        return $this->redirectToRoute('app_reservation');
+    }
 }

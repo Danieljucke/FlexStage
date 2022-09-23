@@ -52,14 +52,14 @@ class RoleController extends AbstractController
         ]);
     }
 
-//    #[Route('/{id}', name: 'montrer.role', methods: ['GET'])]
-//    public function montrer(Role $role): Response
-//    {
-////        return $this->render('users/show.html.twig', [
-////            'role' => $role,
-////        ]);
-//        return new Response();
-//    }
+    #[Route('/montrerRole/{id}', name: 'montrer.role')]
+    public function montrerRole(Role $role=null): Response
+    {
+//        return $this->render('users/show.html.twig', [
+//            'role' => $role,
+//        ]);
+        return new Response();
+    }
 //    #[Route('/{id}/modifier', name: 'modifier.role', methods: ['GET', 'POST'])]
 //    public function modifier(Request $request, Role $role, RoleRepository $roleRepository): Response
 //    {
@@ -78,33 +78,18 @@ class RoleController extends AbstractController
 ////        ]);
 //        return new Response();
 //    }
-//    #[Route('/{id}', name: 'supprimer.role', methods: ['POST'])]
-//    public function supprimer(Request $request, Role $role, RoleRepository $roleRepository): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$role->getId(), $request->request->get('_token'))) {
-//            $roleRepository->remove($role, true);
-//        }
-//        return $this->redirectToRoute('app_role');
-//    }
-//
-////    #[
-////        Route('/alls', name: 'list.alls')
-////    ]
-////    public function indexAlls(ManagerRegistry $doctrine, $page, $nbre): Response {
-////        $repository = $doctrine->getRepository(Role::class);
-////        $nbRole = $repository->count([]);
-////        $nbrePage = ceil($nbRole / $nbre) ;
-////
-////        $role = $repository->findBy([], [],$nbre, ($page - 1 ) * $nbre);
-////        $listAllPersonneEvent = new ListAllPersonnesEvent(count($role));
-////        $this->dispatcher->dispatch($listAllPersonneEvent, ListAllPersonnesEvent::LIST_ALL_PERSONNE_EVENT);
-////
-////        return $this->render('personne/login.html.twig', [
-////            'personnes' => $personnes,
-////            'isPaginated' => true,
-////            'nbrePage' => $nbrePage,
-////            'page' => $page,
-////            'nbre' => $nbre
-////        ]);
-////    }
+    #[Route('/supprimerRole/{id}', name: 'supprimer.role')]
+    public function supprimerRole(Role $role=null, RoleRepository $roleRepository): Response
+    {
+        if ($role) {
+            $roleRepository->remove($role, true);
+            $this->addFlash('success','Suppression Réussi !');
+        }else
+        {
+            $this->addFlash('error','Opération Echoué !');
+        }
+        return $this->redirectToRoute('app_role');
+    }
+
+
 }

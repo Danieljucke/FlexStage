@@ -38,10 +38,10 @@
                                         <td>{{ paiement.modePaiement }}</td>
                                         <td>{{ paiement.datePaiement|date('Y-m-d') }}</td>
                                         <td>
-                                            <a href="{#{{path('montrer.paiement',{'id':paiement.id})}}#}" class="btn btn-tbl-info btn-xs">
+                                            <a href="{{path('montrer.paiement',{'id':paiement.id})}}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
-                                            <a href="{#{{path('supprimer.paiement',{'id':paiement.id})}}#}">
+                                            <a href="{{path('supprimer.paiement',{'id':paiement.id})}}">
                                             <button class="btn btn-tbl-delete btn-xs">
                                                 <i class="fa fa-trash-o "></i>
                                             </button>

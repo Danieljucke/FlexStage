@@ -39,13 +39,13 @@
                                             <span class="label label-sm label-success">{{role.statut}}</span>
                                         </td>
                                         <td>
-                                            <a href="{#{{path('montrer.roles',{'id':role.id})}}#}" class="btn btn-tbl-info btn-xs">
+                                            <a href="{{path('montrer.role',{'id':role.id})}}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
                                                 <a href="{#{{path('modifier.role',{'id':role.id})}}#}" class="btn btn-tbl-edit btn-xs">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
-                                            <a href="{#{{path('supprimer.role',{'id':role.id})}}#}">
+                                            <a href="{{path('supprimer.role',{'id':role.id})}}">
                                             <button class="btn btn-tbl-delete btn-xs">
                                                     <i class="fa fa-trash-o "></i>
                                                 </button></a>

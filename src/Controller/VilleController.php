@@ -69,4 +69,12 @@ class VilleController extends AbstractController
         }
         return $this->redirectToRoute('app_ville');
     }
+    #[Route('/montrerVille/{id}', name: 'montrer.ville')]
+    public function montrerVille(Ville $ville=null): Response
+    {
+//        return $this->render('users/show.html.twig', [
+//            'reservation' => $ville,
+//        ]);
+        return new Response('bonjour');
+    }
 }

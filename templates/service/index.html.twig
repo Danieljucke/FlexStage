@@ -34,10 +34,10 @@
                                         <td>{{ service.nomService }}</td>
                                         <td>{{ service.codeService }}</td>
                                         <td>
-                                            <a href="{#{{path('montrer.service',{'id':service.id})}}#}" class="btn btn-tbl-info btn-xs">
+                                            <a href="{{path('montrer.service',{'id':service.id})}}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
-                                            <a href="{#{{path('supprimer.service',{'id':service.id})}}#}">
+                                            <a href="{{path('supprimer.service',{'id':service.id})}}">
                                             <button class="btn btn-tbl-delete btn-xs">
                                                 <i class="fa fa-trash-o "></i>
                                             </button></a>

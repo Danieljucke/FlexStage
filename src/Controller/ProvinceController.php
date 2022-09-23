@@ -46,13 +46,10 @@ class ProvinceController extends AbstractController
         ]);
     }
     #[Route('/supprimerProvince/{id}', name: 'supprimer.province')]
-    public function supprimerProvince(ManagerRegistry $doctrine,Province $province = null): Response
+    public function supprimerProvince(ProvinceRepository $provinceRepository,Province $province = null): Response
     {
-        $entite = $doctrine->getManager();
-        $form=$this->createForm(ProvinceType::class,$province);
         if ($province) {
-            $entite->remove($province);
-            $entite->flush();
+            $provinceRepository->remove($province,true);
             $this->addFlash('success', 'Suppression Réussi !');
         }
         else
@@ -60,5 +57,13 @@ class ProvinceController extends AbstractController
             $this->addFlash('error',"Opération Echoué !");
         }
         return $this->redirectToRoute('app_province');
+    }
+    #[Route('/montrerProvince/{id}', name: 'montrer.province')]
+    public function montrerProvince(Province $province=null): Response
+    {
+//        return $this->render('users/show.html.twig', [
+//            'province' => $province,
+//        ]);
+        return new Response('bonjour');
     }
 }

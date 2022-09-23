@@ -52,14 +52,12 @@ class PrivillegeController extends AbstractController
             'privilleges'=>$privillegeRepository->findAll()
         ]);
     }
-    #[Route('/supprimerPivillege/{id}', name: 'supprimer.privilleg')]
-    public function supprimerPrivilleg(ManagerRegistry $doctrine,Privillege $privillege = null): Response
+    #[Route('/supprimerPivillege/{id}', name: 'supprimer.privillege')]
+    public function supprimerPrivillege(PrivillegeRepository $privillegeRepository,Privillege $privillege = null): Response
     {
-        $entite = $doctrine->getManager();
-        $form=$this->createForm(PrivillegeType::class,$privillege);
+
         if ($privillege) {
-            $entite->remove($privillege);
-            $entite->flush();
+            $privillegeRepository->remove($privillege, true);
             $this->addFlash('success', 'Suppression Réussi !');
         }
         else
@@ -67,5 +65,13 @@ class PrivillegeController extends AbstractController
             $this->addFlash('error',"Opération Echoué !");
         }
         return $this->redirectToRoute('app_privillege');
+    }
+    #[Route('/montrerPrivilleg/{id}', name: 'montrer.privillege')]
+    public function montrer(Privillege $privillege=null): Response
+    {
+//        return $this->render('users/show.html.twig', [
+//            'privilleg' => $privillege,
+//        ]);
+        return new Response('bonjour');
     }
 }

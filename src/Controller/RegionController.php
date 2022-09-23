@@ -39,19 +39,17 @@ class RegionController extends AbstractController
                 $this->addFlash('success','Enregistrement reussi!');
             }
         }
+
         return $this->render('region/region.html.twig', [
             'formRegion' => $form->createView(),
             'regions'=>$regionRepository->findAll()
         ]);
     }
     #[Route('/supprimerRegion/{id}', name: 'supprimer.region')]
-    public function supprimerRegion(ManagerRegistry $doctrine,Region $region = null): Response
+    public function supprimerRegion(Region $region = null,RegionRepository $regionRepository): Response
     {
-        $entite = $doctrine->getManager();
-        $form=$this->createForm(RegionType::class,$region);
         if ($region) {
-            $entite->remove($region);
-            $entite->flush();
+            $regionRepository->remove($region, true);
             $this->addFlash('success', 'Suppression Réussi !');
         }
         else
@@ -59,5 +57,13 @@ class RegionController extends AbstractController
             $this->addFlash('error',"Opération Echoué !");
         }
         return $this->redirectToRoute('app_region');
+    }
+    #[Route('/montrerRegion/{id}', name: 'montrer.region')]
+    public function montrerRegion(Region $region=null): Response
+    {
+//        return $this->render('users/show.html.twig', [
+//            'region' => $region,
+//        ]);
+        return new Response('bonjour');
     }
 }
