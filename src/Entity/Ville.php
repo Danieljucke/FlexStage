@@ -30,8 +30,12 @@ class Ville
     #[ORM\ManyToOne(inversedBy: 'villes')]
     private ?Region $region = null;
 
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Hotel::class)]
+    private Collection $hotels;
+
     public function __construct()
     {
+        $this->hotels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,5 +104,35 @@ class Ville
     }
     public function __toString() {
         return $this->nom_ville;
+    }
+
+    /**
+     * @return Collection<int, Hotel>
+     */
+    public function getHotels(): Collection
+    {
+        return $this->hotels;
+    }
+
+    public function addHotel(Hotel $hotel): self
+    {
+        if (!$this->hotels->contains($hotel)) {
+            $this->hotels->add($hotel);
+            $hotel->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHotel(Hotel $hotel): self
+    {
+        if ($this->hotels->removeElement($hotel)) {
+            // set the owning side to null (unless already changed)
+            if ($hotel->getVille() === $this) {
+                $hotel->setVille(null);
+            }
+        }
+
+        return $this;
     }
 }
