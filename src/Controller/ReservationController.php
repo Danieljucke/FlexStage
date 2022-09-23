@@ -30,36 +30,38 @@ class ReservationController extends AbstractController
             'reservations'=>$reservationRepository->findAll()
         ]);
     }
-    #[Route('/{id}', name: 'montrer.reservation', methods: ['GET'])]
-    public function montrer(Reservation $reservation): Response
-    {
-        return $this->render('users/show.html.twig', [
-            'reservation' => $reservation,
-        ]);
-    }
-    #[Route('/{id}/modifier', name: 'modifier.reservation', methods: ['GET', 'POST'])]
-    public function modifier(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
-    {
-        $form = $this->createForm(ReservationType::class, $reservation);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $reservationRepository->add($reservation, true);
-
-            return $this->redirectToRoute('app_reservation');
-        }
-
-        return $this->renderForm('users/edit.html.twig', [
-            'reservation' => $reservation,
-            'form' => $form,
-        ]);
-    }
-    #[Route('/{id}', name: 'supprimer.Reservation', methods: ['POST'])]
-    public function supprimerReservaiton(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {
-            $reservationRepository->remove($reservation, true);
-        }
-        return $this->redirectToRoute('app_reservation');
-    }
+//    #[Route('/{id}', name: 'montrer.reservation', methods: ['GET'])]
+//    public function montrer(Reservation $reservation): Response
+//    {
+////        return $this->render('users/show.html.twig', [
+////            'reservation' => $reservation,
+////        ]);
+//        return new Response();
+//    }
+//    #[Route('/{id}/modifier', name: 'modifier.reservation', methods: ['GET', 'POST'])]
+//    public function modifier(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+//    {
+//        $form = $this->createForm(ReservationType::class, $reservation);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $reservationRepository->add($reservation, true);
+//
+//            return $this->redirectToRoute('app_reservation');
+//        }
+//
+////        return $this->renderForm('users/edit.html.twig', [
+////            'reservation' => $reservation,
+////            'form' => $form,
+////        ]);
+//        return new Response();
+//    }
+//    #[Route('/{id}', name: 'supprimer.Reservation', methods: ['POST'])]
+//    public function supprimerReservaiton(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {
+//            $reservationRepository->remove($reservation, true);
+//        }
+//        return $this->redirectToRoute('app_reservation');
+//    }
 }

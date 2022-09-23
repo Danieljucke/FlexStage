@@ -20,14 +20,14 @@ class UsersType extends AbstractType
             ->add('role',EntityType::class,[
                 'required'=>false,
                 'class'=>Role::class])
-//            ->add('password', PasswordType::class
-//            ,['required'=>true])
+            ->add('password', PasswordType::class
+            ,['required'=>true])
 //            ->add('roles', EntityType::class,[
 //                'required'=>false,
 //                'multiple'=> true,
 //                'class'=>Role::class]
 //            )
-        ->add('submit',SubmitType::class)
+        ->add('Enregistrer',SubmitType::class)
         ;
     }
 

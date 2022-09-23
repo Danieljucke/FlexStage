@@ -52,36 +52,38 @@ class PrivillegeController extends AbstractController
             'privilleges'=>$privillegeRepository->findAll()
         ]);
     }
-    #[Route('/{id}', name: 'montrer.privillege', methods: ['GET'])]
-    public function montrer(Privillege $privillege): Response
-    {
-        return $this->render('users/show.html.twig', [
-            'privillege' => $privillege,
-        ]);
-    }
-    #[Route('/{id}/modifier', name: 'modifier.privillege', methods: ['GET', 'POST'])]
-    public function modifier(Request $request, Privillege $privillege, PrivillegeRepository $privillegeRepository): Response
-    {
-        $form = $this->createForm(PrivillegeType::class, $privillege);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $privillegeRepository->add($privillege, true);
-
-            return $this->redirectToRoute('app_privillege');
-        }
-
-        return $this->renderForm('users/edit.html.twig', [
-            'privillege' => $privillege,
-            'form' => $form,
-        ]);
-    }
-    #[Route('/{id}', name: 'supprimer.privillege', methods: ['POST'])]
-    public function supprimer(Request $request, Privillege $privillege, PrivillegeRepository $privillegeRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$privillege->getId(), $request->request->get('_token'))) {
-            $privillegeRepository->remove($privillege, true);
-        }
-        return $this->redirectToRoute('app_privillege');
-    }
+//    #[Route('/{id}', name: 'montrer.privillege', methods: ['GET'])]
+//    public function montrer(Privillege $privillege): Response
+//    {
+////        return $this->render('users/show.html.twig', [
+////            'privillege' => $privillege,
+////        ]);
+//        return new Response();
+//    }
+//    #[Route('/{id}/modifier', name: 'modifier.privillege', methods: ['GET', 'POST'], requirements: ['id'=>'\d+'])]
+//    public function modifier(Request $request, Privillege $privillege, PrivillegeRepository $privillegeRepository): Response
+//    {
+//        $form = $this->createForm(PrivillegeType::class,$privillege);
+//        $form->handleRequest($request);
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            $privillegeRepository->add($privillege, true);
+//
+//            return $this->redirectToRoute('app_privillege');
+//        }
+//
+////        return $this->renderForm('users/edit.html.twig', [
+////            'privillege' => $privillege,
+////            'form' => $form,
+////        ]);
+//        return new Response();
+//    }
+//    #[Route('/{id}', name: 'supprimer.privillege', methods: ['POST'])]
+//    public function supprimer(Request $request, Privillege $privillege, PrivillegeRepository $privillegeRepository): Response
+//    {
+//        if ($this->isCsrfTokenValid('delete'.$privillege->getId(), $request->request->get('_token'))) {
+//            $privillegeRepository->remove($privillege, true);
+//        }
+//        return $this->redirectToRoute('app_privillege');
+//    }
 }

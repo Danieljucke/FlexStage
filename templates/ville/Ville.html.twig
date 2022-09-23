@@ -39,15 +39,16 @@
                                         <td>{{ ville.region }}</td>
                                         <td>{{ ville.province }}</td>
                                         <td>
-                                            <a href="{{path('app_ville',{'id':ville.id})}}" class="btn btn-tbl-info btn-xs">
+                                            <a href="{#{{path('montrer.ville',{'id':ville.id})}}#}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
-                                                <a href="" class="btn btn-tbl-edit btn-xs">
+                                                <a href="{#{{path('modifier.ville', {'id':ville.id})}}#}" class="btn btn-tbl-edit btn-xs">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
-                                                <button class="btn btn-tbl-delete btn-xs">
+                                            <a href="{#{{path('supprimer.ville',{'id':ville.id})}}#}">
+                                            <button class="btn btn-tbl-delete btn-xs">
                                                     <i class="fa fa-trash-o "></i>
-                                                </button>
+                                                </button></a>
                                         </td>
                                     </tr>
                                 {%endfor%}

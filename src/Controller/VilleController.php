@@ -46,36 +46,19 @@ class VilleController extends AbstractController
             'Villes'=>$villeRepository->findAll()
         ]);
     }
-    #[Route('/{id}', name: 'montrer.ville', methods: ['GET'])]
-    public function montrer(Ville $ville): Response
-    {
-        return $this->render('users/show.html.twig', [
-            'ville' => $ville,
-        ]);
-    }
-    #[Route('/{id}/modifier', name: 'modifier.ville', methods: ['GET', 'POST'])]
-    public function modifier(Request $request, Ville $ville, VilleRepository $villeRepository): Response
-    {
-        $form = $this->createForm(VilleType::class, $ville);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $villeRepository->add($ville, true);
-
-            return $this->redirectToRoute('app_ville');
-        }
-
-        return $this->renderForm('users/edit.html.twig', [
-            'ville' => $ville,
-            'form' => $form,
-        ]);
-    }
-    #[Route('/{id}', name: 'supprimer.ville', methods: ['POST'])]
-    public function supprimer(Request $request, Ville $ville, VilleRepository $villeRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$ville->getId(), $request->request->get('_token'))) {
-            $villeRepository->remove($ville, true);
-        }
-        return $this->redirectToRoute('app_ville');
-    }
+//    #[Route('/supprimerVille', name: 'supprimer.ville')]
+//    public function supprimerVille(ManagerRegistry $doctrine, Ville $ville = null): Response
+//    {
+//        $entite = $doctrine->getManager();
+//        if ($ville) {
+//            $entite->remove($ville);
+//            $entite->flush();
+//            $this->addFlash('success', 'Suppression Réussi !');
+//        }
+//        else
+//        {
+//            $this->addFlash('error',"cette ville n'existe pas dans la base !");
+//        }
+//        return new Response();
+//    }
 }
