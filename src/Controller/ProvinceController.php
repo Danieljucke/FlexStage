@@ -45,38 +45,20 @@ class ProvinceController extends AbstractController
             'provinces'=>$provinceRepository->findAll()
         ]);
     }
-//    #[Route('/{id}', name: 'montrer.province', methods: ['GET'])]
-//    public function montrer(Province $province): Response
-//    {
-////        return $this->render('users/show.html.twig', [
-////            'province' => $province,
-////        ]);
-//        return new Response();
-//    }
-//    #[Route('/modifier/{id}', name: 'modifier.province', methods: ['GET', 'POST'])]
-//    public function modifier(Request $request,Province $province, ProvinceRepository $provinceRepository): Response
-//    {
-//        $form = $this->createForm(  ProvinceType::class, $province);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $provinceRepository->add($province, true);
-//
-//            return $this->redirectToRoute('app_province');
-//        }
-//
-////        return $this->renderForm('users/edit.html.twig', [
-////            'province' => $province,
-////            'form' => $form,
-////        ]);
-//        return new Response();
-//    }
-//    #[Route('/{id}', name: 'supprimer.province', methods: ['POST'])]
-//    public function supprimer(Request $request, Province $province, ProvinceRepository $provinceRepository): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$province->getId(), $request->request->get('_token'))) {
-//            $provinceRepository->remove($province, true);
-//        }
-//        return $this->redirectToRoute('app_province');
-//    }
+    #[Route('/supprimerProvince/{id}', name: 'supprimer.province')]
+    public function supprimerProvince(ManagerRegistry $doctrine,Province $province = null): Response
+    {
+        $entite = $doctrine->getManager();
+        $form=$this->createForm(ProvinceType::class,$province);
+        if ($province) {
+            $entite->remove($province);
+            $entite->flush();
+            $this->addFlash('success', 'Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error',"Opération Echoué !");
+        }
+        return $this->redirectToRoute('app_province');
+    }
 }

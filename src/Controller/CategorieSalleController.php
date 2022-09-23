@@ -45,38 +45,20 @@ class CategorieSalleController extends AbstractController
             'categories'=>$categorieSalleRepository->findAll()
         ]);
     }
-//    #[Route('/{id}', name: 'montrer.category', methods: ['GET'])]
-//    public function montrer(CategorieSalle $categorieSalle): Response
-//    {
-////        return $this->render('categorie_salle/login.html.twig', [
-////            'categorieSalle' => $categorieSalle,
-////        ]);
-//        return new Response();
-//    }
-//    #[Route('/{id}/modifier', name: 'modifier.category', methods: ['GET', 'POST'])]
-//    public function modifier(Request $request, CategorieSalle $categorieSalle, CategorieSalleRepository $categorieSalleRepository): Response
-//    {
-//        $form = $this->createForm(CategorieSalleType::class, $categorieSalle);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $categorieSalleRepository->add($categorieSalle, true);
-//
-//            return $this->redirectToRoute('app_categorie_salle');
-//        }
-//
-////        return $this->renderForm('users/edit.html.twig', [
-////            'categorieSalle' => $categorieSalle,
-////            'form' => $form,
-////        ]);
-//        return  new Response();
-//    }
-//    #[Route('/{id}', name: 'supprimer.Category.salle', methods: ['POST'])]
-//    public function supprimer(Request $request, CategorieSalle $categorieSalle, CategorieSalleRepository $categorieSalleRepository ): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$categorieSalle->getId(), $request->request->get('_token'))) {
-//            $categorieSalleRepository->remove($categorieSalle, true);
-//        }
-//        return $this->redirectToRoute('app_categorie_salle');
-//    }
+    #[Route('/supprimerCategory/{id}', name: 'supprimer.category')]
+    public function supprimerCategory(ManagerRegistry $doctrine,CategorieSalle $categorieSalle = null): Response
+    {
+        $entite = $doctrine->getManager();
+        $form=$this->createForm(CategorieSalleType::class,$categorieSalle);
+        if ($categorieSalle) {
+            $entite->remove($categorieSalle);
+            $entite->flush();
+            $this->addFlash('success', 'Suppression Réussi !');
+        }
+        else
+        {
+            $this->addFlash('error',"Opération Echoué !");
+        }
+        return $this->redirectToRoute('app_categorie_salle');
+    }
 }
