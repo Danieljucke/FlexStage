@@ -24,8 +24,6 @@ class Hotel
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $nombre_etoiles = null;
 
-    #[ORM\ManyToMany(targetEntity: CategorieHotel::class)]
-    private Collection $categorie;
 
     #[ORM\ManyToOne(inversedBy: 'hotels')]
     #[ORM\JoinColumn(nullable: false)]
@@ -33,6 +31,14 @@ class Hotel
 
     #[ORM\Column(length: 255)]
     private ?string $adresse = null;
+
+    #[ORM\ManyToMany(targetEntity: CategorieHotel::class, inversedBy: 'hotels')]
+    private Collection $categorie;
+
+    public function __construct()
+    {
+        $this->categorie = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -64,29 +70,6 @@ class Hotel
         return $this;
     }
 
-    /**
-     * @return Collection<int, CategorieHotel>
-     */
-    public function getCategorie(): Collection
-    {
-        return $this->categorie;
-    }
-
-    public function addCategorie(CategorieHotel $categorie): self
-    {
-        if (!$this->categorie->contains($categorie)) {
-            $this->categorie->add($categorie);
-        }
-
-        return $this;
-    }
-
-    public function removeCategorie(CategorieHotel $categorie): self
-    {
-        $this->categorie->removeElement($categorie);
-
-        return $this;
-    }
 
     public function getVille(): ?Ville
     {
@@ -108,6 +91,30 @@ class Hotel
     public function setAdresse(string $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CategorieHotel>
+     */
+    public function getCategorie(): Collection
+    {
+        return $this->categorie;
+    }
+
+    public function addCategorie(CategorieHotel $categorie): self
+    {
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie->add($categorie);
+        }
+
+        return $this;
+    }
+
+    public function removeCategorie(CategorieHotel $categorie): self
+    {
+        $this->categorie->removeElement($categorie);
 
         return $this;
     }

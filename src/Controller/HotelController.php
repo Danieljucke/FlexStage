@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class HotelController extends AbstractController
 {
     #[Route('/hotel/add', name: 'add_hotel')]
@@ -42,7 +43,7 @@ class HotelController extends AbstractController
                 $entiteHotel =  $doctrine->getManager();
                 $entiteHotel->persist($hotel);
                 $entiteHotel->flush();
-
+                return $this->redirectToRoute('add_hotel');
             }
         }
 
