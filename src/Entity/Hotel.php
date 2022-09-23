@@ -29,12 +29,11 @@ class Hotel
 
     #[ORM\ManyToOne(inversedBy: 'hotels')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Ville $adresse = null;
+    private ?Ville $ville = null;
 
-    public function __construct()
-    {
-        $this->categorie = new ArrayCollection();
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $adresse = null;
+
 
     public function getId(): ?int
     {
@@ -89,15 +88,28 @@ class Hotel
         return $this;
     }
 
-    public function getAdresse(): ?Ville
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
     {
         return $this->adresse;
     }
 
-    public function setAdresse(?Ville $adresse): self
+    public function setAdresse(string $adresse): self
     {
         $this->adresse = $adresse;
 
         return $this;
     }
+
 }

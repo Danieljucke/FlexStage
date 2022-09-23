@@ -30,14 +30,11 @@ class Ville
     #[ORM\ManyToOne(inversedBy: 'villes')]
     private ?Region $region = null;
 
-
-    #[ORM\OneToMany(mappedBy: 'adresse', targetEntity: Hotel::class)]
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Hotel::class)]
     private Collection $hotels;
 
     public function __construct()
     {
-        $this->communes = new ArrayCollection();
-        $this->quartiers = new ArrayCollection();
         $this->hotels = new ArrayCollection();
     }
 
@@ -105,7 +102,9 @@ class Ville
 
         return $this;
     }
-
+    public function __toString() {
+        return $this->nom_ville;
+    }
 
     /**
      * @return Collection<int, Hotel>
@@ -119,7 +118,7 @@ class Ville
     {
         if (!$this->hotels->contains($hotel)) {
             $this->hotels->add($hotel);
-            $hotel->setAdresse($this);
+            $hotel->setVille($this);
         }
 
         return $this;
@@ -129,8 +128,8 @@ class Ville
     {
         if ($this->hotels->removeElement($hotel)) {
             // set the owning side to null (unless already changed)
-            if ($hotel->getAdresse() === $this) {
-                $hotel->setAdresse(null);
+            if ($hotel->getVille() === $this) {
+                $hotel->setVille(null);
             }
         }
 
