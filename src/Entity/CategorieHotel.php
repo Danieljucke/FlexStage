@@ -32,4 +32,7 @@ class CategorieHotel
 
         return $this;
     }
+    public function __toString() {
+        return $this->denomination;
+    }
 }
