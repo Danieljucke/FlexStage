@@ -32,6 +32,13 @@ class Salle
     #[ORM\JoinColumn(nullable: false)]
     private ?Service $service = null;
 
+    #[ORM\Column(length: 100)]
+    private ?string $adresse = null;
+
+    #[ORM\ManyToOne(inversedBy: 'salles')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Ville $ville = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -111,5 +118,29 @@ class Salle
     public function __toString(): string
     {
         return $this->nom_salle;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
     }
 }
