@@ -30,8 +30,12 @@ class Ville
     #[ORM\ManyToOne(inversedBy: 'villes')]
     private ?Region $region = null;
 
+    #[ORM\OneToMany(mappedBy: 'ville', targetEntity: Salle::class, orphanRemoval: true)]
+    private Collection $salles;
+
     public function __construct()
     {
+        $this->salles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -100,5 +104,35 @@ class Ville
     }
     public function __toString() {
         return $this->nom_ville;
+    }
+
+    /**
+     * @return Collection<int, Salle>
+     */
+    public function getSalles(): Collection
+    {
+        return $this->salles;
+    }
+
+    public function addSalle(Salle $salle): self
+    {
+        if (!$this->salles->contains($salle)) {
+            $this->salles->add($salle);
+            $salle->setVille($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSalle(Salle $salle): self
+    {
+        if ($this->salles->removeElement($salle)) {
+            // set the owning side to null (unless already changed)
+            if ($salle->getVille() === $this) {
+                $salle->setVille(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -21,6 +21,7 @@ class RoleType extends AbstractType
             ->add('roleName',TextType::class,['required'=>true])
             ->add('Privillege',EntityType::class,[
                 'required'=>true,
+                'expanded'=>true,
                 'multiple'=>true,
                 'class'=>Privillege::class
             ])

@@ -31,6 +31,7 @@ class SalleController extends AbstractController
                 $this->addFlash('error','cette Salle existe déjà dans la base !');
             }else
             {
+                $this->addFlash('success','Enregistrement Réussi !');
                 $entite=$doctrine->getManager();
                 $salles->setUpdatedAt(new \DateTimeImmutable());
                 $salles->setCreatedAt(new \DateTimeImmutable());

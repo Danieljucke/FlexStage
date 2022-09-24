@@ -22,7 +22,7 @@ class RoleController extends AbstractController
          $forms->remove('staut');
          $forms->remove('createdAt');
          $forms->remove('updatedAt');
-         $forms->remove('privillege');
+//         $forms->remove('privillege');
          $forms->handleRequest($request);
          $roleName=$forms->get('roleName')->getViewData();
          $manage=$doctrine->getRepository(Role::class);
