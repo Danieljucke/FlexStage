@@ -12,11 +12,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-#[Route('/admin')]
+#[Route('/admin'),IsGranted("IS_AUTHENTICATED_FULLY")]
 class ReservationController extends AbstractController
 {
-    #[Route('/reservation', name: 'app_reservation'),/*IsGranted("IS_AUTHENTICATED_FULLY")*/]
-    public function index(Request $request, ReservationRepository $reservationRepository): Response
+    #[Route('/reservation/{page?1}/{nbre?10}', name: 'app_reservation')]
+    public function index($page,$nbre,Request $request, ReservationRepository $reservationRepository): Response
     {
         $reservation = new Reservation();
         $form=$this->createForm(ReservationType::class,$reservation);
@@ -25,9 +25,16 @@ class ReservationController extends AbstractController
         {
             $reservationRepository->add($reservation,true);// elle va persiter les elements recuperer dans le formulaire et flush dans la base
         }
+        $nbReservation =$reservationRepository->count([]);
+        $nbPages=ceil($nbReservation/$nbre);
+        $reservation=$reservationRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('reservation/index.html.twig', [
             'formReservation' => $form->createView(),
-            'reservations'=>$reservationRepository->findAll()
+            'reservations'=>$reservation,
+            'isPaginated'=>true,
+            'nbrePage'=>$nbPages,
+            'page'=>$page,
+            'nbre'=>$nbre
         ]);
     }
     #[Route('/montrerReservation/{id}', name: 'montrer.reservation')]

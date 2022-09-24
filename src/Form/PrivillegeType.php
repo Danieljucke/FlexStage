@@ -19,8 +19,12 @@ class PrivillegeType extends AbstractType
             ->add('privillegeName', TextType::class, ['required'=>true])
             ->add('roles', EntityType::class, [
                 'required'=>true,
+                'expanded' => false,
                 'multiple'=>true,
-                'class'=>Role::class
+                'class'=>Role::class,
+                'attr' => [
+                    'class' => 'select2'
+                ]
             ])
             ->add('Ajouter', SubmitType::class)
         ;

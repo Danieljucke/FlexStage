@@ -11,11 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route('/province'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class ProvinceController extends AbstractController
 {
-    #[Route('/province', name: 'app_province'),IsGranted("ROLE_ADMIN")]
-    public function AjouterProvince(Request $request, ManagerRegistry $doctrine, ProvinceRepository $provinceRepository): Response
+    #[Route('/voir/{page?1}/{nbre?10}', name: 'app_province'),IsGranted("ROLE_ADMIN")]
+    public function AjouterProvince($page,$nbre,Request $request, ManagerRegistry $doctrine, ProvinceRepository $provinceRepository): Response
     {
         $province= new Province();
         $form=$this->createForm(ProvinceType::class,$province);
@@ -40,9 +40,16 @@ class ProvinceController extends AbstractController
                 $this->addFlash('success','Enregistrement Réussi !');
             }
         }
+        $nbProvince =$provinceRepository->count([]);
+        $nbPages=ceil($nbProvince/$nbre);
+        $province=$provinceRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('province/Province.html.twig', [
             'formProvince' => $form->createView(),
-            'provinces'=>$provinceRepository->findAll()
+            'provinces'=>$province,
+            'isPaginated'=>true,
+            'nbrePage'=>$nbPages,
+            'page'=>$page,
+            'nbre'=>$nbre
         ]);
     }
     #[Route('/supprimerProvince/{id}', name: 'supprimer.province')]

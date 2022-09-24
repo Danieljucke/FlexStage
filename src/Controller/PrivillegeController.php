@@ -13,10 +13,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route('/privillege'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class PrivillegeController extends AbstractController
 {
-    #[Route('/privillege', name: 'app_privillege'),IsGranted("ROLE_ADMIN")]
+    #[Route('/privilleg', name: 'app_privillege'),IsGranted("ROLE_ADMIN")]
     public function ajouterPrivillege(Request $request, PrivillegeRepository $privillegeRepository, ManagerRegistry $doctrine): Response
     {
         $privilleges= new Privillege();

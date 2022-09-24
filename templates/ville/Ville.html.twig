@@ -20,8 +20,9 @@
                 </div>
                 <div class="card-body ">
                     <div class="table-wrap">
-                        <div class="table-responsive">
-                            <table class="table display product-overview mb-30" id="support_table5">
+                        <div class="table-scrollable">
+                            <table class="table table-hover table-checkable order-column full-width"
+                                   id="example4">
                                 <thead>
                                 <tr>
                                     <th>Id</th>
@@ -33,9 +34,9 @@
                                 </thead>
                                 <tbody>
                                 {%for ville in Villes %}
-                                    <tr>
-                                        <td>{{ ville.id }}</td>
-                                        <td>{{ ville.nomVille }}</td>
+                                    <tr {#class="odd gradeX"#}>
+                                        <td class="center">{{ ville.id }}</td>
+                                        <td >{{ ville.nomVille }}</td>
                                         <td>{{ ville.region }}</td>
                                         <td>{{ ville.province }}</td>
                                         <td>

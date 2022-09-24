@@ -11,10 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route('/categorieSalle'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class CategorieSalleController extends AbstractController
 {
-    #[Route('/categorie/salle', name: 'app_categorie_salle'), IsGranted("ROLE_ADMIN")]
+    #[Route('/voir/categorie/salle', name: 'app_categorie_salle'), IsGranted("ROLE_ADMIN")]
     public function index(Request $request, CategorieSalleRepository $categorieSalleRepository,ManagerRegistry $doctrine): Response
     {
         $categorieSalles= new CategorieSalle();
@@ -39,7 +39,6 @@ class CategorieSalleController extends AbstractController
                 $this->addFlash('success','Enregistrement Réussi !');
             }
         }
-
         return $this->render('categorie_salle/index.html.twig', [
             'formCategorie' => $form->createView(),
             'categories'=>$categorieSalleRepository->findAll()

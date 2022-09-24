@@ -6,6 +6,7 @@ use App\Entity\Users;
 use App\Form\UsersType;
 use App\Repository\UsersRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/users')]
+#[Route('/users'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class UsersController extends AbstractController
 {
     #[Route('/', name: 'app_users_index', methods: ['GET'])]

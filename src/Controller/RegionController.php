@@ -11,11 +11,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route('/region'),IsGranted('IS_AUTHENTICATED_FULLY')]
 class RegionController extends AbstractController
 {
-    #[Route('/region', name: 'app_region'),IsGranted("ROLE_ADMIN")]
-    public function index(Request $request,ManagerRegistry $doctrine, RegionRepository $regionRepository): Response
+    #[Route('/liste/{page?1}/{nbre?10}', name: 'app_region'),IsGranted("ROLE_ADMIN")]
+    public function index($page,$nbre,Request $request,ManagerRegistry $doctrine, RegionRepository $regionRepository): Response
     {
         $region = new Region();
         $form=$this->createForm(RegionType::class,$region);
@@ -39,10 +39,16 @@ class RegionController extends AbstractController
                 $this->addFlash('success','Enregistrement reussi!');
             }
         }
-
+        $nbRegion =$regionRepository->count([]);
+        $nbPages=ceil($nbRegion/$nbre);
+        $region=$regionRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('region/region.html.twig', [
             'formRegion' => $form->createView(),
-            'regions'=>$regionRepository->findAll()
+            'regions'=>$region,
+            'isPaginated'=>true,
+            'nbrePage'=>$nbPages,
+            'page'=>$page,
+            'nbre'=>$nbre
         ]);
     }
     #[Route('/supprimerRegion/{id}', name: 'supprimer.region')]
