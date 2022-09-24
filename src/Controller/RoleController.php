@@ -54,10 +54,9 @@ class RoleController extends AbstractController
     #[Route('/montrerRole/{id}', name: 'montrer.role')]
     public function montrerRole(Role $role=null): Response
     {
-//        return $this->render('users/show.html.twig', [
-//            'role' => $role,
-//        ]);
-        return new Response();
+        return $this->render('role/detailRole.html.twig', [
+            'role' => $role,
+        ]);
     }
 //    #[Route('/{id}/modifier', name: 'modifier.role', methods: ['GET', 'POST'])]
 //    public function modifier(Request $request, Role $role, RoleRepository $roleRepository): Response

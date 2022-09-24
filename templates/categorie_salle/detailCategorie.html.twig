@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}categorie{% endblock %}
+
+{% block body %}
+    <h1>categorie</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom De La Categorie</th>
+            <th>Description</th>
+            <th>Prix</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ categorie.id }}</td>
+            <td>{{ categorie.nomCategorie }}</td>
+            <td>{{ categorie.description }}</td>
+            <td>{{ categorie.prix }} $</td>
+            <td>
+                <a href="{{ path('app_categorie_salle') }}" class="btn btn-tbl-arrow btn-xs">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a href="{#{{ path('', {'id': categorie.id}) }}#}" class="btn btn-tbl-edit btn-xs">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{path('supprimer.category',{'id':categorie.id})}}">
+        <button class="btn btn-tbl-delete btn-xs">
+            <i class="fa fa-trash-o "></i>
+        </button></a>
+{%endblock%}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement{% endblock %}
+
+{% block body %}
+    <h1>Paiement</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Montant</th>
+            <th>Mode De Paiement</th>
+            <th>Date De Paiement</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ paiement.id}}</td>
+            <td>{{ paiement.montant }}$</td>
+            <td>{{ paiement.modePaiement }}</td>
+            <td>{{ paiement.datePaiement|date('Y-m-d') }}</td>
+            <td>
+                <a href="{{ path('app_paiement') }}" class="btn btn-tbl-arrow btn-xs">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a href="{#{{ path('', {'id': paiement.id}) }}#}" class="btn btn-tbl-edit btn-xs">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+{#    <a href="{{path('s',{'id':paiement.id})}}">#}
+{#        <button class="btn btn-tbl-delete btn-xs">#}
+{#            <i class="fa fa-trash-o "></i>#}
+{#        </button></a>#}
+{%endblock%}

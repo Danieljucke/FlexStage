@@ -6894,8 +6894,15 @@ tr.group:hover {
   color: #fff !important;
   box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
 }
+.btn-tbl-arrow{
+  background-color: #E74C3C;
+  border-radius: 50% !important;
+  padding: 5px !important;
+  color: #fff !important;
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.2);
+}
 .btn-tbl-edit:hover,
-.btn-tbl-delete:hover,.btn-tbl-info {
+.btn-tbl-delete:hover,.btn-tbl-info:hover,.btn-tbl-arrow:hover {
   color: #fff;
 }
 /* .tblHeightSet{

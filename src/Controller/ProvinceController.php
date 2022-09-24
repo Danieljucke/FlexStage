@@ -68,9 +68,8 @@ class ProvinceController extends AbstractController
     #[Route('/montrerProvince/{id}', name: 'montrer.province')]
     public function montrerProvince(Province $province=null): Response
     {
-//        return $this->render('users/show.html.twig', [
-//            'province' => $province,
-//        ]);
-        return new Response('bonjour');
+        return $this->render('province/detailProvince.html.twig', [
+            'province' => $province,
+        ]);
     }
 }

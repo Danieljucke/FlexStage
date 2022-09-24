@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ville{% endblock %}
+
+{% block body %}
+<h1>Ville</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nom De La Ville</th>
+        <th>Region</th>
+        <th>Province</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{{ ville.id }}</td>
+        <td>{{ ville.nomVille }}</td>
+        <td>{{ ville.region }}</td>
+        <td>{{ ville.province }}</td>
+        <td>
+            <a href="{{ path('app_ville') }}" class="btn btn-tbl-arrow btn-xs">
+                <i class="fa fa-arrow-left"></i>
+            </a>
+            <a href="{#{{ path('', {'id': ville.id}) }}#}" class="btn btn-tbl-edit btn-xs">
+                <i class="fa fa-pencil"></i>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<a href="{{path('supprimer.ville',{'id':ville.id})}}">
+    <button class="btn btn-tbl-delete btn-xs">
+        <i class="fa fa-trash-o "></i>
+    </button></a>
+{%endblock%}

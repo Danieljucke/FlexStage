@@ -60,9 +60,9 @@ class CategorieSalleController extends AbstractController
     #[Route('/montrerSalle/{id}', name: 'montrer.category')]
     public function montrerCategorieSalle(CategorieSalle $categorieSalle=null): Response
     {
-//        return $this->render('users/show.html.twig', [
-//            'reservation' => $reservation,
-//        ]);
+        return $this->render('categorie_salle/detailCategorie.html.twig', [
+            'categorie' => $categorieSalle,
+        ]);
         return new Response('bonjour');
     }
 }

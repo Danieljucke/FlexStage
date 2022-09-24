@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}role{% endblock %}
+
+{% block body %}
+    <h1>role</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom Du Role</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ role.id }}</td>
+            <td>{{ role.roleName }}</td>
+            <td><span class="label label-sm label-success">{{role.statut}}</span></td>
+            <td>
+                <a href="{{ path('app_role') }}" class="btn btn-tbl-arrow btn-xs">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a href="{#{{ path('', {'id': role.id}) }}#}" class="btn btn-tbl-edit btn-xs">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{path('supprimer.role',{'id':role.id})}}">
+        <button class="btn btn-tbl-delete btn-xs">
+            <i class="fa fa-trash-o "></i>
+        </button></a>
+{%endblock%}
