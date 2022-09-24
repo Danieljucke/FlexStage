@@ -17,11 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/users'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class UsersController extends AbstractController
 {
-    #[Route('/', name: 'app_users_index', methods: ['GET'])]
-    public function index(UsersRepository $usersRepository): Response
+    #[Route('/{page?1}/{nbre?10}', name: 'app_users_index', methods: ['GET'])]
+    public function index($page,$nbre,UsersRepository $usersRepository): Response
     {
+        $nbUsers=$usersRepository->count([]);
+        $nbPages=ceil($nbUsers/$nbre);
         return $this->render('users/index.html.twig', [
-            'users' => $usersRepository->findAll(),
+            'users' => $usersRepository->findBy([],[],$nbre,($page-1)*$nbre),
+            'isPaginated'=>true,
+            'nbrePage'=>$nbPages,
+            'page'=>$page,
+            'nbre'=>$nbre
         ]);
     }
 
