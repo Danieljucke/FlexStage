@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}reservation{% endblock %}
+
+{% block body %}
+    <h1>reservation</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date Début Reservation</th>
+            <th>Date Fin Reservation</th>
+            <th>Motif</th>
+            <th>Client</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ reservation.id }}</td>
+            <td>{{ reservation.dateArriver|date("Y-M-D") }}</td>
+            <td>{{ reservation.dateFin|date("Y-M-D") }}</td>
+            <td>{{ reservation.motif }}</td>
+            <td>{{ reservation.user}}</td>
+            <td>
+                <a href="{{ path('app_reservation') }}" class="btn btn-tbl-arrow btn-xs">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a href="{#{{ path('', {'id': reservation.id}) }}#}" class="btn btn-tbl-edit btn-xs">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{path('supprimer.Reservation',{'id':reservation.id})}}">
+        <button class="btn btn-tbl-delete btn-xs">
+            <i class="fa fa-trash-o "></i>
+        </button></a>
+{%endblock%}

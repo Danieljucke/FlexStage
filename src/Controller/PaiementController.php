@@ -57,9 +57,8 @@ class PaiementController extends AbstractController
     #[Route('/montrerPaiement/{id}', name: 'montrer.paiement')]
     public function montrerPaiment(Paiement $paiement=null): Response
     {
-//        return $this->render('users/show.html.twig', [
-//            'paiement' => $paiement,
-//        ]);
-        return new Response();
+        return $this->render('paiement/detailPaiement.html.twig', [
+            'paiement' => $paiement,
+        ]);
     }
 }

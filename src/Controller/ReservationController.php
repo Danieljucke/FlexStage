@@ -40,10 +40,9 @@ class ReservationController extends AbstractController
     #[Route('/montrerReservation/{id}', name: 'montrer.reservation')]
     public function montrerReservation(Reservation $reservation=null): Response
     {
-//        return $this->render('users/show.html.twig', [
-//            'reservation' => $reservation,
-//        ]);
-        return new Response('bonjour');
+        return $this->render('reservation/detailReservation.html.twig', [
+            'reservation' => $reservation,
+        ]);
     }
 //    #[Route('/{id}/modifier', name: 'modifier.reservation', methods: ['GET', 'POST'])]
 //    public function modifier(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response

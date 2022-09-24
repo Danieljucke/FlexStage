@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service{% endblock %}
+
+{% block body %}
+    <h1>Service</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom Du Service</th>
+            <th>Code Du Service</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ service.id }}</td>
+            <td>{{ service.nomService }}</td>
+            <td>{{ service.codeService }}</td>
+            <td>
+                <a href="{{ path('app_service') }}" class="btn btn-tbl-arrow btn-xs">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a href="{#{{ path('', {'id': Service.id}) }}#}" class="btn btn-tbl-edit btn-xs">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{path('supprimer.service',{'id':service.id})}}">
+        <button class="btn btn-tbl-delete btn-xs">
+            <i class="fa fa-trash-o "></i>
+        </button></a>
+{%endblock%}

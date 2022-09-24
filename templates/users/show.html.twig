@@ -6,25 +6,35 @@
     <h1>Users</h1>
 
     <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
+        <tr>
+            <td>{{ user.id }}</td>
+            <td >{{ user.email}}</td>
+            <td>{{ user.role }}</td>
+            <td>
+                <a href="{{ path('app_users_index') }}" class="btn btn-tbl-arrow btn-xs">
+                  <i class="fa fa-arrow-left"></i>
+                </a>
+                <a href="{{ path('app_users_edit', {'id': user.id}) }}" class="btn btn-tbl-edit btn-xs">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_users_index') }}">Revenir A La Liste</a>
-    <br>
-    <a href="{{ path('app_users_edit', {'id': user.id}) }}">Modifier</a>
 
-    {{ include('users/_delete_form.html.twig') }}
+    <a href="{{path('app_users_delete',{'id':user.id})}}">
+        <button class="btn btn-tbl-delete btn-xs">
+            <i class="fa fa-trash-o "></i>
+        </button></a>
+    {#    {{ include('users/_delete_form.html.twig') }}#}
 {% endblock %}

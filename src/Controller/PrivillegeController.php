@@ -69,9 +69,9 @@ class PrivillegeController extends AbstractController
     #[Route('/montrerPrivilleg/{id}', name: 'montrer.privillege')]
     public function montrer(Privillege $privillege=null): Response
     {
-//        return $this->render('users/show.html.twig', [
-//            'privilleg' => $privillege,
-//        ]);
+        return $this->render('privillege/detailPrivillege.html.twig', [
+            'privillege' => $privillege,
+        ]);
         return new Response('bonjour');
     }
 }

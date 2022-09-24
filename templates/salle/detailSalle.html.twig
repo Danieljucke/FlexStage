@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}salle{% endblock %}
+
+{% block body %}
+    <h1>salle</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom De La Salle</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+            <th>Statut</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ salle.id }}</td>
+            <td>{{ salle.nomsalle }}</td>
+            <td>{{ salle.adresse }}</td>
+            <td>{{ salle.ville }}</td>
+            <td><span class="label label-sm label-success">{{ salle.statut }}</span></td>
+            <td>
+                <a href="{{ path('app_salle') }}" class="btn btn-tbl-arrow btn-xs">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a href="{#{{ path('', {'id': salle.id}) }}#}" class="btn btn-tbl-edit btn-xs">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{path('supprimer.salle',{'id':salle.id})}}">
+        <button class="btn btn-tbl-delete btn-xs">
+            <i class="fa fa-trash-o "></i>
+        </button></a>
+{%endblock%}

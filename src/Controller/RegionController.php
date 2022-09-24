@@ -67,9 +67,8 @@ class RegionController extends AbstractController
     #[Route('/montrerRegion/{id}', name: 'montrer.region')]
     public function montrerRegion(Region $region=null): Response
     {
-//        return $this->render('users/show.html.twig', [
-//            'region' => $region,
-//        ]);
-        return new Response('bonjour');
+        return $this->render('region/detailRegion.html.twig', [
+            'region' => $region,
+        ]);
     }
 }

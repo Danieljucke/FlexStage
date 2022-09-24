@@ -54,10 +54,9 @@ class SalleController extends AbstractController
     #[Route('/montrerSalle/{id}', name: 'montrer.salle')]
     public function montrerSalle( Salle $salle=null): Response
     {
-//        return $this->render('users/show.html.twig', [
-//            'salle' => $salle,
-//        ]);
-        return new Response();
+        return $this->render('salle/detailSalle.html.twig', [
+            'salle' => $salle,
+        ]);
     }
 //    #[Route('/{id}/modifier', name: 'modifier.salle', methods: ['GET', 'POST'])]
 //    public function modifier(Request $request, Salle $salle,SalleRepository $salleRepository): Response

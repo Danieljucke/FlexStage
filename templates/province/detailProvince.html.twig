@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}province{% endblock %}
+
+{% block body %}
+    <h1>province</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom De La Province</th>
+            <th>Region</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ province.id }}</td>
+            <td>{{ province.nomprovince }}</td>
+            <td>{{ province.region }}</td>
+            <td>
+                <a href="{{ path('app_province') }}" class="btn btn-tbl-arrow btn-xs">
+                    <i class="fa fa-arrow-left"></i>
+                </a>
+                <a href="{#{{ path('', {'id': province.id}) }}#}" class="btn btn-tbl-edit btn-xs">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <a href="{{path('supprimer.province',{'id':province.id})}}">
+        <button class="btn btn-tbl-delete btn-xs">
+            <i class="fa fa-trash-o "></i>
+        </button></a>
+{%endblock%}

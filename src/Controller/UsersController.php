@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/users'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class UsersController extends AbstractController
 {
-    #[Route('/{page?1}/{nbre?10}', name: 'app_users_index', methods: ['GET'])]
+    #[Route('/indexUser/{page?1}/{nbre?10}', name: 'app_users_index', methods: ['GET'])]
     public function index($page,$nbre,UsersRepository $usersRepository): Response
     {
         $nbUsers=$usersRepository->count([]);

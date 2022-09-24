@@ -43,10 +43,9 @@ class ServiceController extends AbstractController
     #[Route('/montrerService/{id}', name: 'montrer.service')]
     public function montrer(Service $service=null): Response
     {
-//        return $this->render('users/show.html.twig', [
-//            'service' => $service,
-//        ]);
-        return new Response();
+        return $this->render('service/detailService.html.twig', [
+            'service' => $service,
+        ]);
     }
     #[Route('/supprimerService/{id}', name: 'supprimer.service')]
     public function supprimer(Request $request, Service $service=null, ServiceRepository $serviceRepository): Response
