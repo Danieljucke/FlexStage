@@ -8,13 +8,14 @@ use App\Form\VilleType;
 use App\Repository\VilleRepository;
 use http\Env\Request;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route('/ville'),IsGranted("IS_AUTHENTICATED_FULLY")]
 class VilleController extends AbstractController
 {
-    #[Route('/ville/{page?1}/{nbre?10}', name: 'app_ville')]
+    #[Route('/voiretajouter/{page?1}/{nbre?10}', name: 'app_ville')]
     public function index($page,$nbre,\Symfony\Component\HttpFoundation\Request $request, ManagerRegistry $doctrine, VilleRepository $villeRepository): Response
     {
         $villes = new Ville();

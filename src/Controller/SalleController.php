@@ -6,15 +6,16 @@ use App\Entity\Salle;
 use App\Form\SalleType;
 use App\Repository\SalleRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route('/Salle'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class SalleController extends AbstractController
 {
-    #[Route('/salle', name: 'app_salle')]
-    public function index(SalleRepository $salleRepository, Request $request, ManagerRegistry $doctrine): Response
+    #[Route('/voirEtAjouter/{page?1}/{nbre?10}', name: 'app_salle')]
+    public function index($page,$nbre,SalleRepository $salleRepository, Request $request, ManagerRegistry $doctrine): Response
     {
         $salles= new Salle();
         $form=$this->createForm(SalleType::class,$salles);
@@ -37,9 +38,16 @@ class SalleController extends AbstractController
                 $entite->flush();
             }
         }
+        $nbSalle =$salleRepository->count([]);
+        $nbPages=ceil($nbSalle/$nbre);
+        $salles=$salleRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('salle/index.html.twig', [
             'formSalle' => $form->createView(),
-            'salles'=>$salleRepository->findAll()
+            'salles'=>$salles,
+            'isPaginated'=>true,
+            'nbrePage'=>$nbPages,
+            'page'=>$page,
+            'nbre'=>$nbre
         ]);
     }
     #[Route('/montrerSalle/{id}', name: 'montrer.salle')]

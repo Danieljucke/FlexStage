@@ -11,10 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route('/role'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class RoleController extends AbstractController
 {
-    #[Route('/role', name: 'app_role'),IsGranted("ROLE_ADMIN")]
+    #[Route('/voir', name: 'app_role'),IsGranted("ROLE_ADMIN")]
     public function index(Request $request, ManagerRegistry $doctrine): Response
     {
          $role = new Role();

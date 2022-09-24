@@ -11,10 +11,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route('/paiement'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class PaiementController extends AbstractController
 {
-    #[Route('/paiement/{page?1}/{nbre?10}', name: 'app_paiement'),IsGranted("ROLE_ADMIN")]
+    #[Route('/voir/{page?1}/{nbre?10}', name: 'app_paiement'),IsGranted("ROLE_ADMIN")]
     public function index($page,$nbre,Request $request, ManagerRegistry $doctrine,PaiementRepository $paiementRepository): Response
     {
         $paiements= new Paiement();
@@ -28,12 +28,17 @@ class PaiementController extends AbstractController
             $entite->persist($paiements);
             $entite->flush();
         }
-//        $nbrPaiement=$paiementRepository->count([]);
-//        $nbPages=ceil($nbrPaiement/$nbre);
-//        $paiements=$paiementRepository->findBy()
+        $nbrPaiement=$paiementRepository->count([]);
+        $nbPages=ceil($nbrPaiement/$nbre);
+        $paiements=$paiementRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('paiement/index.html.twig', [
             'formPaiement' => $form->createView(),
-            'paiements'=>$paiements
+            'paiements'=>$paiements,
+            'isPaginated'=>true,
+            'nbrePage'=>$nbPages,
+            'page'=>$page,
+            'nbre'=>$nbre
+
         ]);
     }
 //    #[Route('/supprimerPaiement/{id}', name: 'supprimer.paiement')]

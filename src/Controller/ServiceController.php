@@ -6,14 +6,15 @@ use App\Entity\Service;
 use App\Form\ServiceType;
 use App\Repository\ServiceRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+#[Route("/service"),IsGranted("IS_AUTHENTICATED_FULLY")]
 class ServiceController extends AbstractController
 {
-    #[Route('/service', name: 'app_service')]
+    #[Route('/voirEtAjouter', name: 'app_service')]
     public function index(ServiceRepository $serviceRepository,ManagerRegistry $doctrine, Request $request): Response
     {
         $service= new Service();
