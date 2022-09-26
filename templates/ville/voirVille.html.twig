@@ -24,17 +24,20 @@
             <a href="{{ path('app_ville') }}" class="btn btn-tbl-arrow btn-xs">
                 <i class="fa fa-arrow-left"></i>
             </a>
+            {% if is_granted('ROLE_ADMIN') %}
             <a href="{#{{ path('', {'id': ville.id}) }}#}" class="btn btn-tbl-edit btn-xs">
                 <i class="fa fa-pencil"></i>
             </a>
+            {%endif%}
         </td>
     </tr>
     </tbody>
 </table>
 
-
+    {% if is_granted('ROLE_ADMIN') %}
 <a href="{{path('supprimer.ville',{'id':ville.id})}}">
     <button class="btn btn-tbl-delete btn-xs">
         <i class="fa fa-trash-o "></i>
     </button></a>
+    {%endif%}
 {%endblock%}

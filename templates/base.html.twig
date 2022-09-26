@@ -161,6 +161,7 @@
                                 <span class="title">Dashboard</span>
                             </a>
                         </li>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
                             <a href="#" class="nav-link nav-toggle">
                                 <i class="fa fa-user-o"></i>
@@ -183,21 +184,26 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif%}
 {#                        {%if is_granted('ROLE_MASTERDATA')%}#}
+                        {% if is_granted('ROLE_ADMIN') %}
                             <li class="menu-heading m-t-20">
                                 <span>Master Data</span>
                             </li>
+                        {%endif%}
                             <li class="nav-item">
                                 <a href="" class="nav-link nav-toggle"> <i class="fa fa-database"></i>
                                     <span class="title">Données</span> <span class="arrow"></span>
                                 </a>
                                 <ul class="sub-menu">
+                                    {% if is_granted('ROLE_ADMIN') %}
                                     <li class="nav-item">
                                         <a href="{{path('app_privillege')}}" class="nav-link ">
                                             <i class="material-icons">verified_user</i>
                                             <span class="title">Privilege</span>
                                         </a>
                                     </li>
+                                    {%endif%}
                                     <li class="nav-item">
                                         <a href="{{path('app_province')}}" class="nav-link ">
                                             <i class="material-icons">my_location</i>
@@ -211,12 +217,14 @@
                                                     class="title">Region</span>
                                         </a>
                                     </li>
+                                    {% if is_granted('ROLE_ADMIN') %}
                                     <li class="nav-item">
                                         <a href="{{path('app_role')}}" class="nav-link ">
                                             <i class="material-icons">gavel</i>
                                             <span class="title">Role</span>
                                         </a>
                                     </li>
+                                    {%endif%}
                                     <li class="nav-item">
                                         <a href="{{path('app_ville')}}" class="nav-link ">
                                             <i class="material-icons">location_city</i>
@@ -262,13 +270,19 @@
                                     </a>
                                     <ul class="sub-menu">
                                         <li class="nav-item">
-                                            <a href="contact_list.html" class="nav-link ">
+                                            <a href="{#{{path('')}}#}" class="nav-link ">
+                                                <i class="material-icons">add</i>
+                                                <span class="title">Restaurant</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="{#{{path('')}}#}" class="nav-link ">
                                                 <i class="material-icons">menu_book</i>
                                                 <span class="title">Ménus</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="contact_list.html" class="nav-link ">
+                                            <a href="{#{{path('')}}#}" class="nav-link ">
                                                 <i class="material-icons">restaurant_menu</i>
                                                 <span class="title">Plats</span>
                                             </a>
