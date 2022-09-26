@@ -38,6 +38,7 @@
                                         <td>{{ paiement.modePaiement }}</td>
                                         <td>{{ paiement.datePaiement|date('Y-m-d') }}</td>
                                         <td>
+                                            {% if is_granted('ROLE_ADMIN') %}
                                             <a href="{{path('montrer.paiement',{'id':paiement.id})}}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
@@ -46,6 +47,7 @@
 {#                                                <i class="fa fa-trash-o "></i>#}
 {#                                            </button>#}
 {#                                            </a>#}
+                                            {%endif%}
                                         </td>
                                     </tr>
                                 {%endfor%}

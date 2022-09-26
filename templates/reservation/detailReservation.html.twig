@@ -34,9 +34,10 @@
         </tbody>
     </table>
 
-
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{path('supprimer.Reservation',{'id':reservation.id})}}">
         <button class="btn btn-tbl-delete btn-xs">
             <i class="fa fa-trash-o "></i>
         </button></a>
+    {%endif%}
 {%endblock%}

@@ -4,9 +4,9 @@
 
 {% block body %}
     <div class="mb-3">
-
+        {% if is_granted('ROLE_ADMIN') %}
             {{form(formProvince)}}
-
+        {%endif%}
     </div>
     <div class="row">
         <div class="col-md-12 col-sm-12">
@@ -41,6 +41,7 @@
                                             <a href="{{path('montrer.province',{'id':province.id})}}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
+                                            {% if is_granted('ROLE_ADMIN') %}
                                                 <a href="{#{{path('modifier.province',{'id':province.id})}}#}" class="btn btn-tbl-edit btn-xs">
                                                     <i class="fa fa-pencil"></i>
                                                 </a>
@@ -48,6 +49,7 @@
                                             <button class="btn btn-tbl-delete btn-xs">
                                                     <i class="fa fa-trash-o "></i>
                                                 </button></a>
+                                            {%endif%}
                                         </td>
                                     </tr>
                                 {%endfor%}

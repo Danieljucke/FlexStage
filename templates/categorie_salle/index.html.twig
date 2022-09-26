@@ -3,7 +3,9 @@
 {% block title %} Categorie De Salle{% endblock %}
 
 {% block body %}
-{{form(formCategorie)}}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{form(formCategorie)}}
+    {%endif%}
     <div class="row">
         <div class="col-md-12 col-sm-12">
             <div class="card  card-box">
@@ -39,6 +41,7 @@
                                             <a href="{{path('montrer.category',{'id': categorie.id})}}" class="btn btn-tbl-info btn-xs">
                                                 <i class="fa fa-info"></i>
                                             </a>
+                                            {% if is_granted('ROLE_ADMIN') %}
                                             <a href="{#{{path('modifier.category',{'id':categorie.id})}}#}" class="btn btn-tbl-edit btn-xs">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
@@ -46,6 +49,7 @@
                                             <button class="btn btn-tbl-delete btn-xs">
                                                 <i class="fa fa-trash-o "></i>
                                             </button></a>
+                                            {%endif%}
                                         </td>
                                     </tr>
                                 {%endfor%}

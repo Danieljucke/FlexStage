@@ -29,9 +29,10 @@
         </tbody>
     </table>
 
-
+    {% if is_granted('ROLE_ADMIN') %}
     <a href="{{path('supprimer.region',{'id':region.id})}}">
         <button class="btn btn-tbl-delete btn-xs">
             <i class="fa fa-trash-o "></i>
         </button></a>
+    {%endif%}
 {%endblock%}
