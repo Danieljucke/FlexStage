@@ -20,8 +20,8 @@ class ServiceController extends AbstractController
         $service= new Service();
         $form=$this->createForm(ServiceType::class,$service);
         $form->handleRequest($request);
-        $recupNomService=$form->get('nom_service')->getViewData();
-        $checkSiNomServiceExiste=$serviceRepository->findBy(['nom_service'=>$recupNomService]);
+        // je check dans la BDD si le nom que je récupère dans le formulaire existe dans la base ou pas si oui alors je pose une condition
+        $checkSiNomServiceExiste=$serviceRepository->findBy(['nom_service'=>$form->get('nom_service')->getViewData()]);
         if($form->isSubmitted()&& $form->isValid())
         {
             if ($checkSiNomServiceExiste!=null)
@@ -30,9 +30,7 @@ class ServiceController extends AbstractController
             }else
             {
                 $this->addFlash('error','Enregistrement Réussi !');
-                $entite=$doctrine->getManager();
-                $entite->persist($service);
-                $entite->flush();
+                $serviceRepository->add($service,true);// la méthode add permet de persiter et de flush en même temps
             }
         }
         return $this->render('service/index.html.twig', [

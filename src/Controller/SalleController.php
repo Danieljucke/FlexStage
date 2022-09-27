@@ -22,8 +22,8 @@ class SalleController extends AbstractController
         $form->remove('createdAt');
         $form->remove('updatedAt');
         $form->handleRequest($request);
-        $recupNomSalle=$form->get('nom_salle')->getViewData();
-        $checkSiNomSalleExiste=$salleRepository->findBy(['nom_salle'=>$recupNomSalle]);
+        // je check dans la BDD si le nom que je récupère dans le formulaire existe dans la base ou pas si oui alors je pose une condition
+        $checkSiNomSalleExiste=$salleRepository->findBy(['nom_salle'=>$form->get('nom_salle')->getViewData()]);
         if($form->isSubmitted()&& $form->isValid())
         {
             if ($checkSiNomSalleExiste!=null)
@@ -32,21 +32,17 @@ class SalleController extends AbstractController
             }else
             {
                 $this->addFlash('success','Enregistrement Réussi !');
-                $entite=$doctrine->getManager();
                 $salles->setUpdatedAt(new \DateTimeImmutable());
                 $salles->setCreatedAt(new \DateTimeImmutable());
-                $entite->persist($salles);
-                $entite->flush();
+                $salleRepository->add($salles,true);// la méthode add permet de persiter et de flush en même temps
             }
         }
         $nbSalle =$salleRepository->count([]);
-        $nbPages=ceil($nbSalle/$nbre);
-        $salles=$salleRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('salle/index.html.twig', [
             'formSalle' => $form->createView(),
-            'salles'=>$salles,
+            'salles'=>$salleRepository->findBy([],[],$nbre,($page-1)*$nbre),
             'isPaginated'=>true,
-            'nbrePage'=>$nbPages,
+            'nbrePage'=>ceil($nbSalle/$nbre),
             'page'=>$page,
             'nbre'=>$nbre
         ]);

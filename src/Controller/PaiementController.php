@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaiementController extends AbstractController
 {
     #[Route('/voir/{page?1}/{nbre?10}', name: 'app_paiement'),IsGranted("ROLE_ADMIN")]
-    public function index($page,$nbre,Request $request, ManagerRegistry $doctrine,PaiementRepository $paiementRepository): Response
+    public function index($page,$nbre,Request $request,PaiementRepository $paiementRepository): Response
     {
         $paiements= new Paiement();
         $form=$this->createForm(PaiementType::class,$paiements);
@@ -23,19 +23,16 @@ class PaiementController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-            $entite=$doctrine->getManager();
             $paiements->setDatePaiement(new \DateTimeImmutable());
-            $entite->persist($paiements);
-            $entite->flush();
+            $paiementRepository->add($paiements, true); // la méthode add permet de persiter et de flush en même temps
+            $this->addFlash('success', 'Opération réussi !');
         }
         $nbrPaiement=$paiementRepository->count([]);
-        $nbPages=ceil($nbrPaiement/$nbre);
-        $paiements=$paiementRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('paiement/index.html.twig', [
             'formPaiement' => $form->createView(),
-            'paiements'=>$paiements,
+            'paiements'=>$paiementRepository->findBy([],[],$nbre,($page-1)*$nbre),
             'isPaginated'=>true,
-            'nbrePage'=>$nbPages,
+            'nbrePage'=>ceil($nbrPaiement/$nbre),
             'page'=>$page,
             'nbre'=>$nbre
 

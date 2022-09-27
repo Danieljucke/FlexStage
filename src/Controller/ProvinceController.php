@@ -15,16 +15,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProvinceController extends AbstractController
 {
     #[Route('/voir/{page?1}/{nbre?10}', name: 'app_province'),IsGranted("ROLE_ADMIN")]
-    public function AjouterProvince($page,$nbre,Request $request, ManagerRegistry $doctrine, ProvinceRepository $provinceRepository): Response
+    public function AjouterProvince($page,$nbre,Request $request, ProvinceRepository $provinceRepository): Response
     {
         $province= new Province();
         $form=$this->createForm(ProvinceType::class,$province);
         $form->remove('createdAt');
         $form->remove('updatedAt');
         $form->handleRequest($request);
-        $recupNomProvince=$form->get('nom_province')->getViewData();
-        $repository=$doctrine->getRepository(Province::class);
-        $checkSiprovinceExiste=$repository->findBy(['nom_province'=>$recupNomProvince]);
+        // je check dans la BDD si le nom que je récupère dans le formulaire existe dans la base ou pas si oui alors je pose une condition
+        $checkSiprovinceExiste=$provinceRepository->findBy(['nom_province'=>$form->get('nom_province')->getViewData()]);
         if ($form->isSubmitted()&& $form->isValid())
         {
             if($checkSiprovinceExiste!=null)
@@ -32,22 +31,18 @@ class ProvinceController extends AbstractController
                 $this->addFlash('error','cette province existe déjà');
             }else
             {
-                $entite=$doctrine->getManager();
                 $province->setUpdatedAt(new \DateTimeImmutable('now'));
                 $province->setCreatedAt(new \DateTimeImmutable('now'));
-                $entite->persist($province);
-                $entite->flush();
+                $provinceRepository->add($province, true);// la méthode add permet de persiter et de flush en même temps
                 $this->addFlash('success','Enregistrement Réussi !');
             }
         }
         $nbProvince =$provinceRepository->count([]);
-        $nbPages=ceil($nbProvince/$nbre);
-        $province=$provinceRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('province/Province.html.twig', [
             'formProvince' => $form->createView(),
-            'provinces'=>$province,
+            'provinces'=>$provinceRepository->findBy([],[],$nbre,($page-1)*$nbre),
             'isPaginated'=>true,
-            'nbrePage'=>$nbPages,
+            'nbrePage'=>ceil($nbProvince/$nbre),
             'page'=>$page,
             'nbre'=>$nbre
         ]);

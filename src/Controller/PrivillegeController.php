@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PrivillegeController extends AbstractController
 {
     #[Route('/privilleg', name: 'app_privillege'),IsGranted("ROLE_ADMIN")]
-    public function ajouterPrivillege(Request $request, PrivillegeRepository $privillegeRepository, ManagerRegistry $doctrine): Response
+    public function ajouterPrivillege(Request $request, PrivillegeRepository $privillegeRepository): Response
     {
         $privilleges= new Privillege();
         $form=$this->createForm(PrivillegeType::class,$privilleges);
@@ -25,8 +25,8 @@ class PrivillegeController extends AbstractController
         $form->remove('createdAt');
         $form->remove('updatedAt');
         $form->handleRequest($request);
-        $recuperPrivillege=$form->get('privillegeName')->getViewData();
-        $checkSiPrivillegeExiste=$privillegeRepository->findBy(['privillegeName'=>$recuperPrivillege]);
+        // je check dans la BDD si le nom que je récupère dans le formulaire existe dans la base ou pas si oui alors je pose une condition
+        $checkSiPrivillegeExiste=$privillegeRepository->findBy(['privillegeName'=>$form->get('privillegeName')->getViewData()]);
         if ($form->isSubmitted() && $form->isValid())
         {
             if ($checkSiPrivillegeExiste!=null)
@@ -35,12 +35,10 @@ class PrivillegeController extends AbstractController
             }
             else{
                 try {
-                    $entite=$doctrine->getManager();
                     $privilleges->setUpdatedAt(new \DateTimeImmutable());
                     $privilleges->setCreatedAt(new \DateTimeImmutable());
                     $privilleges->setStatut('Actif');
-                    $entite->persist($privilleges);
-                    $entite->flush();
+                    $privillegeRepository->add($privilleges, true);// la méthode add permet de persiter et de flush en même temps
                 }catch (Exception $exception)
                 {
                     $this->addFlash('error', $exception);
