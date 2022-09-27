@@ -15,14 +15,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegionController extends AbstractController
 {
     #[Route('/liste/{page?1}/{nbre?10}', name: 'app_region'),IsGranted("ROLE_ADMIN")]
-    public function index($page,$nbre,Request $request,ManagerRegistry $doctrine, RegionRepository $regionRepository): Response
+    public function index($page,$nbre,Request $request, RegionRepository $regionRepository): Response
     {
         $region = new Region();
         $form=$this->createForm(RegionType::class,$region);
         $form->handleRequest($request);
-        $regionNom=$form->get('nom_region')->getViewData();
-        $repo=$doctrine->getRepository(Region::class);
-        $findregionNom=$repo->findBy(['nom_region'=>$regionNom]);
+        // je check dans la BDD si le nom que je récupère dans le formulaire existe dans la base ou pas si oui alors je pose une condition
+        $findregionNom=$regionRepository->findBy(['nom_region'=>$form->get('nom_region')->getViewData()]);
         if ($form->isSubmitted() && $form->isValid())
         {
             if($findregionNom!=null)
@@ -33,20 +32,16 @@ class RegionController extends AbstractController
             {
                 $region->setCreatedAt(new \DateTimeImmutable());
                 $region->setUpdatedAt(new  \DateTimeImmutable());
-                $entite=$doctrine->getManager();
-                $entite->persist($region);
-                $entite->flush();
+                $regionRepository->add($region,true);// la méthode add permet de persiter et de flush en même temps
                 $this->addFlash('success','Enregistrement reussi!');
             }
         }
         $nbRegion =$regionRepository->count([]);
-        $nbPages=ceil($nbRegion/$nbre);
-        $region=$regionRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('region/region.html.twig', [
             'formRegion' => $form->createView(),
-            'regions'=>$region,
+            'regions'=>$regionRepository->findBy([],[],$nbre,($page-1)*$nbre),
             'isPaginated'=>true,
-            'nbrePage'=>$nbPages,
+            'nbrePage'=>ceil($nbRegion/$nbre),
             'page'=>$page,
             'nbre'=>$nbre
         ]);

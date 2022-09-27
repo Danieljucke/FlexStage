@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RoleController extends AbstractController
 {
     #[Route('/voir', name: 'app_role'),IsGranted("ROLE_ADMIN")]
-    public function index(Request $request, ManagerRegistry $doctrine): Response
+    public function index(Request $request,RoleRepository $roleRepository): Response
     {
          $role = new Role();
          $forms=$this->createForm(RoleType::class,$role);
@@ -23,9 +23,8 @@ class RoleController extends AbstractController
          $forms->remove('createdAt');
          $forms->remove('updatedAt');
          $forms->handleRequest($request);
-         $roleName=$forms->get('roleName')->getViewData();
-         $manage=$doctrine->getRepository(Role::class);
-         $find=$manage->findBy(['roleName'=>$roleName]);
+        // je check dans la BDD si le nom que je récupère dans le formulaire existe dans la base ou pas si oui alors je pose une condition
+         $find=$roleRepository->findBy(['roleName'=>$forms->get('roleName')->getViewData()]);
          if ($forms->isSubmitted())
          {
              if ($find!=null)
@@ -34,20 +33,16 @@ class RoleController extends AbstractController
              }
              else
              {
-                 $this->addFlash('success','enregistrement réussi!');
                  $role->setStatut('Actif');
                  $role->setCreatedAt(new \DateTimeImmutable('now'));
                  $role->setUpdatedAt(new \DateTimeImmutable('now'));
-                 $manager=$doctrine->getManager();
-                 $manager->persist($role);
-                 $manager->flush();
+                 $roleRepository->add($role,true);// la méthode add permet de persiter et de flush en même temps
+                 $this->addFlash('success','enregistrement réussi!');
              }
          }
-        $repository = $doctrine->getRepository(Role::class);
-        $role=$repository->findAll();
         return $this->render('role/addRole.html.twig',[
             'formRole'=> $forms->createView(),
-            'roles'=>$role
+            'roles'=>$roleRepository->findAll()
         ]);
     }
 

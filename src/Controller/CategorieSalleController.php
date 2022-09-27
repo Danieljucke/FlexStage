@@ -11,19 +11,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function PHPUnit\Framework\equalTo;
+
 #[Route('/categorieSalle'), IsGranted("IS_AUTHENTICATED_FULLY")]
 class CategorieSalleController extends AbstractController
 {
     #[Route('/voir/categorie/salle', name: 'app_categorie_salle'), IsGranted("ROLE_ADMIN")]
-    public function index(Request $request, CategorieSalleRepository $categorieSalleRepository,ManagerRegistry $doctrine): Response
+    public function index(
+        Request $request,
+        CategorieSalleRepository $categorieSalleRepository): Response
     {
         $categorieSalles= new CategorieSalle();
         $form=$this->createForm(CategorieSalleType::class,$categorieSalles);
         $form->remove('createdAt');
         $form->remove('updatedAt');
         $form->handleRequest($request);
-        $recupNomCategorei=$form->get('nom_categorie')->getViewData();
-        $checkSiNomCategorieExiste=$categorieSalleRepository->findBy(['nom_categorie'=>$recupNomCategorei]);
+        // je check dans la BDD si le nom que je récupère dans le formulaire existe dans la base ou pas si oui alors je pose une condition
+        $checkSiNomCategorieExiste=$categorieSalleRepository->findBy(['nom_categorie'=>$form->get('nom_categorie')->getViewData()]);
         if($form->isSubmitted()&& $form->isValid())
         {
             if ($checkSiNomCategorieExiste!=null)
@@ -31,11 +35,10 @@ class CategorieSalleController extends AbstractController
                 $this->addFlash('error','cette categorie existe déjà dans la base !');
             }else
             {
-                $entite=$doctrine->getManager();
                 $categorieSalles->setUpdatedAt(new \DateTimeImmutable());
                 $categorieSalles->setCreatedAt(new \DateTimeImmutable());
-                $entite->persist($categorieSalles);
-                $entite->flush();
+                // la méthode add permet de persiter et de flush en même temps
+                $categorieSalleRepository->add($categorieSalles, true);
                 $this->addFlash('success','Enregistrement Réussi !');
             }
         }
@@ -63,6 +66,5 @@ class CategorieSalleController extends AbstractController
         return $this->render('categorie_salle/detailCategorie.html.twig', [
             'categorie' => $categorieSalle,
         ]);
-        return new Response('bonjour');
     }
 }

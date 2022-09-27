@@ -26,13 +26,11 @@ class ReservationController extends AbstractController
             $reservationRepository->add($reservation,true);// elle va persiter les elements recuperer dans le formulaire et flush dans la base
         }
         $nbReservation =$reservationRepository->count([]);
-        $nbPages=ceil($nbReservation/$nbre);
-        $reservation=$reservationRepository->findBy([],[],$nbre,($page-1)*$nbre);
         return $this->render('reservation/index.html.twig', [
             'formReservation' => $form->createView(),
-            'reservations'=>$reservation,
+            'reservations'=>$reservationRepository->findBy([],[],$nbre,($page-1)*$nbre),
             'isPaginated'=>true,
-            'nbrePage'=>$nbPages,
+            'nbrePage'=>ceil($nbReservation/$nbre),
             'page'=>$page,
             'nbre'=>$nbre
         ]);
