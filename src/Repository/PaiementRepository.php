@@ -42,11 +42,11 @@ class PaiementRepository extends ServiceEntityRepository
 //    /**
 //     * @return Paiement[] Returns an array of Paiement objects
 //     */
-//    public function findByExampleField($value): array
+//    public function findByDate(): array
 //    {
 //        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
+//            ->andWhere('p.date_paiement = :val')
+//            ->setParameter('val', new  \DateTimeImmutable(date('now')))
 //            ->orderBy('p.id', 'ASC')
 //            ->setMaxResults(10)
 //            ->getQuery()

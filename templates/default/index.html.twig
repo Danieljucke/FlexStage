@@ -16,7 +16,17 @@
                                <span class="info-box-text">Utilisateurs</span>
                                <span class="info-box-number">{{nbreUtilisateur}}</span>
                                <div class="progress">
-                                   <div class="progress-bar width-{{nbreUtilisateur}}"></div>
+                                   {%if nbreUtilisateur >=0 and nbreUtilisateur<300 %}
+                                    <div class="progress-bar width-10" ></div>
+                                   {%elseif nbreUtilisateur >=300 and nbreUtilisateur <600%}
+                                       <div class="progress-bar width-40" ></div>
+                                   {%elseif nbreUtilisateur >=600 and nbreUtilisateur <900%}
+                                       <div class="progress-bar width-60" ></div>
+                                   {%elseif nbreUtilisateur >=900 and nbreUtilisateur <1100%}
+                                       <div class="progress-bar width-80" ></div>
+                                   {%else%}
+                                       <div class="progress-bar width-90" ></div>
+                                   {%endif%}
                                </div>
                            </div>
                        <!-- /.info-box-content -->
@@ -32,7 +42,17 @@
                            <span class="info-box-text">Reservations</span>
                            <span class="info-box-number">{{ nbreReservation }}</span>
                            <div class="progress">
-                               <div class="progress-bar width-{{nbreReservation}}"></div>
+                               {%if nbreReservation >=0 and nbreReservation<300 %}
+                                   <div class="progress-bar width-10" ></div>
+                               {%elseif nbreReservation >=300 and nbreReservation <600%}
+                                   <div class="progress-bar width-40" ></div>
+                               {%elseif nbreReservation >=600 and nbreReservation <900%}
+                                   <div class="progress-bar width-60" ></div>
+                               {%elseif nbreReservation >=900 and nbreReservation <1100%}
+                                   <div class="progress-bar width-80" ></div>
+                               {%else%}
+                                   <div class="progress-bar width-90" ></div>
+                               {%endif%}
                            </div>
                        </div>
                        <!-- /.info-box-content -->
@@ -48,7 +68,17 @@
                                        <span class="info-box-text"> Nombre Paiement</span>
                                        <span class="info-box-number">{{ nbrePaiement }}</span>
                                        <div class="progress">
-                                           <div class="progress-bar width-{{ nbrePaiement }}"></div>
+                                           {%if nbrePaiement >=0 and nbrePaiement<300 %}
+                                               <div class="progress-bar width-10" ></div>
+                                           {%elseif nbrePaiement >=300 and nbrePaiement <600%}
+                                               <div class="progress-bar width-40" ></div>
+                                           {%elseif nbrePaiement >=600 and nbrePaiement <900%}
+                                               <div class="progress-bar width-60" ></div>
+                                           {%elseif nbrePaiement >=900 and nbrePaiement <1100%}
+                                               <div class="progress-bar width-80" ></div>
+                                           {%else%}
+                                               <div class="progress-bar width-90" ></div>
+                                           {%endif%}
                                        </div>
                                    </div>
                                    <!-- /.info-box-content -->
@@ -64,7 +94,17 @@
                            <span class="info-box-text">Total Paiement</span>
                            <span class="info-box-number">{{sommePaiement}}.00$</span>
                            <div class="progress">
-                               <div class="progress-bar width-{{nbrePaiement}}"></div>
+                               {%if nbrePaiement >=0 and nbrePaiement<300 %}
+                                   <div class="progress-bar width-10" ></div>
+                               {%elseif nbrePaiement >=300 and nbrePaiement <600%}
+                                   <div class="progress-bar width-40" ></div>
+                               {%elseif nbrePaiement >=600 and nbrePaiement <900%}
+                                   <div class="progress-bar width-60" ></div>
+                               {%elseif nbrePaiement >=900 and nbrePaiement <1100%}
+                                   <div class="progress-bar width-80" ></div>
+                               {%else%}
+                                   <div class="progress-bar width-90" ></div>
+                               {%endif%}
                            </div>
                        </div>
                        <!-- /.info-box-content -->

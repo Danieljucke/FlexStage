@@ -6,6 +6,7 @@ use App\Repository\PaiementRepository;
 use App\Repository\ReservationRepository;
 use App\Repository\UsersRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,21 +17,21 @@ class DefaultController extends AbstractController
     public function index(
         UsersRepository $usersRepository,
         ReservationRepository $reservationRepository,
-        PaiementRepository $paiementRepository
+        PaiementRepository $paiementRepository, ManagerRegistry $d
+
     ): Response
     {
-        $nbrePaiement=$paiementRepository->count([]);
         $sommePaiement=0;
-        for ($i=0;$i<$nbrePaiement;$i++)
+        for ($i=1;$i<$paiementRepository->count([]);$i++)
         {
-             $pa=$paiementRepository->findOneBySomeField(['id'=>$i+1]);
+            $pa=$paiementRepository->findOneBySomeField(['id'=>$i]);
             $sommePaiement=$sommePaiement+ $pa->getMontant();
         }
         return $this->render('default/index.html.twig', [
             'nbreUtilisateur' => $usersRepository->count([]),
             'nbreReservation'=>$reservationRepository->count([]),
             'nbrePaiement'=>$paiementRepository->count([]),
-            'sommePaiement'=>$sommePaiement
+            'sommePaiement'=>$sommePaiement,
         ]);
     }
 }
