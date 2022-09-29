@@ -23,7 +23,7 @@ class PaiementController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-            $paiements->setDatePaiement(new \DateTimeImmutable());
+            $paiements->setDatePaiement(new \DateTimeImmutable('now'));
             $paiementRepository->add($paiements, true); // la méthode add permet de persiter et de flush en même temps
             $this->addFlash('success', 'Opération réussi !');
         }
