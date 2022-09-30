@@ -13,13 +13,13 @@ class Menu
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nom_menu = null;
+    public ?string $nom_menu = null;
 
     #[ORM\Column]
-    private ?int $nombre_plat = null;
+    public ?int $nombre_plat = null;
 
     #[ORM\ManyToMany(targetEntity: Plat::class, inversedBy: 'menus')]
     private Collection $Plat;
@@ -121,4 +121,5 @@ class Menu
 
         return $this;
     }
+
 }

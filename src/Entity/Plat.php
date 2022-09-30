@@ -14,16 +14,16 @@ class Plat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nom_plat = null;
+    public ?string $nom_plat = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: '0')]
-    private ?string $prix = null;
+    public ?string $prix = null;
 
     #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'Plat')]
-    private Collection $menus;
+    public Collection $menus;
 
     public function __construct()
     {
@@ -38,6 +38,7 @@ class Plat
     public function getNomPlat(): ?string
     {
         return $this->nom_plat;
+
     }
 
     public function setNomPlat(string $nom_plat): self
@@ -84,5 +85,9 @@ class Plat
         }
 
         return $this;
+    }
+    public function __toString(): string
+    {
+        return $this->nom_plat;
     }
 }

@@ -13,22 +13,22 @@ class Restaurant
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nom_restaurant = null;
+    public ?string $nom_restaurant = null;
 
     #[ORM\Column]
-    private ?int $nombre_etoile = null;
+    public ?int $nombre_etoile = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $adresse = null;
+    public ?string $adresse = null;
 
     #[ORM\OneToMany(mappedBy: 'restaurant', targetEntity: Menu::class)]
     private Collection $menu;
 
     #[ORM\ManyToOne(inversedBy: 'restaurant')]
-    private ?Ville $ville = null;
+    public ?Ville $ville = null;
 
     public function __construct()
     {
@@ -117,7 +117,10 @@ class Restaurant
 
         return $this;
     }
-
+    public function __toString(): string
+    {
+        return $this->nom_restaurant;
+    }
 
 
 }
