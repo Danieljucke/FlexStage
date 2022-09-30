@@ -75,13 +75,19 @@ class RestaurantController extends AbstractController
         ]);
     }
 
-    #[Route('/details', name: 'detailsRestau')]
-    public function detailsRestau(ManagerRegistry $doctrine): Response
+    #[Route('/detailR', name: 'detailRestau')]
+    public function detailRestau(ManagerRegistry $doctrine, $id): Response
     {
 
         $repository = $doctrine->getRepository(Restaurant::class);
-        $restaurant= $repository->findAll();
-        return $this->render('restaurant/listerestau.html.twig', [
+        $restaurant= $repository->find($id);
+        if(!$restaurant){
+
+           $this->addFlash('error', 'le restaurant avec cet identifiant n existe pas');
+           return $this->redirectToRoute('restaurant');
+
+        }
+        return $this->render('restaurant/detailrestau.html.twig', [
             'restaurants'=>$restaurant
 
         ]);
