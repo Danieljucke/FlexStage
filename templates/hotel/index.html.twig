@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme formHotel 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}Insertion d'hotel{% endblock %}
+
+{% block body %}
+    <h1>
+        {% if editMode %}
+            Modification d'un hotel
+        {% else %}
+            Création d'un hotel
+        {% endif %}
+    </h1>
+
+    {{ form_start(formHotel) }}
+
+    {{ form_widget(formHotel) }}
+    <button type="submit" class="btn btn-success">
+        {% if editMode %}
+            Enregistrer les modifications
+        {% else %}
+            Ajouter l'hôtel
+        {% endif %}
+    </button>
+    {{ form_end(formHotel) }}
+{% endblock %}
