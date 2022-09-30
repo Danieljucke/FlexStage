@@ -1,0 +1,19 @@
+{% extends 'baseRestau.html.twig' %}
+
+{% block contenu %}
+<h1>Liste des Restaurants</h1>
+{% for restaurant in restaurants %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ restaurant.nom_restaurant }} </h5>
+            <p class="card-text">{{ restaurant.nombre_etoile }} étoile</p>
+            <p class="card-text">{{ restaurant.ville }} </p>
+            <p class="card-text">{{ restaurant.adresse  }}</p>
+
+            <a href="#" class="card-link">Todo</a>
+
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}
