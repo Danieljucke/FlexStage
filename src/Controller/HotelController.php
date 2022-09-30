@@ -6,16 +6,17 @@ use App\Entity\Hotel;
 use App\Form\HotelType;
 use App\Repository\HotelRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
+#[Route("/hotel"),IsGranted("IS_AUTHENTICATED_FULLY")]
 class HotelController extends AbstractController
 {
-    #[Route('/hotel/add', name: 'add_hotel')]
-    #[Route('/hotel/edit/{id}', name:'edit_hotel')]
+    #[Route('/add', name: 'add_hotel'),IsGranted("ROLE_ADMIN")]
+    #[Route('/edit/{id}', name:'edit_hotel'),IsGranted("ROLE_ADMIN")]
     public function create(HotelRepository $hotelRepository, ManagerRegistry $doctrine, Request $request, Hotel $hotel=null): Response
     {
         if (!$hotel){

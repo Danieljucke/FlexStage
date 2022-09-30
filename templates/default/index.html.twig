@@ -1,7 +1,162 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-
+{#<div class="page-wrapper">#}
+{#    <div class="page-container">#}
+{#        <div class="page-content-wrapper">#}
+       <!-- start widget -->
+       <div class="state-overview">
+           <div class="row">
+               <div class="col-xl-3 col-md-6 col-12">
+                   <div class="info-box bg-blue">
+                           <span class="info-box-icon push-bottom"> <i class="material-icons">group</i></span>
+                           <div class="info-box-content">
+                               <span class="info-box-text">Utilisateurs</span>
+                               <span class="info-box-number">{{nbreUtilisateur}}</span>
+                               <div class="progress">
+                                   {%if nbreUtilisateur >=0 and nbreUtilisateur<300 %}
+                                    <div class="progress-bar width-10" ></div>
+                                   {%elseif nbreUtilisateur >=300 and nbreUtilisateur <600%}
+                                       <div class="progress-bar width-40" ></div>
+                                   {%elseif nbreUtilisateur >=600 and nbreUtilisateur <900%}
+                                       <div class="progress-bar width-60" ></div>
+                                   {%elseif nbreUtilisateur >=900 and nbreUtilisateur <1100%}
+                                       <div class="progress-bar width-80" ></div>
+                                   {%else%}
+                                       <div class="progress-bar width-90" ></div>
+                                   {%endif%}
+                               </div>
+                           </div>
+                       <!-- /.info-box-content -->
+                   </div>
+                   <!-- /.info-box -->
+               </div>
+               <!-- /.col -->
+               <div class="col-xl-3 col-md-6 col-12">
+                   <div class="info-box bg-orange">
+									<span class="info-box-icon push-bottom"><i
+                                                class="material-icons">turned_in</i></span>
+                       <div class="info-box-content">
+                           <span class="info-box-text">Reservations</span>
+                           <span class="info-box-number">{{ nbreReservation }}</span>
+                           <div class="progress">
+                               {%if nbreReservation >=0 and nbreReservation<300 %}
+                                   <div class="progress-bar width-10" ></div>
+                               {%elseif nbreReservation >=300 and nbreReservation <600%}
+                                   <div class="progress-bar width-40" ></div>
+                               {%elseif nbreReservation >=600 and nbreReservation <900%}
+                                   <div class="progress-bar width-60" ></div>
+                               {%elseif nbreReservation >=900 and nbreReservation <1100%}
+                                   <div class="progress-bar width-80" ></div>
+                               {%else%}
+                                   <div class="progress-bar width-90" ></div>
+                               {%endif%}
+                           </div>
+                       </div>
+                       <!-- /.info-box-content -->
+                   </div>
+                   <!-- /.info-box -->
+               </div>
+               <!-- /.col -->
+                           <div class="col-xl-3 col-md-6 col-12">
+                               <div class="info-box bg-purple">
+               									<span class="info-box-icon push-bottom"><i
+                                                               class="material-icons">shopping_cart</i></span>
+                                   <div class="info-box-content">
+                                       <span class="info-box-text"> Nombre Paiement</span>
+                                       <span class="info-box-number">{{ nbrePaiement }}</span>
+                                       <div class="progress">
+                                           {%if nbrePaiement >=0 and nbrePaiement<300 %}
+                                               <div class="progress-bar width-10" ></div>
+                                           {%elseif nbrePaiement >=300 and nbrePaiement <600%}
+                                               <div class="progress-bar width-40" ></div>
+                                           {%elseif nbrePaiement >=600 and nbrePaiement <900%}
+                                               <div class="progress-bar width-60" ></div>
+                                           {%elseif nbrePaiement >=900 and nbrePaiement <1100%}
+                                               <div class="progress-bar width-80" ></div>
+                                           {%else%}
+                                               <div class="progress-bar width-90" ></div>
+                                           {%endif%}
+                                       </div>
+                                   </div>
+                                   <!-- /.info-box-content -->
+                               </div>
+                               <!-- /.info-box -->
+                           </div>
+               <!-- /.col -->
+               <div class="col-xl-3 col-md-6 col-12">
+                   <div class="info-box bg-success">
+									<span class="info-box-icon push-bottom"><i
+                                                class="material-icons">monetization_on</i></span>
+                       <div class="info-box-content">
+                           <span class="info-box-text">Total Paiement</span>
+                           <span class="info-box-number">{{sommePaiement}}.00$</span>
+                           <div class="progress">
+                               {%if nbrePaiement >=0 and nbrePaiement<300 %}
+                                   <div class="progress-bar width-10" ></div>
+                               {%elseif nbrePaiement >=300 and nbrePaiement <600%}
+                                   <div class="progress-bar width-40" ></div>
+                               {%elseif nbrePaiement >=600 and nbrePaiement <900%}
+                                   <div class="progress-bar width-60" ></div>
+                               {%elseif nbrePaiement >=900 and nbrePaiement <1100%}
+                                   <div class="progress-bar width-80" ></div>
+                               {%else%}
+                                   <div class="progress-bar width-90" ></div>
+                               {%endif%}
+                           </div>
+                       </div>
+                       <!-- /.info-box-content -->
+                   </div>
+                   <!-- /.info-box -->
+               </div>
+               <!-- /.col -->
+           </div>
+       </div>
+       <!-- end widget -->
+    <!-- chart start -->
+    <div class="mb-3">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-box">
+                <div class="card-head">
+                    <header>Statistiques</header>
+{#                    <div class="tools">#}
+{#                        <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>#}
+{#                        <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>#}
+{#                        <a class="t-close btn-color fa fa-times" href="javascript:;"></a>#}
+{#                    </div>#}
+                </div>
+                <div class="card-body no-padding height-9">
+                    <div class="row text-center">
+                        <div class="col-sm-3 col-6">
+                            <h4 class="margin-0">$ 209 </h4>
+                            <p class="text-muted"> Today's Income</p>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <h4 class="margin-0">$ 837 </h4>
+                            <p class="text-muted">This Week's Income</p>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <h4 class="margin-0">$ 3410 </h4>
+                            <p class="text-muted">This Month's Income</p>
+                        </div>
+                        <div class="col-sm-3 col-6">
+                            <h4 class="margin-0">$ 78,000 </h4>
+                            <p class="text-muted">This Year's Income</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="area_line_chart" class="width-100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{#</div>#}
+{#</div>#}
+{#</div>#}
+    <!-- Chart end -->
 {% endblock %}
