@@ -43,7 +43,7 @@ class RestaurantController extends AbstractController
         {
             if ($checkSiNomRestaurantExiste!=null)
             {
-                $this->addFlash('error','cette categorie existe déjà dans la base !');
+                $this->addFlash('error','ce restaurant existe déjà dans la base !');
             }else
             {
                 //$restaurant->setUpdatedAt(new \DateTimeImmutable());
@@ -73,6 +73,7 @@ class RestaurantController extends AbstractController
 
         ]);
     }
+
 
     #[Route('/detailR', name: 'detailRestau')]
     public function detailRestau(ManagerRegistry $doctrine, $id): Response
